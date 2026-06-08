@@ -1,5 +1,6 @@
 import { Instagram } from "lucide-react";
 
+import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import {
   buildWhatsAppUrl,
@@ -15,6 +16,7 @@ import styles from "./FinalCtaSection.module.css";
 
 type Props = Readonly<{
   dict: Dictionary;
+  locale: Locale;
 }>;
 
 function WhatsAppIcon({ className }: Readonly<{ className?: string }>) {
@@ -31,7 +33,7 @@ function WhatsAppIcon({ className }: Readonly<{ className?: string }>) {
   );
 }
 
-export function FinalCtaSection({ dict }: Props) {
+export function FinalCtaSection({ dict, locale }: Props) {
   const { contact } = dict;
   const { info } = contact;
   const whatsAppUrl = buildWhatsAppUrl();
@@ -97,7 +99,7 @@ export function FinalCtaSection({ dict }: Props) {
             </div>
 
             <div className={styles["contact-section__form-col"]}>
-              <ContactForm form={contact.form} />
+              <ContactForm form={contact.form} locale={locale} />
             </div>
           </div>
         </div>

@@ -53,13 +53,6 @@
     box-shadow var(--sv-transition-card-hover);
 }
 
-@supports (backdrop-filter: blur(1px)) {
-  .process-section__card {
-    -webkit-backdrop-filter: blur(var(--glass-backdrop-blur));
-    backdrop-filter: blur(var(--glass-backdrop-blur));
-  }
-}
-
 .process-section__icon-wrap {
   display: inline-flex;
   flex: 0 0 auto;

@@ -34,8 +34,7 @@
   padding: 0;
   border: none;
   cursor: pointer;
-  background: var(--color-bg-overlay-scrim);
-  color: var(--color-text-primary);
+  background: transparent;
 }
 
 .case-drop-card__poster-button:disabled {
@@ -50,27 +49,6 @@
 
 .case-drop-card__poster {
   object-fit: cover;
-}
-
-.case-drop-card__play {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  translate: -50% -50%;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 3rem;
-  min-height: 3rem;
-  border-radius: var(--sv-radius-ui);
-  border: 1px solid var(--color-border-strong);
-  background: var(--color-surface-glass);
-  backdrop-filter: blur(var(--glass-backdrop-blur));
-  font-size: 0.7rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  box-shadow: var(--shadow-button-quiet);
 }
 
 .case-drop-card__video {

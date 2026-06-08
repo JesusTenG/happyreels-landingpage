@@ -5,33 +5,35 @@ import {
   useEffect,
   useRef,
   useState,
+  type ComponentPropsWithoutRef,
   type CSSProperties,
-  type TransitionEvent as ReactTransitionEvent,
 } from "react";
+
+type HeroPanelVideoProps = ComponentPropsWithoutRef<"video"> & {
+  fetchPriority?: "high" | "low" | "auto";
+};
 
 import {
   getHeroPanelVideoStaggerMs,
+  getHeroPanelVideoUnlockOrder,
   isCoarsePointerDevice,
   isHeroPanelVideoActive,
   prefersReducedMotion,
   scheduleAfterIdle,
   shouldDeferHeroVideoPlayback,
   HERO_MOBILE_LAYOUT_MAX_WIDTH_PX,
-  HERO_MOBILE_VISIBLE_PANEL_INDICES,
+  HERO_PANEL_CENTER_INDEX,
   HERO_VIDEO_IDLE_DELAY_MOBILE_MS,
   HERO_VIDEO_IDLE_DELAY_MS,
+  HERO_VIDEO_SECONDARY_UNLOCK_DELAY_MS,
 } from "./heroPerformance";
 import {
   assertNoAdjacentDuplicates,
   buildInitialPanelClipIds,
   getHeroClipById,
-  HERO_PANEL_CENTER_INDEX,
-  HERO_PANEL_ROTATE_INTERVAL_MS,
-  HERO_ROTATION_ENABLED,
   HERO_VIDEO_CROSSFADE_MS,
   HERO_PANEL_PLAYBACK_OFFSET_S,
   HERO_VIDEO_PLAYBACK_RATE,
-  pickAllowedClipIdForPanel,
 } from "./heroVideos";
 
 import shellStyles from "./HeroPanelsShell.module.css";
@@ -62,31 +64,15 @@ function applyPanelTimeOffset(video: HTMLVideoElement, panelIndex: number): void
   }
 }
 
-type PanelLayer = "a" | "b";
-
 type PanelSlotState = {
   clipId: string;
-  visibleLayer: PanelLayer;
-  layerClips: Record<PanelLayer, string>;
-  pendingLayer: PanelLayer | null;
-  pendingClipId: string | null;
 };
 
 function createInitialPanelStates(): PanelSlotState[] {
   const initialIds = buildInitialPanelClipIds();
   assertNoAdjacentDuplicates(initialIds, "initial assignment");
 
-  return initialIds.map((clipId) => ({
-    clipId,
-    visibleLayer: "a" as PanelLayer,
-    layerClips: { a: clipId, b: clipId },
-    pendingLayer: null,
-    pendingClipId: null,
-  }));
-}
-
-function getVisiblePanelOrder(mobileLayout: boolean): readonly number[] {
-  return mobileLayout ? HERO_MOBILE_VISIBLE_PANEL_INDICES : [0, 1, 2, 3, 4];
+  return initialIds.map((clipId) => ({ clipId }));
 }
 
 function setPanelGradientHidden(panelIndex: number, hidden: boolean) {
@@ -101,37 +87,33 @@ function setPanelGradientHidden(panelIndex: number, hidden: boolean) {
 
 type HeroPanelProps = Readonly<{
   panelIndex: number;
-  slot: PanelSlotState;
+  clipId: string;
   isVideoCapable: boolean;
   panelVideoSrcAllowed: boolean;
   allowPlayback: boolean;
   hasClip: boolean;
-  mobileLayout: boolean;
-  onIncomingCanPlay: (panelIndex: number) => void;
-  onCrossfadeComplete: (panelIndex: number) => void;
   onVideoError: (clipId: string) => void;
 }>;
 
 function HeroPanel({
   panelIndex,
-  slot,
+  clipId,
   isVideoCapable,
   panelVideoSrcAllowed,
   allowPlayback,
   hasClip,
-  mobileLayout,
-  onIncomingCanPlay,
-  onCrossfadeComplete,
   onVideoError,
 }: HeroPanelProps) {
-  const showSecondLayer = !mobileLayout || slot.pendingClipId !== null;
-  const videoARef = useRef<HTMLVideoElement>(null);
-  const videoBRef = useRef<HTMLVideoElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const [videoReady, setVideoReady] = useState(false);
+  const isPrimaryLcpPanel = panelIndex === HERO_PANEL_CENTER_INDEX;
+
+  const primaryLcpVideoProps: Pick<HeroPanelVideoProps, "preload" | "fetchPriority"> =
+    isPrimaryLcpPanel ? { preload: "auto", fetchPriority: "high" } : { preload: "none" };
 
   const applyVideo = useCallback(
-    (video: HTMLVideoElement | null, layerClipId: string, shouldPlay: boolean) => {
-      if (!video || !isVideoCapable || !panelVideoSrcAllowed || !layerClipId) {
+    (video: HTMLVideoElement | null, shouldPlay: boolean) => {
+      if (!video || !isVideoCapable || !panelVideoSrcAllowed || !clipId) {
         if (video) {
           video.pause();
           video.removeAttribute("src");
@@ -140,12 +122,12 @@ function HeroPanel({
         return;
       }
 
-      const layerClip = getHeroClipById(layerClipId);
-      if (!layerClip) return;
+      const clip = getHeroClipById(clipId);
+      if (!clip) return;
 
       applyPlaybackRate(video);
 
-      const encoded = encodePublicAssetSrc(layerClip.src);
+      const encoded = encodePublicAssetSrc(clip.src);
       if (video.dataset.loadedSrc !== encoded) {
         video.dataset.loadedSrc = encoded;
         video.src = encoded;
@@ -159,17 +141,15 @@ function HeroPanel({
         video.pause();
       }
     },
-    [allowPlayback, isVideoCapable, panelIndex, panelVideoSrcAllowed],
+    [allowPlayback, clipId, isVideoCapable, panelIndex, panelVideoSrcAllowed],
   );
 
-  const handleLoadedMetadata = useCallback(
-    (video: HTMLVideoElement | null) => {
-      if (!video) return;
-      applyPlaybackRate(video);
-      applyPanelTimeOffset(video, panelIndex);
-    },
-    [panelIndex],
-  );
+  const handleLoadedMetadata = useCallback(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    applyPlaybackRate(video);
+    applyPanelTimeOffset(video, panelIndex);
+  }, [panelIndex]);
 
   const markVideoReady = useCallback(() => {
     setVideoReady(true);
@@ -184,56 +164,29 @@ function HeroPanel({
 
   useEffect(() => {
     if (!isVideoCapable || !hasClip || !panelVideoSrcAllowed) {
-      if (videoARef.current) {
-        videoARef.current.pause();
-        videoARef.current.removeAttribute("src");
-        videoARef.current.removeAttribute("data-loaded-src");
-      }
-      if (videoBRef.current) {
-        videoBRef.current.pause();
-        videoBRef.current.removeAttribute("src");
-        videoBRef.current.removeAttribute("data-loaded-src");
+      if (videoRef.current) {
+        videoRef.current.pause();
+        videoRef.current.removeAttribute("src");
+        videoRef.current.removeAttribute("data-loaded-src");
       }
       return;
     }
 
-    const playA =
-      slot.visibleLayer === "a" ||
-      (slot.pendingLayer === "a" && slot.pendingClipId !== null);
-    const playB =
-      slot.visibleLayer === "b" ||
-      (slot.pendingLayer === "b" && slot.pendingClipId !== null);
+    applyVideo(videoRef.current, true);
+  }, [applyVideo, clipId, hasClip, isVideoCapable, panelVideoSrcAllowed]);
 
-    applyVideo(videoARef.current, slot.layerClips.a, playA);
-    if (showSecondLayer) {
-      applyVideo(videoBRef.current, slot.layerClips.b, playB);
-    } else if (videoBRef.current) {
-      videoBRef.current.pause();
-      videoBRef.current.removeAttribute("src");
-      videoBRef.current.removeAttribute("data-loaded-src");
+  const showVideo = isVideoCapable && hasClip && panelVideoSrcAllowed;
+
+  const handleCanPlay = () => {
+    if (!isPrimaryLcpPanel) {
+      markVideoReady();
     }
-  }, [applyVideo, hasClip, isVideoCapable, panelVideoSrcAllowed, showSecondLayer, slot]);
-
-  const layerAVisible = slot.visibleLayer === "a";
-  const layerBVisible = slot.visibleLayer === "b";
-  const showVideos = isVideoCapable && hasClip && panelVideoSrcAllowed;
-
-  const handleCanPlay = (layer: PanelLayer) => {
-    const isVisible =
-      slot.visibleLayer === layer ||
-      (slot.pendingLayer === layer && slot.pendingClipId !== null);
-    if (isVisible) markVideoReady();
-    if (slot.pendingLayer === layer) onIncomingCanPlay(panelIndex);
   };
 
-  const handleFadeEnd = (layer: PanelLayer) => (event: ReactTransitionEvent<HTMLVideoElement>) => {
-    if (event.propertyName !== "opacity") return;
-    if (slot.pendingLayer !== layer) return;
-    onCrossfadeComplete(panelIndex);
-  };
-
-  const handleError = (clipId: string) => () => {
-    onVideoError(clipId);
+  const handleLoadedData = () => {
+    if (isPrimaryLcpPanel) {
+      markVideoReady();
+    }
   };
 
   return (
@@ -248,55 +201,26 @@ function HeroPanel({
       }
     >
       <div className={shellStyles["hero-panel-media"]}>
-        {showVideos ? (
-          <>
-            <video
-              ref={videoARef}
-              className={[
-                styles["hero-panel-video"],
-                layerAVisible && videoReady ? styles["hero-panel-video--visible"] : "",
-              ]
-                .filter(Boolean)
-                .join(" ")}
-              style={{ transitionDuration: `${HERO_VIDEO_CROSSFADE_MS}ms` }}
-              muted
-              playsInline
-              loop
-              preload="none"
-              aria-hidden="true"
-              onLoadedMetadata={() => handleLoadedMetadata(videoARef.current)}
-              onLoadedData={() => {
-                if (layerAVisible) markVideoReady();
-              }}
-              onCanPlay={() => handleCanPlay("a")}
-              onTransitionEnd={handleFadeEnd("a")}
-              onError={handleError(slot.layerClips.a)}
-            />
-            {showSecondLayer ? (
-              <video
-                ref={videoBRef}
-                className={[
-                  styles["hero-panel-video"],
-                  layerBVisible && videoReady ? styles["hero-panel-video--visible"] : "",
-                ]
-                  .filter(Boolean)
-                  .join(" ")}
-                style={{ transitionDuration: `${HERO_VIDEO_CROSSFADE_MS}ms` }}
-                muted
-                playsInline
-                loop
-                preload="none"
-                aria-hidden="true"
-                onLoadedMetadata={() => handleLoadedMetadata(videoBRef.current)}
-                onLoadedData={() => {
-                  if (layerBVisible) markVideoReady();
-                }}
-                onCanPlay={() => handleCanPlay("b")}
-                onTransitionEnd={handleFadeEnd("b")}
-                onError={handleError(slot.layerClips.b)}
-              />
-            ) : null}
-          </>
+        {showVideo ? (
+          <video
+            ref={videoRef}
+            className={[
+              styles["hero-panel-video"],
+              videoReady ? styles["hero-panel-video--visible"] : "",
+            ]
+              .filter(Boolean)
+              .join(" ")}
+            style={{ transitionDuration: `${HERO_VIDEO_CROSSFADE_MS}ms` }}
+            muted
+            playsInline
+            loop
+            {...primaryLcpVideoProps}
+            aria-hidden="true"
+            onLoadedMetadata={handleLoadedMetadata}
+            onLoadedData={handleLoadedData}
+            onCanPlay={handleCanPlay}
+            onError={() => onVideoError(clipId)}
+          />
         ) : null}
       </div>
     </div>
@@ -329,13 +253,6 @@ export function HeroVideoPanels() {
   const [isInView, setIsInView] = useState(false);
   const [allowPlayback, setAllowPlayback] = useState(false);
   const [failedClipIds, setFailedClipIds] = useState<ReadonlySet<string>>(() => new Set());
-
-  const fadeStartedRef = useRef<Record<number, boolean>>({});
-  const failedClipIdsRef = useRef(failedClipIds);
-
-  useEffect(() => {
-    failedClipIdsRef.current = failedClipIds;
-  }, [failedClipIds]);
 
   useEffect(() => {
     const mqMobileLayout = window.matchMedia(
@@ -374,14 +291,23 @@ export function HeroVideoPanels() {
     if (!globalVideoGateOpen) return;
 
     let cancelled = false;
-    const order = getVisiblePanelOrder(mobileLayout);
-    const timeoutIds: number[] = [
-      window.setTimeout(() => {
-        if (!cancelled) setUnlockedPanels(new Set());
-      }, 0),
-    ];
+    const order = getHeroPanelVideoUnlockOrder(mobileLayout);
+    const center = HERO_PANEL_CENTER_INDEX;
+    const timeoutIds: number[] = [];
 
-    for (const [orderIndex, panelIndex] of order.entries()) {
+    timeoutIds.push(
+      window.setTimeout(() => {
+        if (cancelled) return;
+        setUnlockedPanels((prev) => {
+          const next = new Set(prev);
+          next.add(center);
+          return next;
+        });
+      }, 0),
+    );
+
+    const secondaryPanels = order.filter((index) => index !== center);
+    for (const [orderIndex, panelIndex] of secondaryPanels.entries()) {
       timeoutIds.push(
         window.setTimeout(() => {
           if (cancelled) return;
@@ -390,7 +316,7 @@ export function HeroVideoPanels() {
             next.add(panelIndex);
             return next;
           });
-        }, getHeroPanelVideoStaggerMs(orderIndex)),
+        }, HERO_VIDEO_SECONDARY_UNLOCK_DELAY_MS + getHeroPanelVideoStaggerMs(orderIndex)),
       );
     }
 
@@ -438,107 +364,6 @@ export function HeroVideoPanels() {
     });
   }, []);
 
-  const startRotation = useCallback(
-    (panelIndex: number) => {
-      if (!globalVideoGateOpen || !HERO_ROTATION_ENABLED) return;
-      if (!unlockedPanels.has(panelIndex)) return;
-
-      setSlots((prev) => {
-        const slot = prev[panelIndex];
-        if (!slot || slot.pendingClipId) return prev;
-
-        const clipIds = prev.map((s) => s.clipId);
-        const nextClipId = pickAllowedClipIdForPanel(
-          panelIndex,
-          clipIds,
-          failedClipIdsRef.current,
-        );
-        if (!nextClipId) return prev;
-
-        const tentativeIds = [...clipIds];
-        tentativeIds[panelIndex] = nextClipId;
-
-        assertNoAdjacentDuplicates(tentativeIds, `pre-rotate panel ${panelIndex}`);
-
-        fadeStartedRef.current[panelIndex] = false;
-        const pendingLayer: PanelLayer = slot.visibleLayer === "a" ? "b" : "a";
-
-        const next = [...prev];
-        next[panelIndex] = {
-          ...slot,
-          pendingLayer,
-          pendingClipId: nextClipId,
-          layerClips: {
-            ...slot.layerClips,
-            [pendingLayer]: nextClipId,
-          },
-        };
-        return next;
-      });
-    },
-    [globalVideoGateOpen, unlockedPanels],
-  );
-
-  const revealIncoming = useCallback((panelIndex: number) => {
-    if (fadeStartedRef.current[panelIndex]) return;
-
-    setSlots((prev) => {
-      const slot = prev[panelIndex];
-      if (!slot?.pendingLayer || !slot.pendingClipId) return prev;
-
-      const tentativeIds = prev.map((s, i) =>
-        i === panelIndex ? slot.pendingClipId! : s.clipId,
-      );
-      assertNoAdjacentDuplicates(tentativeIds, `reveal panel ${panelIndex}`);
-
-      fadeStartedRef.current[panelIndex] = true;
-
-      const next = [...prev];
-      next[panelIndex] = {
-        ...slot,
-        visibleLayer: slot.pendingLayer,
-      };
-      return next;
-    });
-  }, []);
-
-  const completeRotation = useCallback((panelIndex: number) => {
-    setSlots((prev) => {
-      const slot = prev[panelIndex];
-      if (!slot?.pendingClipId) return prev;
-
-      const next = [...prev];
-      next[panelIndex] = {
-        ...slot,
-        clipId: slot.pendingClipId,
-        pendingClipId: null,
-        pendingLayer: null,
-      };
-
-      assertNoAdjacentDuplicates(
-        next.map((s) => s.clipId),
-        `complete panel ${panelIndex}`,
-      );
-
-      return next;
-    });
-    fadeStartedRef.current[panelIndex] = false;
-  }, []);
-
-  useEffect(() => {
-    if (!globalVideoGateOpen || !allowPlayback || !HERO_ROTATION_ENABLED || mobileLayout) {
-      return;
-    }
-
-    const intervalIds = HERO_PANEL_ROTATE_INTERVAL_MS.map((period, panelIndex) =>
-      window.setInterval(() => startRotation(panelIndex), period),
-    );
-
-    return () => {
-      for (const id of intervalIds) window.clearInterval(id);
-    };
-  }, [allowPlayback, globalVideoGateOpen, mobileLayout, startRotation]);
-
   return (
     <div
       ref={rootRef}
@@ -557,14 +382,11 @@ export function HeroVideoPanels() {
           <HeroPanel
             key={`${panelIndex}-${panelVideoSrcAllowed ? "on" : "off"}`}
             panelIndex={panelIndex}
-            slot={slot}
+            clipId={slot.clipId}
             isVideoCapable={isVideoCapable}
             panelVideoSrcAllowed={panelVideoSrcAllowed}
             allowPlayback={allowPlayback}
             hasClip={hasClip}
-            mobileLayout={mobileLayout}
-            onIncomingCanPlay={revealIncoming}
-            onCrossfadeComplete={completeRotation}
             onVideoError={handleVideoError}
           />
         );

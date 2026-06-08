@@ -16,6 +16,11 @@
   pointer-events: none;
 }
 
+/* Gradient shell sits underneath — keep video layer media transparent until frames paint */
+.hero-panels--videos .hero-panel-media {
+  background: transparent;
+}
+
 .hero-panel {
   position: relative;
   min-width: 0;

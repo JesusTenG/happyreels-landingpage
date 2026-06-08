@@ -8,23 +8,34 @@ export const HERO_PANEL_COUNT = 5;
 
 /**
  * Content-first video gate: gradients + hero copy paint immediately (server HTML).
- * MP4 `src` is set only after idle + in-view; opacity rises on `canplay` per panel.
+ * MP4 `src` is set after idle + in-view; opacity rises on `canplay` per panel.
  */
-export const HERO_VIDEO_CONTENT_FIRST_IDLE_MS = 1200;
+export const HERO_VIDEO_CONTENT_FIRST_IDLE_MS = 200;
 
 /** Extra idle wait before the first panel receives `src`. */
 export const HERO_VIDEO_IDLE_DELAY_MS = HERO_VIDEO_CONTENT_FIRST_IDLE_MS;
 
 /** Slightly longer base defer on coarse-pointer devices. */
-export const HERO_VIDEO_IDLE_DELAY_MOBILE_MS = 1400;
+export const HERO_VIDEO_IDLE_DELAY_MOBILE_MS = 350;
+
+/** After center panel `src`, defer loading MP4 on side panels (ms). */
+export const HERO_VIDEO_SECONDARY_UNLOCK_DELAY_MS = 400;
 
 /**
- * Stagger per visible panel after the global gate opens (ms).
- * Order: outer → … → center on desktop; mobile uses visible indices only.
+ * Stagger after the global gate opens (ms) — index follows `getHeroPanelVideoUnlockOrder`.
  */
 export const HERO_PANEL_VIDEO_STAGGER_MS: readonly number[] = [
-  0, 200, 350, 550, 750,
+  0, 120, 240, 360, 480,
 ];
+
+/** Unlock order: center panel first (likely LCP), then outward. */
+export function getHeroPanelVideoUnlockOrder(mobileLayout: boolean): readonly number[] {
+  const center = HERO_PANEL_CENTER_INDEX;
+  if (mobileLayout) {
+    return [center, 0, 4];
+  }
+  return [center, 1, 3, 0, 4];
+}
 
 export function isHeroPanelVideoActive(
   panelIndex: number,

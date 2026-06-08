@@ -52,7 +52,6 @@
   border: 1px solid var(--color-border-faint);
   background: var(--gradient-glass-card);
   box-shadow: var(--shadow-glass-card);
-  backdrop-filter: blur(12px);
   transition:
     border-color var(--sv-transition-card-hover),
     box-shadow var(--sv-transition-card-hover);

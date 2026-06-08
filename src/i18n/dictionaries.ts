@@ -147,14 +147,17 @@ export type Dictionary = {
       emailPlaceholder: string;
       messagePlaceholder: string;
       submit: string;
+      sending: string;
+      success: string;
+      errorSend: string;
       errors: {
         nameRequired: string;
+        nameTooShort: string;
         emailRequired: string;
         emailInvalid: string;
         messageRequired: string;
+        messageTooShort: string;
       };
-      /** Shown until a server/API submit route is configured. */
-      submitUnavailable: string;
     };
   };
   caseDetail: {
@@ -601,14 +604,18 @@ const dictionaries: Record<Locale, Dictionary> = {
         messagePlaceholder:
           "Brief description: format, goal, footage and timing.",
         submit: "Send request",
+        sending: "Sending…",
+        success: "Your message was sent successfully.",
+        errorSend:
+          "Your message could not be sent right now. Please try again later or contact us directly by email.",
         errors: {
           nameRequired: "Please enter your name.",
+          nameTooShort: "Please enter at least 2 characters.",
           emailRequired: "Please enter your email address.",
           emailInvalid: "Please enter a valid email address.",
           messageRequired: "Please enter a short message.",
+          messageTooShort: "Please write at least 10 characters.",
         },
-        submitUnavailable:
-          "Online sending is not set up yet. WhatsApp or Instagram can be used below.",
       },
     },
     caseDetail: {
@@ -1090,14 +1097,18 @@ const dictionaries: Record<Locale, Dictionary> = {
         messagePlaceholder:
           "Kurzbeschreibung: Format, Ziel, Material und Timing.",
         submit: "Anfrage senden",
+        sending: "Wird gesendet…",
+        success: "Deine Nachricht wurde erfolgreich gesendet.",
+        errorSend:
+          "Die Nachricht konnte gerade nicht gesendet werden. Bitte versuche es später erneut oder kontaktiere uns direkt per E-Mail.",
         errors: {
           nameRequired: "Bitte gib deinen Namen ein.",
+          nameTooShort: "Bitte mindestens 2 Zeichen eingeben.",
           emailRequired: "Bitte gib deine E-Mail-Adresse ein.",
           emailInvalid: "Bitte gib eine gültige E-Mail-Adresse ein.",
           messageRequired: "Bitte schreib eine kurze Nachricht.",
+          messageTooShort: "Bitte mindestens 10 Zeichen schreiben.",
         },
-        submitUnavailable:
-          "Der Versand über das Formular ist noch nicht eingerichtet. WhatsApp oder Instagram können unten genutzt werden.",
       },
     },
     caseDetail: {

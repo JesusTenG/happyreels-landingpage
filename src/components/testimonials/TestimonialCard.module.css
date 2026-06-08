@@ -184,7 +184,6 @@
   background: color-mix(in srgb, var(--color-white) 4%, transparent);
   color: color-mix(in srgb, var(--color-white) 58%, transparent);
   text-decoration: none;
-  backdrop-filter: blur(8px);
   transition:
     color var(--sv-transition-card-hover),
     border-color var(--sv-transition-card-hover),

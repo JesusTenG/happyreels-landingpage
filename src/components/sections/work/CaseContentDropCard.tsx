@@ -50,11 +50,6 @@ export function CaseContentDropCard({
               fill
               sizes="(max-width: 768px) 92vw, (max-width: 980px) 45vw, 33vw"
             />
-            {canPlay ? (
-              <span className={styles["case-drop-card__play"]} aria-hidden="true">
-                Play
-              </span>
-            ) : null}
           </button>
         )}
       </div>

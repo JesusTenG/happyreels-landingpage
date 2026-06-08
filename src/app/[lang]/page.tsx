@@ -18,9 +18,27 @@ import { isLocale, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { buildFaqJsonLd, buildHomeJsonLd } from "@/lib/structured-data";
 
+import styles from "./page.module.css";
+
 type Props = Readonly<{
   params: Promise<{ lang: string }>;
 }>;
+
+/** Temporär: auf `false` setzen, um alle Sections unter der Navbar auszublenden. */
+const SHOW_HOME_SECTIONS = false;
+
+const maintenanceCopy = {
+  de: {
+    eyebrow: "In Arbeit",
+    title: "Website im Aufbau",
+    body: "Die Seite wird gerade überarbeitet und ist in Kürze wieder vollständig verfügbar.",
+  },
+  en: {
+    eyebrow: "In progress",
+    title: "Site under construction",
+    body: "This website is being updated and will be fully available again soon.",
+  },
+} as const;
 
 export default async function LangHomePage({ params }: Props) {
   const { lang } = await params;
@@ -28,6 +46,7 @@ export default async function LangHomePage({ params }: Props) {
 
   const locale = lang satisfies Locale;
   const dict = await getDictionary(locale);
+  const maintenance = maintenanceCopy[locale];
 
   const jsonLd = [...buildHomeJsonLd(locale, dict), buildFaqJsonLd(dict)];
 
@@ -35,21 +54,33 @@ export default async function LangHomePage({ params }: Props) {
     <HeroVisualModeProvider>
       <JsonLd data={jsonLd} />
       <Navbar locale={locale} dict={dict} introAnimation />
-      <div className="page-spectrum flex flex-1 flex-col">
-        <main className="flex flex-1 flex-col">
-          <HeroSection dict={dict} />
-          <ServicesSection dict={dict} />
-          <WorkSection dict={dict} />
-          <ProcessSection dict={dict} />
-          <ApproachSection dict={dict} />
-          <TestimonialSection locale={locale} dict={dict} />
-          <ImpactSnapshotSection dict={dict} locale={locale} />
-          <ClientStoriesSection locale={locale} dict={dict} />
-          <FaqSection dict={dict} />
-          <FinalCtaSection dict={dict} />
-        </main>
-        <Footer locale={locale} dict={dict} />
-      </div>
+      {SHOW_HOME_SECTIONS ? (
+        <div className="page-spectrum flex flex-1 flex-col">
+          <main className="flex flex-1 flex-col">
+            <HeroSection dict={dict} />
+            <ServicesSection dict={dict} />
+            <WorkSection dict={dict} />
+            <ProcessSection dict={dict} />
+            <ApproachSection dict={dict} />
+            <TestimonialSection locale={locale} dict={dict} />
+            <ImpactSnapshotSection dict={dict} locale={locale} />
+            <ClientStoriesSection locale={locale} dict={dict} />
+            <FaqSection dict={dict} />
+            <FinalCtaSection dict={dict} locale={locale} />
+          </main>
+          <Footer locale={locale} dict={dict} />
+        </div>
+      ) : (
+        <div className="page-spectrum flex flex-1 flex-col">
+          <main className={`flex flex-1 flex-col ${styles["home-maintenance"]}`}>
+            <div className={styles["home-maintenance__inner"]}>
+              <p className={styles["home-maintenance__eyebrow"]}>{maintenance.eyebrow}</p>
+              <h1 className={styles["home-maintenance__title"]}>{maintenance.title}</h1>
+              <p className={styles["home-maintenance__body"]}>{maintenance.body}</p>
+            </div>
+          </main>
+        </div>
+      )}
     </HeroVisualModeProvider>
   );
 }

@@ -65,13 +65,6 @@
   transition: opacity var(--sv-transition-card-hover);
 }
 
-@supports (backdrop-filter: blur(1px)) {
-  .approach-section__card {
-    -webkit-backdrop-filter: blur(var(--glass-backdrop-blur));
-    backdrop-filter: blur(var(--glass-backdrop-blur));
-  }
-}
-
 .approach-section__icon-wrap {
   display: inline-flex;
   flex: 0 0 auto;

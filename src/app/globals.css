@@ -700,13 +700,6 @@
     border-radius: var(--sv-radius-ui) !important;
     background: var(--gradient-glass-card);
     box-shadow: var(--shadow-glass-card);
-    -webkit-backdrop-filter: blur(var(--glass-backdrop-blur));
-  }
-
-  @supports (backdrop-filter: blur(1px)) {
-    .glass-card {
-      backdrop-filter: blur(var(--glass-backdrop-blur));
-    }
   }
 }
 

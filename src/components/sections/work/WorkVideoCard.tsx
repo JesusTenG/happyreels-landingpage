@@ -136,9 +136,6 @@ export function WorkVideoCard({
               onPlaying={markPreviewReady}
             />
           ) : null}
-          <span className={styles["work-video-card__play"]} aria-hidden="true">
-            Play
-          </span>
           <span className={styles["work-video-card__label"]}>
             <span className={styles["work-video-card__label-title"]}>{title}</span>
             <span className={styles["work-video-card__label-description"]}>{description}</span>

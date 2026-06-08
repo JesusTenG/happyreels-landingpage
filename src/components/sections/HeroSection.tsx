@@ -1,6 +1,7 @@
 import type { Dictionary } from "@/i18n/dictionaries";
 import { HeroGradientPanels } from "@/components/hero/HeroGradientPanels";
 import { HeroSectionBackground } from "@/components/hero/HeroSectionBackground.client";
+import { HeroVideoPreload } from "@/components/hero/HeroVideoPreload";
 import { HeroVisualModeToggle } from "@/components/hero/HeroVisualModeToggle.client";
 import { contactCtaClassNames } from "@/components/ui/contactCtaButton";
 import SVisualsButton from "@/components/ui/SVisualsButton";
@@ -23,6 +24,7 @@ export function HeroSection({ dict }: Props) {
       style={introCssProperties()}
       aria-labelledby="hero-heading"
     >
+      <HeroVideoPreload />
       <div className={styles["hero-background"]} data-hero-background>
         <HeroGradientPanels />
         <HeroSectionBackground />

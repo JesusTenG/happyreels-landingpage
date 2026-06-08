@@ -24,11 +24,7 @@ export const HERO_VIDEO_CLIPS: readonly HeroVideoClip[] = [
 
 export const HERO_PANEL_COUNT = 5;
 
-/** Per-panel rotation period — staggered so panels never swap together. */
-export const HERO_PANEL_ROTATE_INTERVAL_MS: readonly number[] = [
-  7000, 9500, 12000, 14500, 17000,
-] as const;
-
+/** Opacity fade-in when a panel video becomes ready. */
 export const HERO_VIDEO_CROSSFADE_MS = 720;
 
 /** Hero loop speed — values below 1 = slow motion (Zeitlupe). */
@@ -40,8 +36,6 @@ export const HERO_PANEL_PLAYBACK_OFFSET_S: readonly number[] = [
 ];
 
 export const HERO_PANEL_CENTER_INDEX = (HERO_PANEL_COUNT - 1) / 2;
-
-export const HERO_ROTATION_ENABLED = HERO_VIDEO_CLIPS.length >= 2;
 
 export function getHeroClipById(id: string): HeroVideoClip | undefined {
   return HERO_VIDEO_CLIPS.find((clip) => clip.id === id);
@@ -104,23 +98,10 @@ export function buildInitialPanelClipIds(): string[] {
   return assigned.map((clip) => clip.id);
 }
 
-export function panelVideosFromIds(ids: readonly string[]): HeroVideoClip[] {
+function panelVideosFromIds(ids: readonly string[]): HeroVideoClip[] {
   return ids
     .map((id) => getHeroClipById(id))
     .filter((clip): clip is HeroVideoClip => clip !== undefined);
-}
-
-export function pickAllowedClipIdForPanel(
-  panelIndex: number,
-  clipIds: readonly string[],
-  excludeIds: ReadonlySet<string> = new Set(),
-): string | null {
-  const panelVideos = panelVideosFromIds(clipIds);
-  const allowed = getAllowedVideosForPanel(panelIndex, panelVideos).filter(
-    (clip) => !excludeIds.has(clip.id),
-  );
-  if (allowed.length === 0) return null;
-  return allowed[Math.floor(Math.random() * allowed.length)]!.id;
 }
 
 export function assertNoAdjacentDuplicates(

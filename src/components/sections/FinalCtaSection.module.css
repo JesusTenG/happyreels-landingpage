@@ -297,6 +297,36 @@
   color: var(--color-text-muted);
 }
 
+.contact-section__status--error {
+  color: color-mix(in srgb, var(--color-accent) 72%, var(--color-text-muted));
+}
+
+.contact-section__honeypot-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.contact-section__honeypot {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
 @media (max-width: 980px) {
   .contact-section__panel-body {
     grid-template-columns: 1fr;
