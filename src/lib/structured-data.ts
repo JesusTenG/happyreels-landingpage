@@ -1,20 +1,40 @@
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import type { WorkVideoItem } from "@/i18n/dictionaries";
+import type { ReelVideo } from "@/data/reel-videos";
 import type { WorkCaseLocaleContent } from "@/data/work-cases";
-import { buildCanonical } from "@/lib/seo";
+import type { FaqItem } from "@/data/faq-content";
+import type {
+  ClientStory,
+  ClientStoryLocaleContent,
+} from "@/data/client-stories";
+import type { ServiceLandingContent } from "@/data/service-content";
+import { homeContent } from "@/data/home-content";
+import { buildCanonical, siteUrl } from "@/lib/seo";
 import { INSTAGRAM_URL, SITE_NAME } from "@/lib/site";
+import {
+  getClientProjectPath,
+  getProjectsPath,
+  getServicePath,
+  type ServiceKey,
+} from "@/lib/route-config";
 
 export function buildHomeJsonLd(locale: Locale, dict: Dictionary) {
   const url = buildCanonical(locale);
+  const rootUrl = buildCanonical(locale);
+  const organizationId = `${rootUrl}#organization`;
+  const websiteId = `${rootUrl}#website`;
+  const personId = `${rootUrl}#simon-saad`;
 
   return [
     {
       "@context": "https://schema.org",
       "@type": "WebSite",
+      "@id": websiteId,
       name: SITE_NAME,
       url,
       inLanguage: locale === "de" ? "de-DE" : "en-US",
+      publisher: { "@id": organizationId },
     },
     {
       "@context": "https://schema.org",
@@ -23,36 +43,53 @@ export function buildHomeJsonLd(locale: Locale, dict: Dictionary) {
       description: dict.meta.description,
       url,
       inLanguage: locale === "de" ? "de-DE" : "en-US",
-      isPartOf: { "@type": "WebSite", name: SITE_NAME, url: buildCanonical(locale) },
+      isPartOf: { "@id": websiteId },
+      about: { "@id": organizationId },
     },
     {
       "@context": "https://schema.org",
-      "@type": "Person",
-      name: "Simon Saad",
+      "@type": "Organization",
+      "@id": organizationId,
+      name: SITE_NAME,
       url,
-      jobTitle: locale === "de" ? "Video Editor & Produzent" : "Video Editor & Producer",
+      founder: { "@id": personId },
       sameAs: [INSTAGRAM_URL],
     },
     {
       "@context": "https://schema.org",
+      "@type": "Person",
+      "@id": personId,
+      name: "Simon Saad",
+      url,
+      jobTitle: locale === "de" ? "Gründer und Videoproduzent" : "Founder and video producer",
+      sameAs: [INSTAGRAM_URL],
+      worksFor: { "@id": organizationId },
+    },
+    {
+      "@context": "https://schema.org",
       "@type": "ProfessionalService",
+      "@id": `${rootUrl}#video-production-studio`,
       name: SITE_NAME,
       url,
       areaServed: {
         "@type": "Country",
         name: "Germany",
       },
-      serviceType: dict.services.items.map((item) => item.title),
+      serviceType: homeContent[locale].services.items.map((item) => item.title),
       description: dict.meta.description,
+      founder: { "@id": personId },
+      sameAs: [INSTAGRAM_URL],
     },
   ];
 }
 
-export function buildFaqJsonLd(dict: Dictionary) {
+export function buildFaqPageJsonLd(locale: Locale, items: readonly FaqItem[]) {
   return {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    mainEntity: dict.faq.items.map((item) => ({
+    url: `${buildCanonical(locale)}#faq`,
+    inLanguage: locale === "de" ? "de-DE" : "en-US",
+    mainEntity: items.map((item) => ({
       "@type": "Question",
       name: item.question,
       acceptedAnswer: {
@@ -93,7 +130,7 @@ export function buildCaseJsonLd(
           "@type": "ListItem",
           position: 2,
           name: locale === "de" ? "Work" : "Work",
-          item: `${buildCanonical(locale)}#work`,
+          item: buildCanonical(locale, "/projekte"),
         },
         {
           "@type": "ListItem",
@@ -157,8 +194,8 @@ export function buildClientStoryJsonLd(
         {
           "@type": "ListItem",
           position: 2,
-          name: locale === "de" ? "Kooperationen" : "Collaborations",
-          item: `${buildCanonical(locale)}#collaborations`,
+          name: locale === "de" ? "Projekte" : "Work",
+          item: buildCanonical(locale, "/projekte"),
         },
         {
           "@type": "ListItem",
@@ -200,4 +237,195 @@ export function buildClientStoryVideoJsonLd(
       embedUrl: pageUrl,
       inLanguage,
     }));
+}
+
+export function buildClientProjectJsonLd(
+  locale: Locale,
+  story: ClientStory,
+  content: ClientStoryLocaleContent,
+) {
+  const url = new URL(getClientProjectPath(locale, story.slug), siteUrl).toString();
+  const projectsUrl = new URL(getProjectsPath(locale), siteUrl).toString();
+
+  return [
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      name: content.pageTitle,
+      description: content.metaDescription,
+      url,
+      inLanguage: locale === "de" ? "de-DE" : "en-US",
+      primaryImageOfPage: story.heroImageSrc
+        ? new URL(story.heroImageSrc, siteUrl).toString()
+        : undefined,
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: locale === "de" ? "Start" : "Home",
+          item: buildCanonical(locale),
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: locale === "de" ? "Projekte" : "Projects",
+          item: projectsUrl,
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: story.name,
+          item: url,
+        },
+      ],
+    },
+  ];
+}
+
+export function buildClientProjectVideoJsonLd(
+  locale: Locale,
+  story: ClientStory,
+  items: WorkVideoItem[],
+  fallbackDescription: string,
+) {
+  const pageUrl = new URL(getClientProjectPath(locale, story.slug), siteUrl).toString();
+  const inLanguage = locale === "de" ? "de-DE" : "en-US";
+
+  return items
+    .filter((item) => Boolean(item.lightboxSrc && item.posterSrc))
+    .map((item) => ({
+      "@context": "https://schema.org",
+      "@type": "VideoObject",
+      name: item.title,
+      description: item.description || fallbackDescription,
+      thumbnailUrl: new URL(item.posterSrc, siteUrl).toString(),
+      contentUrl: new URL(item.lightboxSrc, siteUrl).toString(),
+      embedUrl: pageUrl,
+      inLanguage,
+    }));
+}
+
+export function buildProjectsJsonLd(locale: Locale, items: ReelVideo[]) {
+  const url = new URL(getProjectsPath(locale), siteUrl).toString();
+  const inLanguage = locale === "de" ? "de-DE" : "en-US";
+
+  return [
+    {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      name: locale === "de" ? "Projekte von HappyReels" : "Projects by HappyReels",
+      description:
+        locale === "de"
+          ? "Ausgewählte Reels, Commercials und Podcast Edits von HappyReels."
+          : "Selected reels, commercials and podcast edits by HappyReels.",
+      url,
+      inLanguage,
+      mainEntity: {
+        "@type": "ItemList",
+        itemListElement: items.map((item, index) => ({
+          "@type": "ListItem",
+          position: index + 1,
+          name: item.title,
+          url: item.projectHref ? new URL(item.projectHref, url).toString() : url,
+        })),
+      },
+    },
+    ...items.map((item) => ({
+      "@context": "https://schema.org",
+      "@type": "VideoObject",
+      name: item.title,
+      description: item.description,
+      thumbnailUrl: new URL(item.posterSrc, url).toString(),
+      contentUrl: new URL(item.lightboxSrc, url).toString(),
+      embedUrl: url,
+      inLanguage,
+    })),
+  ];
+}
+
+export function buildServiceJsonLd(
+  locale: Locale,
+  serviceKey: ServiceKey,
+  content: ServiceLandingContent,
+) {
+  const url = new URL(getServicePath(locale, serviceKey), siteUrl).toString();
+  const homeUrl = buildCanonical(locale);
+
+  return [
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      name: content.navTitle,
+      serviceType: content.navTitle,
+      description: content.metaDescription,
+      url,
+      inLanguage: locale === "de" ? "de-DE" : "en-US",
+      areaServed: {
+        "@type": "Country",
+        name: "Germany",
+      },
+      provider: {
+        "@type": "ProfessionalService",
+        name: SITE_NAME,
+        url: homeUrl,
+      },
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: locale === "de" ? "Start" : "Home",
+          item: homeUrl,
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: locale === "de" ? "Leistungen" : "Services",
+          item: `${homeUrl}#services`,
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: content.navTitle,
+          item: url,
+        },
+      ],
+    },
+  ];
+}
+
+export function buildAboutJsonLd(
+  locale: Locale,
+  title: string,
+  description: string,
+) {
+  const url = buildCanonical(locale, "/about");
+  const organizationId = `${buildCanonical(locale)}#organization`;
+
+  return [
+    {
+      "@context": "https://schema.org",
+      "@type": "AboutPage",
+      name: title,
+      description,
+      url,
+      inLanguage: locale === "de" ? "de-DE" : "en-US",
+      about: { "@id": organizationId },
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      name: "Simon Saad",
+      jobTitle: locale === "de" ? "Gründer und Videoproduzent" : "Founder and video producer",
+      worksFor: { "@id": organizationId },
+      sameAs: [INSTAGRAM_URL],
+    },
+  ];
 }

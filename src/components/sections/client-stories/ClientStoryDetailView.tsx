@@ -1,14 +1,16 @@
+import Image from "next/image";
+
 import {
   getClientStoryContent,
-  getClientStoryPageTitle,
   getWorkItemsForClientStory,
 } from "@/data/client-stories";
 import { getTestimonialForClientStory } from "@/content/testimonials";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { TestimonialCard } from "@/components/testimonials/TestimonialCard";
-import { contactCtaClassNames } from "@/components/ui/contactCtaButton";
-import SVisualsButton from "@/components/ui/SVisualsButton";
+import HappyReelsButton from "@/components/ui/HappyReelsButton";
+import { MixedHeadline } from "@/components/ui/MixedHeadline";
+import { getProjectsPath } from "@/lib/route-config";
 
 import type { ClientStory } from "@/data/client-stories";
 import { ClientStoryDetailReels } from "./ClientStoryDetailReels.client";
@@ -23,34 +25,70 @@ type Props = Readonly<{
 export function ClientStoryDetailView({ locale, dict, story }: Props) {
   const content = getClientStoryContent(story, locale);
   const { clientStoryDetail } = dict;
-  const backHref = `/${locale}#collaborations`;
+  const backHref = getProjectsPath(locale);
   const contactHref = `/${locale}#contact`;
-  const workHref = `/${locale}#work`;
-  const pageTitle = getClientStoryPageTitle(story, dict);
+  const workHref = getProjectsPath(locale);
+  const pageTitle = content.pageTitle;
   const testimonial = getTestimonialForClientStory(story.slug, locale);
   const workItems = getWorkItemsForClientStory(story, dict, locale);
   const hasTestimonial = testimonial !== undefined;
 
   return (
-    <article className={styles["collaboration-detail"]}>
+    <article className={styles["collaboration-detail"]} data-navbar-theme="brown">
       <div className={styles["collaboration-detail__shell"]}>
         <div className={styles["collaboration-detail-back"]}>
-          <SVisualsButton
+          <HappyReelsButton
             href={backHref}
             variant="secondary"
             showIcon={false}
-            enableStarBorder={false}
+            enableMovingBorder={false}
           >
             {clientStoryDetail.back}
-          </SVisualsButton>
+          </HappyReelsButton>
         </div>
 
-        <section className={styles["collaboration-detail-intro"]} aria-label={pageTitle}>
+        <section className={styles["collaboration-detail-intro"]} aria-labelledby="client-project-title">
           <div className={styles["collaboration-detail-copy"]}>
-            <h1 className={styles["collaboration-detail-headline"]}>{pageTitle}</h1>
+            <p className={styles["collaboration-detail-eyebrow"]}>
+              {locale === "de" ? "Langfristiges Projekt" : "Long-term project"}
+            </p>
+            <h1 id="client-project-title" className={styles["collaboration-detail-headline"]}>
+              <MixedHeadline text={pageTitle} />
+            </h1>
+            <p className={styles["collaboration-detail-lead"]}>{content.intro}</p>
             <p className={styles["collaboration-detail-description"]}>
               {content.collaborationText}
             </p>
+          </div>
+          {story.heroImageSrc ? (
+            <div className={styles["collaboration-detail-hero-media"]}>
+              <Image
+                src={story.heroImageSrc}
+                alt={content.imageAlt}
+                fill
+                priority
+                sizes="(max-width: 768px) 92vw, (max-width: 1100px) 44vw, 34rem"
+              />
+            </div>
+          ) : null}
+        </section>
+
+        <section
+          className={styles["collaboration-detail-direction"]}
+          aria-labelledby="client-project-direction-title"
+        >
+          <div>
+            <p className={styles["collaboration-detail-section-label"]}>
+              {locale === "de" ? "Visuelle Ausrichtung" : "Visual direction"}
+            </p>
+            <h2 id="client-project-direction-title"><MixedHeadline text={content.directionTitle} /></h2>
+            <p>{content.directionText}</p>
+          </div>
+          <div className={styles["collaboration-detail-formats"]}>
+            <h3><MixedHeadline text={locale === "de" ? "Produzierte Formate" : "Produced formats"} tone="gold" /></h3>
+            <ul>
+              {content.formats.map((format) => <li key={format}>{format}</li>)}
+            </ul>
           </div>
         </section>
 
@@ -64,7 +102,7 @@ export function ClientStoryDetailView({ locale, dict, story }: Props) {
                 id="client-story-edits-heading"
                 className={`${styles["collaboration-detail-headline"]} ${styles["collaboration-detail-reels-heading"]}`}
               >
-                {clientStoryDetail.publishedEditsHeading}
+                <MixedHeadline text={clientStoryDetail.publishedEditsHeading} />
               </h2>
             ) : null}
 
@@ -101,26 +139,24 @@ export function ClientStoryDetailView({ locale, dict, story }: Props) {
           aria-labelledby="client-story-cta-heading"
         >
           <h2 id="client-story-cta-heading" className={styles["collaboration-detail-cta-title"]}>
-            {clientStoryDetail.ctaHeadline}
+            <MixedHeadline text={clientStoryDetail.ctaHeadline} />
           </h2>
           <p className={styles["collaboration-detail-cta-text"]}>{clientStoryDetail.ctaBody}</p>
           <div className={styles["collaboration-detail-cta-actions"]}>
-            <SVisualsButton
+            <HappyReelsButton
               href={contactHref}
               showIcon={false}
-              className={`${contactCtaClassNames.primary} ${contactCtaClassNames.prominent}`}
             >
               {clientStoryDetail.ctaPrimary}
-            </SVisualsButton>
-            <SVisualsButton
+            </HappyReelsButton>
+            <HappyReelsButton
               href={workHref}
               variant="secondary"
               showIcon={false}
-              enableStarBorder={false}
-              className={contactCtaClassNames.secondary}
+              enableMovingBorder={false}
             >
               {clientStoryDetail.ctaSecondary}
-            </SVisualsButton>
+            </HappyReelsButton>
           </div>
         </section>
       </div>

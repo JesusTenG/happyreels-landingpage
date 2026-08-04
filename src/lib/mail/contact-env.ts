@@ -39,7 +39,7 @@ export function getContactMailConfig(): ContactMailConfig | null {
   const secure = parseBoolean(process.env.SMTP_SECURE, secureDefault);
 
   const siteName =
-    process.env.CONTACT_SITE_NAME?.trim() || "Simon Saad Visuals";
+    process.env.CONTACT_SITE_NAME?.trim() || "HappyReels";
   const autoReplyEnabled = parseBoolean(
     process.env.CONTACT_AUTO_REPLY_ENABLED,
     true,

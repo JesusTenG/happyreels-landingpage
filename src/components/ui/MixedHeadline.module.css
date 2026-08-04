@@ -1,0 +1,18 @@
+.accent {
+  font-family: var(--font-instrument-serif), Georgia, serif;
+  font-size: 1.04em;
+  font-style: italic;
+  font-weight: 400;
+  color: var(--mixed-headline-fill, var(--color-happy-gold));
+  -webkit-text-fill-color: var(--mixed-headline-fill, var(--color-happy-gold));
+  -webkit-text-stroke: clamp(1px, 0.018em, 2px) var(--mixed-headline-stroke, var(--color-petal-white));
+  paint-order: stroke fill;
+}
+
+.gold {
+  --mixed-headline-fill: var(--color-happy-gold);
+}
+
+.petal {
+  --mixed-headline-fill: var(--color-petal-white);
+}

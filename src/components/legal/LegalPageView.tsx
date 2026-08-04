@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { SectionHeader } from "@/components/sections/SectionHeader";
+import { MixedHeadline } from "@/components/ui/MixedHeadline";
 
 import styles from "./LegalPageView.module.css";
 
@@ -18,7 +19,7 @@ export function LegalPageView({ locale, dict, page }: Props) {
   const backLabel = locale === "de" ? "Zur Startseite" : "Back to home";
 
   return (
-    <article className={styles.legal}>
+    <article className={styles.legal} data-navbar-theme="brown">
       <p className={styles.back}>
         <Link href={home}>← {backLabel}</Link>
       </p>
@@ -33,7 +34,7 @@ export function LegalPageView({ locale, dict, page }: Props) {
 
         {content.sections.map((section) => (
           <section key={section.heading} className={styles.block}>
-            <h2 className={styles.heading}>{section.heading}</h2>
+            <h2 className={styles.heading}><MixedHeadline text={section.heading} /></h2>
             <p className={styles.body}>{section.body}</p>
           </section>
         ))}

@@ -1,4 +1,4 @@
-# Video Asset Policy (S-Visuals)
+# Video Asset Policy (HappyReels)
 
 ## Öffentlich ausgelieferte Video-Ordner (public/)
 - `public/assets/videos/preview/`  
@@ -21,4 +21,3 @@
 2. Preview-Dateien bleiben klein und werden nur “on demand” vorbereitet.
 3. Lightbox-Dateien sind nur für die tatsächliche Interaktion gedacht.
 4. Poster-Bilder bleiben bereitgestellt (Poster ist meist der SEO-/LCP-Anker).
-

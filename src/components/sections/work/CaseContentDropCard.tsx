@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useState } from "react";
+import { MixedHeadline } from "@/components/ui/MixedHeadline";
 
 import styles from "./CaseContentDropCard.module.css";
 
@@ -55,7 +56,7 @@ export function CaseContentDropCard({
       </div>
       <div className={styles["case-drop-card__meta"]}>
         <p className={styles["case-drop-card__type"]}>{type}</p>
-        <h3 className={styles["case-drop-card__title"]}>{title}</h3>
+        <h3 className={styles["case-drop-card__title"]}><MixedHeadline text={title} /></h3>
       </div>
     </article>
   );

@@ -1,0 +1,22 @@
+.group {
+  position: relative;
+}
+
+.item {
+  --scroll-y: 0px;
+  --scroll-scale: 1;
+
+  min-width: 0;
+  transform: translate3d(0, var(--scroll-y), 0) scale(var(--scroll-scale));
+  transform-origin: center;
+}
+
+.group[data-scroll-active] .item {
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .item {
+    transform: none;
+  }
+}

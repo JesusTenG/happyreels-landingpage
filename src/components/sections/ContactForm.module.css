@@ -1,0 +1,104 @@
+.contact-section__form {
+  position: relative;
+  display: grid;
+  gap: 1.1rem;
+  padding: clamp(1.3rem, 3vw, 2.25rem);
+  border: 1px solid color-mix(in srgb, var(--color-cocoa-ink) 22%, transparent);
+  border-radius: var(--radius-media);
+  background: var(--color-petal-white);
+  box-shadow: 0 1.25rem 3rem color-mix(in srgb, var(--color-cocoa-ink) 16%, transparent);
+}
+
+.contact-section__field {
+  position: relative;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.contact-section__label {
+  font-size: 0.74rem;
+  font-weight: 760;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.contact-section__input {
+  width: 100%;
+  min-height: 3.25rem;
+  border: 1px solid color-mix(in srgb, var(--color-cocoa-ink) 30%, transparent);
+  border-radius: var(--radius-ui);
+  padding: 0.85rem 1rem;
+  color: var(--color-cocoa-ink);
+  background: color-mix(in srgb, var(--color-petal-white) 70%, var(--color-dusty-blush));
+  transition: border-color 180ms ease, background-color 180ms ease;
+}
+
+.contact-section__input::placeholder {
+  color: color-mix(in srgb, var(--color-cocoa-ink) 52%, transparent);
+}
+
+.contact-section__input:hover {
+  border-color: color-mix(in srgb, var(--color-cocoa-ink) 58%, transparent);
+}
+
+.contact-section__input:focus {
+  border-color: var(--color-cocoa-ink);
+  background: var(--color-petal-white);
+}
+
+.contact-section__input[aria-invalid="true"] {
+  border-color: #9b2f23;
+}
+
+.contact-section__textarea {
+  min-height: 9rem;
+  resize: vertical;
+}
+
+.contact-section__actions {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 0.35rem;
+}
+
+.contact-section__error,
+.contact-section__status {
+  margin: 0;
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+.contact-section__error,
+.contact-section__status--error {
+  color: #8c261c;
+}
+
+.contact-section__status:not(.contact-section__status--error) {
+  color: #315828;
+}
+
+.contact-section__honeypot,
+.contact-section__honeypot-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+@media (max-width: 430px) {
+  .contact-section__form {
+    padding: 1rem;
+  }
+
+  .contact-section__actions > * {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contact-section__input {
+    transition: none;
+  }
+}

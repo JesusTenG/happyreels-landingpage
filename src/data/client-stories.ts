@@ -10,8 +10,14 @@ export type ClientStorySocialLink = {
 };
 
 export type ClientStoryLocaleContent = {
+  pageTitle: string;
+  cardLabel: string;
   intro: string;
   collaborationText: string;
+  formats: string[];
+  directionTitle: string;
+  directionText: string;
+  imageAlt: string;
   metaDescription: string;
 };
 
@@ -35,8 +41,6 @@ export type ClientStory = {
   localized: Record<Locale, ClientStoryLocaleContent>;
 };
 
-export const TODO_SOCIAL_URL = "TODO_ADD_REAL_INSTAGRAM_URL";
-
 /** Creator photos: public/assets/videos/collaboration/ */
 const collaborationPhoto = (filename: string) =>
   `/assets/videos/collaboration/${filename}` as const;
@@ -55,7 +59,7 @@ export const clientStories: ClientStory[] = [
     name: "Leon Hägele",
     firstName: "Leon",
     lastName: "Hägele",
-    bentoRole: "stack",
+    bentoRole: "feature",
     handle: "leon.haegele",
     cardImageSrc: collaborationPhoto("leon1.png"),
     heroImageSrc: collaborationPhoto("leon1.png"),
@@ -75,20 +79,34 @@ export const clientStories: ClientStory[] = [
     ],
     localized: {
       en: {
+        pageTitle: "Content for Leon Hägele, shaped for every feed.",
+        cardLabel: "Social ads, cinematic edits & podcast content",
         intro:
           "Recurring social ads and performance edits with a consistent premium look across the feed.",
         collaborationText:
           "For Leon Hägele, recurring reels, social ads, cinematic edits, educational short-form content and podcast trailers are produced, cut and edited for Instagram and other digital touchpoints — with a consistently premium look, clear pacing and flexible adaptation across different formats.",
+        formats: ["Social ads", "Cinematic edits", "Short-form content", "Podcast trailers"],
+        directionTitle: "One visual language. Many formats.",
+        directionText:
+          "The collaboration combines social-first pacing with cinematic imagery, considered sound and a consistent editing language. Each video is shaped for its platform while remaining recognisably part of the same body of work.",
+        imageAlt: "Leon Hägele holding a camera during a fitness production",
         metaDescription:
-          "Inside the collaboration with Leon Hägele — recurring Instagram reels, social ads, cinematic edits, educational content and podcast trailers by Simon Saad Visuals.",
+          "Inside the collaboration with Leon Hägele — recurring Instagram reels, social ads, cinematic edits, educational content and podcast trailers by HappyReels.",
       },
       de: {
+        pageTitle: "Content für Leon Hägele, geschärft für jeden Feed.",
+        cardLabel: "Social Ads, Cinematic Edits & Podcast Content",
         intro:
           "Wiederkehrende Social Ads und Performance-Edits mit konsistentem Premium-Look im Feed.",
         collaborationText:
           "Für Leon Hägele entstehen regelmäßig Reels, Social Ads, Cinematic Edits, lehrreiche Kurzformate und Podcast-Trailer. Die Zusammenarbeit umfasst die Produktion, den Schnitt und die Bearbeitung von Content für Instagram und weitere digitale Touchpoints — mit einem konsistent hochwertigen Look, klarer Dramaturgie und flexibler Anpassung an unterschiedliche Formate.",
+        formats: ["Social Ads", "Cinematic Edits", "Short-Form Content", "Podcast-Trailer"],
+        directionTitle: "Eine Bildsprache. Viele Formate.",
+        directionText:
+          "Die Zusammenarbeit verbindet Social-First-Pacing mit filmischen Bildern, bewusstem Sound und einer konsistenten Editing-Sprache. Jedes Video wird für seine Plattform entwickelt und bleibt zugleich klar als Teil derselben visuellen Welt erkennbar.",
+        imageAlt: "Leon Hägele mit Kamera bei einer Fitness-Produktion",
         metaDescription:
-          "Einblick in die Kooperation mit Leon Hägele — wiederkehrende Instagram-Reels, Social Ads, Cinematic Edits, lehrreiche Inhalte und Podcast-Trailer von Simon Saad Visuals.",
+          "Einblick in die Kooperation mit Leon Hägele — wiederkehrende Instagram-Reels, Social Ads, Cinematic Edits, lehrreiche Inhalte und Podcast-Trailer von HappyReels.",
       },
     },
   },
@@ -97,34 +115,42 @@ export const clientStories: ClientStory[] = [
     name: "Ramon Limacher",
     firstName: "Ramon",
     lastName: "Limacher",
-    bentoRole: "feature",
+    bentoRole: "stack",
     handle: "ramon_limacher",
     cardImageSrc: collaborationPhoto("ramon1.png"),
     heroImageSrc: collaborationPhoto("ramon1.png"),
-    socialLinks: [
-      {
-        platform: "instagram",
-        handle: "@ramon_limacher",
-        url: TODO_SOCIAL_URL,
-      },
-    ],
+    socialLinks: [],
     workReelPreviewSrcs: ["/assets/videos/preview/random/mealplans leiser-web.mp4"],
     localized: {
       en: {
+        pageTitle: "Calm edits for Ramon Limacher. Clearly recognisable.",
+        cardLabel: "Educational & lifestyle reels",
         intro:
           "Recurring social edits shaped for recognition, calm pacing and platform-native rhythm.",
         collaborationText:
           "For Ramon Limacher, recurring social content is produced and edited — educational and lifestyle reels with calm pacing and a recognisable rhythm for Instagram and short-form platforms.",
+        formats: ["Educational reels", "Lifestyle reels", "Short-form editing"],
+        directionTitle: "Calm pacing. Unmistakable rhythm.",
+        directionText:
+          "The edits give educational ideas enough space while keeping every sequence concise and native to short-form platforms. A restrained visual treatment connects the recurring releases.",
+        imageAlt: "Ramon Limacher speaking to camera",
         metaDescription:
-          "Ongoing social video editing for creator Ramon Limacher — recurring visuals and platform-native edits by Simon Saad Visuals.",
+          "Ongoing social video editing for creator Ramon Limacher — recurring visuals and platform-native edits by HappyReels.",
       },
       de: {
+        pageTitle: "Ruhige Edits für Ramon Limacher. Klar wiedererkennbar.",
+        cardLabel: "Educational & Lifestyle Reels",
         intro:
           "Regelmäßige Social Edits mit Fokus auf Wiedererkennung, ruhigem Pacing und kanalgerechtem Rhythmus.",
         collaborationText:
           "Für Ramon Limacher entsteht fortlaufend Social Content — Educational- und Lifestyle-Reels mit ruhigem Pacing und wiedererkennbarem Rhythmus für Instagram und Short-Form.",
+        formats: ["Educational Reels", "Lifestyle Reels", "Short-Form Editing"],
+        directionTitle: "Ruhiges Pacing. Klarer Rhythmus.",
+        directionText:
+          "Die Edits geben lehrreichen Inhalten den nötigen Raum und bleiben zugleich kompakt und plattformgerecht. Eine zurückhaltende visuelle Bearbeitung verbindet die wiederkehrenden Veröffentlichungen.",
+        imageAlt: "Ramon Limacher spricht direkt in die Kamera",
         metaDescription:
-          "Fortlaufender Social-Video-Schnitt für Creator Ramon Limacher — wiederkehrende Visuals und plattformgerechte Edits von Simon Saad Visuals.",
+          "Fortlaufender Social-Video-Schnitt für Creator Ramon Limacher — wiederkehrende Visuals und plattformgerechte Edits von HappyReels.",
       },
     },
   },
@@ -137,13 +163,7 @@ export const clientStories: ClientStory[] = [
     handle: "marioscherthan",
     cardImageSrc: collaborationPhoto("mario1.png"),
     heroImageSrc: collaborationPhoto("mario1.png"),
-    socialLinks: [
-      {
-        platform: "instagram",
-        handle: "@marioscherthan",
-        url: TODO_SOCIAL_URL,
-      },
-    ],
+    socialLinks: [],
     workReelPreviewSrcs: [
       "/assets/videos/preview/podcast trailer/trailer f15-web.mp4",
       "/assets/videos/preview/podcast trailer/trailer folge 14-web.mp4",
@@ -155,20 +175,34 @@ export const clientStories: ClientStory[] = [
     ],
     localized: {
       en: {
+        pageTitle: "Podcast moments for Mario Scherthan with a premium finish.",
+        cardLabel: "Premium podcast & social edits",
         intro:
           "Ongoing social content with clear visual direction and a consistent editing style.",
         collaborationText:
           "For Mario Scherthan, recurring social edits are produced along a defined visual direction — social-first pacing, brand-aware rhythm and a cohesive premium look across ongoing Instagram content.",
+        formats: ["Podcast edits", "Social edits", "Premium short-form editing"],
+        directionTitle: "A finish that connects every release.",
+        directionText:
+          "Podcast moments and social-first ideas are translated into concise edits with a shared visual language. Typography, pacing, sound and finishing remain aligned across the continuing release schedule.",
+        imageAlt: "Mario Scherthan during a gym production",
         metaDescription:
-          "Long-term social content editing for Mario Scherthan — consistent visual direction and premium short-form edits by Simon Saad Visuals.",
+          "Long-term social content editing for Mario Scherthan — consistent visual direction and premium short-form edits by HappyReels.",
       },
       de: {
+        pageTitle: "Podcast-Momente für Mario Scherthan mit Premium-Finish.",
+        cardLabel: "Premium Podcast & Social Edits",
         intro:
           "Fortlaufender Social Content mit klarer visueller Richtung und konsistentem Schnittstil.",
         collaborationText:
           "Für Mario Scherthan entstehen wiederkehrende Social Edits entlang einer definierten Bildsprache — social-first Pacing, markenbewusster Rhythmus und ein stimmiger Premium-Look über laufende Instagram-Inhalte.",
+        formats: ["Podcast-Edits", "Social-Edits", "Premium Short-Form Editing"],
+        directionTitle: "Ein Finish, das jede Veröffentlichung verbindet.",
+        directionText:
+          "Podcast-Momente und Social-First-Ideen werden in kompakte Edits mit gemeinsamer visueller Sprache übersetzt. Typografie, Pacing, Sound und Finishing bleiben über die laufenden Veröffentlichungen hinweg aufeinander abgestimmt.",
+        imageAlt: "Mario Scherthan bei einer Produktion im Gym",
         metaDescription:
-          "Langfristiger Social-Content-Schnitt für Mario Scherthan — konsistente visuelle Richtung und Premium-Short-Form-Edits von Simon Saad Visuals.",
+          "Langfristiger Social-Content-Schnitt für Mario Scherthan — konsistente visuelle Richtung und Premium-Short-Form-Edits von HappyReels.",
       },
     },
   },
@@ -226,6 +260,7 @@ function buildWorkVideoItemFromPreviewSrc(
 
   if (locale === "de") {
     return {
+      id: previewSrc,
       title: label,
       description: "Edit aus dieser Kooperation.",
       posterSrc,
@@ -237,6 +272,7 @@ function buildWorkVideoItemFromPreviewSrc(
   }
 
   return {
+    id: previewSrc,
     title: label,
     description: "Edit from this collaboration.",
     posterSrc,

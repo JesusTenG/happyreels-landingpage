@@ -1,0 +1,217 @@
+.section {
+  --mixed-headline-fill: var(--color-happy-gold);
+  --mixed-headline-stroke: var(--color-petal-white);
+
+  overflow: clip;
+  padding: clamp(4.5rem, 8vw, 6rem) 0;
+  color: var(--color-petal-white);
+  background: var(--color-cocoa-ink);
+}
+
+.section[data-variant="projects"] {
+  --mixed-headline-fill: var(--color-petal-white);
+  --mixed-headline-stroke: var(--color-soft-clay);
+  padding-block: clamp(4rem, 7vw, 6.5rem);
+  color: var(--color-cocoa-ink);
+  background: var(--color-soft-clay);
+}
+
+.heading {
+  position: relative;
+  z-index: 2;
+  margin-bottom: clamp(4.25rem, 7vw, 5rem);
+}
+
+.headingGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(18rem, 0.8fr);
+  align-items: end;
+  gap: clamp(1.5rem, 5vw, 5rem);
+}
+
+.heading h2 {
+  max-width: 11ch;
+  margin: 0;
+  padding-bottom: 0.08em;
+  font-size: clamp(2.75rem, 6vw, 5.5rem);
+  font-weight: 780;
+  line-height: 0.94;
+  letter-spacing: -0.065em;
+}
+
+.headingGrid > p {
+  max-width: 31rem;
+  margin: 0 0 0.35rem;
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
+  line-height: 1.58;
+}
+
+.grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  min-height: clamp(34rem, 53vw, 42rem);
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  gap: clamp(0.9rem, 1.6vw, 1.35rem);
+}
+
+.slot {
+  min-width: 0;
+  min-height: 0;
+}
+
+.cardReveal {
+  width: 100%;
+  height: 100%;
+}
+
+.featureSlot {
+  grid-column: 1 / span 7;
+  grid-row: 1 / span 2;
+}
+
+.stackSlot {
+  grid-column: 8 / -1;
+}
+
+.stackSlot:nth-child(2) { grid-row: 1; }
+.stackSlot:nth-child(3) { grid-row: 2; }
+
+.card {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  min-height: 17rem;
+  overflow: hidden;
+  align-items: flex-end;
+  border: 1px solid color-mix(in srgb, var(--color-cocoa-ink) 22%, transparent);
+  border-radius: var(--radius-card);
+  color: var(--color-petal-white);
+  background: var(--color-cocoa-ink);
+  box-shadow: 0 1rem 2.4rem color-mix(in srgb, var(--color-cocoa-ink) 15%, transparent);
+  text-decoration: none;
+  transform: translateZ(0);
+  transition:
+    transform var(--hr-transition-card-hover),
+    box-shadow var(--hr-transition-card-hover),
+    border-color var(--hr-transition-card-hover);
+}
+
+.media,
+.overlay {
+  position: absolute;
+  inset: 0;
+}
+
+.media img {
+  object-fit: cover;
+  transition: transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.featureSlot .media img { object-position: center 42%; }
+.stackSlot:nth-child(2) .media img { object-position: center 28%; }
+.stackSlot:nth-child(3) .media img { object-position: center 34%; }
+
+.overlay {
+  z-index: 1;
+  background:
+    linear-gradient(180deg, transparent 34%, color-mix(in srgb, var(--color-cocoa-ink) 88%, transparent) 100%),
+    linear-gradient(90deg, color-mix(in srgb, var(--color-cocoa-ink) 24%, transparent), transparent 65%);
+}
+
+.cardCopy {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  width: 100%;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 0.35rem 1rem;
+  padding: clamp(1.25rem, 3vw, 2.2rem);
+}
+
+.cardName {
+  font-size: clamp(1.45rem, 2.9vw, 3.1rem);
+  font-weight: 780;
+  line-height: 1;
+  letter-spacing: -0.05em;
+}
+
+.stackSlot .cardName { font-size: clamp(1.35rem, 2.2vw, 2.25rem); }
+
+.cardLabel {
+  max-width: 34rem;
+  color: color-mix(in srgb, var(--color-petal-white) 82%, transparent);
+  font-size: clamp(0.76rem, 1vw, 0.92rem);
+  line-height: 1.45;
+}
+
+.cardLink {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.62rem 0.82rem;
+  border-radius: var(--radius-pill);
+  color: var(--color-cocoa-ink);
+  background: var(--color-happy-gold);
+  font-size: 0.7rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.card:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 5px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .card:hover {
+    border-color: var(--color-happy-gold);
+    box-shadow: 0 1.5rem 3.2rem color-mix(in srgb, var(--color-cocoa-ink) 23%, transparent);
+    transform: translate3d(0, -0.3rem, 0);
+  }
+
+  .card:hover .media img { transform: scale(1.045); }
+}
+
+@media (max-width: 1040px) {
+  .headingGrid { grid-template-columns: 1fr; gap: 1.25rem; }
+  .heading h2 { max-width: 13ch; }
+  .grid {
+    min-height: auto;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: auto;
+    row-gap: clamp(4.5rem, 8vw, 5.25rem);
+  }
+  .featureSlot { grid-column: 1 / -1; grid-row: auto; min-height: 32rem; }
+  .stackSlot { grid-column: auto; grid-row: auto !important; min-height: 23rem; }
+}
+
+@media (max-width: 680px) {
+  .section,
+  .section[data-variant="projects"] { padding-block: clamp(4rem, 14vw, 5.5rem); }
+  .heading h2 { font-size: clamp(2.6rem, 13vw, 4.4rem); }
+  .grid {
+    grid-template-columns: 1fr;
+    row-gap: 2.5rem;
+  }
+  .featureSlot,
+  .stackSlot { grid-column: 1; min-height: 24rem; }
+  .stackSlot { min-height: 21rem; }
+  .cardCopy { grid-template-columns: 1fr; }
+  .cardLink { grid-column: 1; grid-row: auto; width: fit-content; margin-top: 0.45rem; }
+  .cardName,
+  .stackSlot .cardName { font-size: clamp(1.65rem, 8vw, 2.4rem); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .media img { transition: none; }
+  .card:hover { transform: none; }
+  .card:hover .media img { transform: none; }
+}

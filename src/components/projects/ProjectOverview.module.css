@@ -1,0 +1,15 @@
+.main { overflow: clip; }
+.hero { --mixed-headline-fill: var(--color-happy-gold); --mixed-headline-stroke: var(--color-dusty-blush); padding: calc(var(--header-height) + clamp(5rem, 10vw, 9rem)) 0 clamp(4rem, 8vw, 7rem); background: var(--color-dusty-blush); }
+.heroInner { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(16rem, 0.65fr); gap: 2rem; align-items: end; }
+.hero h1, .cta h2 { margin: 0; padding-bottom: 0.1em; font-size: clamp(3.3rem, 8vw, 8.5rem); font-weight: 780; line-height: 0.92; letter-spacing: -0.07em; }
+.hero p { max-width: 30rem; margin: 0; font-size: clamp(1.05rem, 1.7vw, 1.35rem); font-weight: 620; line-height: 1.55; }
+.gridSection { padding: var(--section-space) 0; background: var(--color-petal-white); }
+.cta { --mixed-headline-fill: var(--color-petal-white); --mixed-headline-stroke: var(--color-happy-gold); padding: var(--section-space) 0; background: var(--color-happy-gold); }
+.ctaInner { display: flex; align-items: flex-end; justify-content: space-between; gap: 2rem; }
+.cta h2 { max-width: 10ch; font-size: clamp(3rem, 6.5vw, 7rem); }
+
+@media (max-width: 760px) {
+  .heroInner { grid-template-columns: 1fr; align-items: start; }
+  .hero h1, .cta h2 { font-size: clamp(2.85rem, 14vw, 5rem); line-height: 0.94; }
+  .ctaInner { align-items: flex-start; flex-direction: column; }
+}
