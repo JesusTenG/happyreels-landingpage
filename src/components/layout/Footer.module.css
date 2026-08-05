@@ -3,7 +3,7 @@
 .top { display: flex; align-items: flex-end; justify-content: space-between; gap: 2rem; padding-bottom: clamp(2rem, 5vw, 4rem); border-bottom: 1px solid color-mix(in srgb, var(--color-petal-white) 22%, transparent); }
 .brand { display: inline-flex; flex: none; text-decoration: none; }
 .top > p { max-width: 12ch; margin: 0; font-size: clamp(1.2rem, 2.2vw, 2rem); font-weight: 700; line-height: 1.05; text-align: right; }
-.top em { color: var(--color-happy-gold); -webkit-text-fill-color: var(--color-happy-gold); -webkit-text-stroke: clamp(1px, 0.018em, 2px) var(--color-cocoa-ink); font-family: var(--font-instrument-serif), Georgia, serif; font-weight: 400; paint-order: stroke fill; }
+.top em { color: var(--color-happy-gold); -webkit-text-fill-color: var(--color-happy-gold); -webkit-text-stroke: var(--hr-italic-stroke-width) var(--color-cocoa-ink); font-family: var(--font-instrument-serif), Georgia, serif; font-weight: 400; letter-spacing: var(--hr-italic-letter-spacing); paint-order: stroke fill; }
 .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem; }
 .grid nav, .contactLinks { display: flex; flex-direction: column; align-items: flex-start; gap: 0.75rem; }
 .grid a, .bottom a { color: inherit; font-size: 0.9rem; font-weight: 650; text-decoration-color: color-mix(in srgb, var(--color-happy-gold) 70%, transparent); text-underline-offset: 0.3rem; }

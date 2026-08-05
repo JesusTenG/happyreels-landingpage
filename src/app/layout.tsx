@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Instrument_Serif, Manrope } from "next/font/google";
 import { headers } from "next/headers";
 
+import { ConsentBanner } from "@/components/layout/ConsentBanner.client";
+import { InitialLoader } from "@/components/layout/InitialLoader.client";
 import { readLocaleFromHeaders } from "@/lib/locale-header";
 import { siteUrl } from "@/lib/seo";
 
@@ -49,8 +51,16 @@ export default async function RootLayout({
   const lang = readLocaleFromHeaders(headerList.get("x-locale"));
 
   return (
-    <html lang={lang} className={`${manrope.variable} ${instrumentSerif.variable}`}>
-      <body>{children}</body>
+    <html
+      lang={lang}
+      className={`${manrope.variable} ${instrumentSerif.variable}`}
+      data-site-intro=""
+    >
+      <body>
+        <InitialLoader locale={lang} />
+        <div id="site-content">{children}</div>
+        <ConsentBanner locale={lang} />
+      </body>
     </html>
   );
 }

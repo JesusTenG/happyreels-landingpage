@@ -15,7 +15,7 @@ export const faqContent: Record<Locale, readonly FaqItem[]> = {
     {
       question: "Kann ich bereits aufgenommenes Rohmaterial einsenden?",
       answer:
-        "Ja. Bestehendes Rohmaterial kann vollständig übernommen und zu Reels, Shorts, YouTube-Videos oder anderen Social-Formaten verarbeitet werden.",
+        "Ja. Wir übernehmen vorhandenes Rohmaterial und schneiden daraus Reels, Shorts, YouTube-Videos oder andere Social-Formate.",
     },
     {
       question: "Übernimmt HappyReels auch den Videodreh?",
