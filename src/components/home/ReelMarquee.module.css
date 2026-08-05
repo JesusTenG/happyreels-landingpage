@@ -3,7 +3,7 @@
   --marquee-duration: 72s;
   width: 100%;
   overflow: hidden;
-  padding-block: clamp(1.75rem, 3.5vw, 2.75rem);
+  padding-block: clamp(1.75rem, 3.5vw, 2.75rem) clamp(4.25rem, 6vw, 5rem);
   container-type: inline-size;
   pointer-events: none;
   -webkit-mask-image: linear-gradient(
@@ -93,7 +93,7 @@
 
 @media (max-width: 760px) {
   .viewport {
-    padding-block: 1.75rem 2.5rem;
+    padding-block: 1.75rem 4rem;
   }
 
   .card {

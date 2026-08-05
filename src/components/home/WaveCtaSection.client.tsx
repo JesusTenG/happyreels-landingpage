@@ -4,7 +4,6 @@ import { useLayoutEffect, useRef } from "react";
 
 import { BrandMark } from "@/components/brand/BrandMark";
 import HappyReelsButton from "@/components/ui/HappyReelsButton";
-import { MixedHeadline } from "@/components/ui/MixedHeadline";
 import type { Locale } from "@/i18n/config";
 
 import styles from "./WaveCtaSection.module.css";
@@ -16,11 +15,23 @@ const CONNECTOR_WAVE_PATH =
 
 const COPY = {
   de: {
-    title: "Aus deinem Footage wird das Feeling, das im Kopf bleibt.",
+    title: {
+      lead: "Aus deinem",
+      footage: "Footage",
+      middle: "wird das",
+      feeling: "Feeling",
+      end: ", das im Kopf bleibt.",
+    },
     cta: "Jetzt Projekt starten",
   },
   en: {
-    title: "Your footage becomes the feeling people remember.",
+    title: {
+      lead: "Your",
+      footage: "footage",
+      middle: "becomes the",
+      feeling: "feeling",
+      end: " people remember.",
+    },
     cta: "Start your project now",
   },
 } as const;
@@ -118,7 +129,13 @@ export function WaveCtaSection({ locale }: Props) {
           <div className={styles.panel}>
             <div className={`container-base ${styles.inner}`}>
               <div className={styles.copy}>
-                <h2 id="wave-cta-title"><MixedHeadline text={copy.title} /></h2>
+                <h2 id="wave-cta-title">
+                  {copy.title.lead}{" "}
+                  <em className={styles.headlineAccent}>{copy.title.footage}</em>{" "}
+                  {copy.title.middle}{" "}
+                  <em className={styles.headlineAccent}>{copy.title.feeling}</em>
+                  {copy.title.end}
+                </h2>
                 <HappyReelsButton
                   href={`/${locale}#contact`}
                   variant="on-brown"
@@ -131,7 +148,7 @@ export function WaveCtaSection({ locale }: Props) {
               <span className={styles.logoMark} aria-hidden="true">
                 <BrandMark
                   size="footer"
-                  accent="dark"
+                  accent="white"
                   reveal="viewport"
                   revealDelay={260}
                   className={styles.logo}

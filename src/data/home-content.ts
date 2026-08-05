@@ -24,13 +24,19 @@ type Outcome = Readonly<{
 type OutcomesContent = Readonly<{
   title: string;
   titleAccent: string;
-  intro: string;
+  titleEnd: string;
   items: readonly [Outcome, Outcome, Outcome, Outcome];
 }>;
 
 export type HomeContent = Readonly<{
   hero: { primaryCta: string };
-  work: { title: string; titleAccent: string; cta: string };
+  work: {
+    titleLineOne: string;
+    titleLineTwoLead: string;
+    titleAccent: string;
+    titleLineTwoEnd: string;
+    cta: string;
+  };
   outcomes: OutcomesContent;
   services: {
     title: string;
@@ -52,14 +58,16 @@ export const homeContent: Record<Locale, HomeContent> = {
       primaryCta: "View projects",
     },
     work: {
-      title: "Reels that stop the scroll and",
-      titleAccent: "stay with you.",
+      titleLineOne: "Content that turns seconds",
+      titleLineTwoLead: "into real",
+      titleAccent: "attention",
+      titleLineTwoEnd: ".",
       cta: "View all projects",
     },
     outcomes: {
-      title: "Content that",
-      titleAccent: "delivers results.",
-      intro: "More views, more interaction and more traffic — with a visual direction that strengthens your brand.",
+      title: "Visibility that delivers",
+      titleAccent: "results",
+      titleEnd: ".",
       items: [
         {
           title: "More views.",
@@ -142,14 +150,16 @@ export const homeContent: Record<Locale, HomeContent> = {
       primaryCta: "Projekte ansehen",
     },
     work: {
-      title: "Reels, die den Scroll stoppen und",
-      titleAccent: "im Kopf bleiben.",
+      titleLineOne: "Content, der aus Sekunden",
+      titleLineTwoLead: "echte",
+      titleAccent: "Aufmerksamkeit",
+      titleLineTwoEnd: " macht.",
       cta: "Alle Projekte ansehen",
     },
     outcomes: {
-      title: "Content, der",
-      titleAccent: "Ergebnisse bringt.",
-      intro: "Mehr Views, mehr Interaktion und mehr Traffic – mit einer visuellen Linie, die deine Marke stärkt.",
+      title: "Sichtbarkeit, die",
+      titleAccent: "Ergebnisse",
+      titleEnd: " bringt.",
       items: [
         {
           title: "Mehr Views.",
@@ -164,7 +174,7 @@ export const homeContent: Record<Locale, HomeContent> = {
           description: "Klare Botschaften führen vom Feed zu Profil, Angebot oder Website.",
         },
         {
-          title: "Mehr Markenwirkung.",
+          title: "Mehr Wiedererkennung.",
           description: "Ein wiedererkennbarer Look baut über einzelne Posts hinaus Vertrauen auf.",
         },
       ],

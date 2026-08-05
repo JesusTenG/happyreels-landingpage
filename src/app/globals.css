@@ -132,6 +132,9 @@
   --hr-space-6: 1.5rem;
   --hr-space-8: 2rem;
   --hr-space-10: 2.5rem;
+  --hr-italic-stroke-width: clamp(2px, 0.035em, 4px);
+  --hr-italic-letter-spacing: 0.004em;
+  --hr-italic-heading-weight: 500;
   --hr-transition-fast: 180ms ease;
   --hr-transition-card-hover: 260ms cubic-bezier(0.2, 0.8, 0.2, 1);
   --hr-bg: var(--color-petal-white);
@@ -229,6 +232,7 @@
 
 html {
   min-height: 100%;
+  overflow-y: scroll;
   scroll-behavior: smooth;
   scroll-padding-top: calc(var(--header-height) + 1rem);
   background: var(--color-petal-white);
@@ -244,6 +248,13 @@ body {
   font-size: 1rem;
   letter-spacing: var(--tracking-normal);
   text-rendering: optimizeLegibility;
+}
+
+html[data-site-intro] body {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  overflow: hidden;
 }
 
 button,

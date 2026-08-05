@@ -139,6 +139,11 @@
   --logo-smile-color: var(--color-happy-gold);
 }
 
+.mark[data-accent="white"] {
+  --logo-letter-color: var(--color-petal-white);
+  --logo-smile-color: var(--color-petal-white);
+}
+
 .mark[data-accent="progress"] {
   --logo-letter-color: color-mix(
     in srgb,

@@ -91,12 +91,12 @@
   border: 1.5px solid color-mix(in srgb, var(--color-cocoa-ink) 36%, transparent);
   border-radius: 50%;
   opacity: var(--cta-logo-opacity, 0);
-  background: var(--color-soft-clay);
+  background: var(--color-happy-gold);
   box-shadow:
     clamp(0.5rem, 1vw, 0.85rem)
     clamp(0.5rem, 1vw, 0.85rem)
     0
-    var(--color-happy-gold);
+    var(--color-gray-500);
   transform: translate3d(0, var(--cta-logo-y, 76px), 0) rotate(-8deg);
   transform-origin: 52% 58%;
   will-change: opacity, transform;
@@ -125,11 +125,28 @@
   will-change: opacity, transform;
 }
 
+.headlineAccent {
+  color: var(--color-happy-gold);
+  -webkit-text-fill-color: var(--color-happy-gold);
+  -webkit-text-stroke: var(--hr-italic-stroke-width) var(--color-cocoa-ink);
+  font-family: var(--font-instrument-serif), Georgia, serif;
+  font-size: 1.04em;
+  font-style: italic;
+  font-weight: var(--hr-italic-heading-weight);
+  letter-spacing: var(--hr-italic-letter-spacing);
+  paint-order: stroke fill;
+}
+
 .cta {
   justify-self: start;
   opacity: var(--cta-button-opacity, 0);
+  box-shadow: 7px 6px 0 color-mix(in srgb, var(--color-petal-white) 42%, transparent);
   transform: translate3d(0, var(--cta-button-y, 54px), 0);
   will-change: opacity, transform;
+}
+
+.cta:hover {
+  box-shadow: 4px 3px 0 color-mix(in srgb, var(--color-petal-white) 48%, transparent);
 }
 
 @media (max-width: 900px) {

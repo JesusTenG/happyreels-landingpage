@@ -149,8 +149,7 @@ export function Navbar({ locale, dict, introAnimation = false }: Props) {
             <BrandMark
               size="navigation"
               accent={theme === "brown" ? "yellow" : "light"}
-              reveal={introAnimation ? "intro" : "immediate"}
-              revealDelay={introAnimation ? 2040 : 0}
+              reveal={introAnimation ? "none" : "immediate"}
               interactive
             />
           </Link>

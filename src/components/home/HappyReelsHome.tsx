@@ -17,7 +17,7 @@ import { getProjectsPath } from "@/lib/route-config";
 
 import { DirectMessageCard } from "./DirectMessageCard";
 import { FAQSection } from "./FAQSection.client";
-import { HeroShowcase } from "./HeroShowcase.client";
+import { HeroShowcase } from "./HeroShowcase";
 import { HomeTestimonials } from "./HomeTestimonials";
 import { ReelMarquee } from "./ReelMarquee.client";
 import { ResultsSection } from "./ResultsSection";
@@ -53,8 +53,12 @@ export function HappyReelsHome({ locale, dict }: Props) {
       <section id="work" className={styles.work} aria-labelledby="work-title" data-navbar-theme="brown">
         <Reveal className={`container-base ${styles.workHeading}`}>
           <h2 id="work-title">
-            <span>{copy.work.title}</span>{" "}
-            <em>{copy.work.titleAccent}</em>
+            <span className={styles.workTitleLine}>{copy.work.titleLineOne}</span>
+            <span className={styles.workTitleLine}>
+              <span>{copy.work.titleLineTwoLead}</span>{" "}
+              <em>{copy.work.titleAccent}</em>
+              <span>{copy.work.titleLineTwoEnd}</span>
+            </span>
           </h2>
         </Reveal>
         <div className={styles.marqueeReveal}>
@@ -74,12 +78,14 @@ export function HappyReelsHome({ locale, dict }: Props) {
           <Reveal className={styles.outcomesHeader}>
             <h2
               id="outcomes-title"
-              aria-label={`${copy.outcomes.title} ${copy.outcomes.titleAccent}`}
+              aria-label={`${copy.outcomes.title} ${copy.outcomes.titleAccent}${copy.outcomes.titleEnd}`}
             >
               <span>{copy.outcomes.title}</span>
-              <em>{copy.outcomes.titleAccent}</em>
+              <span className={styles.outcomesTitleAccentLine}>
+                <em>{copy.outcomes.titleAccent}</em>
+                <span>{copy.outcomes.titleEnd}</span>
+              </span>
             </h2>
-            <p>{copy.outcomes.intro}</p>
           </Reveal>
 
           <ScrollMotionGroup className={styles.outcomesGrid}>

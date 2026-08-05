@@ -35,7 +35,7 @@
 }
 
 .header[data-intro] {
-  animation: navbar-shell-reveal 520ms cubic-bezier(0.16, 1, 0.3, 1) 1500ms both;
+  animation: navbar-shell-reveal 620ms cubic-bezier(0.16, 1, 0.3, 1) 460ms both;
 }
 
 @keyframes navbar-shell-reveal {
@@ -85,20 +85,41 @@
   animation: nav-item-reveal 540ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-.header[data-intro] .brand { animation-delay: 2040ms; }
-.header[data-intro] .desktopLinks a:nth-child(1) { animation-delay: 2120ms; }
-.header[data-intro] .desktopLinks a:nth-child(2) { animation-delay: 2200ms; }
-.header[data-intro] .desktopLinks a:nth-child(3) { animation-delay: 2280ms; }
-.header[data-intro] .desktopLinks a:nth-child(4) { animation-delay: 2360ms; }
-.header[data-intro] .desktopLinks a:nth-child(5) { animation-delay: 2440ms; }
-.header[data-intro] .actions > :nth-child(1) { animation-delay: 2520ms; }
-.header[data-intro] .actions > :nth-child(2) { animation-delay: 2600ms; }
-.header[data-intro] .actions > :nth-child(3) { animation-delay: 2680ms; }
-.header[data-intro] .actions > :nth-child(4) { animation-delay: 2120ms; }
+.header[data-intro] .brand { animation-delay: 620ms; }
+.header[data-intro] .desktopLinks a:nth-child(1) { animation-delay: 660ms; }
+.header[data-intro] .desktopLinks a:nth-child(2) { animation-delay: 700ms; }
+.header[data-intro] .desktopLinks a:nth-child(3) { animation-delay: 740ms; }
+.header[data-intro] .desktopLinks a:nth-child(4) { animation-delay: 780ms; }
+.header[data-intro] .desktopLinks a:nth-child(5) { animation-delay: 820ms; }
+.header[data-intro] .actions > :nth-child(1) { animation-delay: 860ms; }
+.header[data-intro] .actions > :nth-child(2) { animation-delay: 900ms; }
+.header[data-intro] .actions > :nth-child(3) { animation-delay: 940ms; }
+.header[data-intro] .actions > :nth-child(4) { animation-delay: 660ms; }
 
 @keyframes nav-item-reveal {
-  from { opacity: 0; filter: blur(0.4rem); }
-  to { opacity: 1; filter: blur(0); }
+  from {
+    opacity: 0;
+    filter: blur(0.4rem);
+    translate: 0 0.7rem;
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    translate: 0 0;
+  }
+}
+
+:global(html[data-site-intro]) .header[data-intro] {
+  transform: translate3d(0, -105%, 0);
+  animation: none;
+}
+
+:global(html[data-site-intro]) .header[data-intro] .brand,
+:global(html[data-site-intro]) .header[data-intro] .desktopLinks a,
+:global(html[data-site-intro]) .header[data-intro] .actions > * {
+  opacity: 0;
+  filter: blur(0.4rem);
+  animation: none;
 }
 
 .desktopLinks {
