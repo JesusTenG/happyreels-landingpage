@@ -1,0 +1,112 @@
+.stack {
+  position: relative;
+  width: min(100%, 38rem);
+  min-height: clamp(27rem, 68svh, 33rem);
+  justify-self: end;
+}
+
+.card {
+  --card-rotation: 0deg;
+
+  position: absolute;
+  width: min(43%, 16.25rem);
+  aspect-ratio: 9 / 16;
+  overflow: hidden;
+  margin: 0;
+  border: 0.35rem solid color-mix(in srgb, var(--color-petal-white) 72%, transparent);
+  border-radius: clamp(1.15rem, 2vw, 1.8rem);
+  background: var(--color-cocoa-ink);
+  box-shadow:
+    0 1.5rem 3.8rem color-mix(in srgb, var(--color-cocoa-ink) 25%, transparent),
+    0 0.25rem 0.8rem color-mix(in srgb, var(--color-cocoa-ink) 15%, transparent);
+  transform: rotate(var(--card-rotation));
+  transform-origin: center 80%;
+  animation: hero-card-reveal 760ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  transition:
+    transform 360ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 360ms ease;
+}
+
+.card[data-card="1"] { animation-delay: 480ms; }
+.card[data-card="2"] { animation-delay: 590ms; }
+.card[data-card="3"] { animation-delay: 700ms; }
+
+@keyframes hero-card-reveal {
+  from { opacity: 0; filter: blur(0.55rem); }
+  to { opacity: 1; filter: blur(0); }
+}
+
+.card[data-card="1"] {
+  top: 15%;
+  left: 2%;
+  z-index: 10;
+  --card-rotation: -6deg;
+}
+
+.card[data-card="2"] {
+  top: 2%;
+  left: 29%;
+  z-index: 11;
+  --card-rotation: 1.5deg;
+}
+
+.card[data-card="3"] {
+  top: 17%;
+  right: 0;
+  z-index: 12;
+  --card-rotation: 6deg;
+}
+
+.card video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  object-fit: cover;
+}
+
+@media (hover: hover) {
+  .card:hover,
+  .card:focus-within {
+    z-index: 30;
+    box-shadow:
+      0 2rem 4.5rem color-mix(in srgb, var(--color-cocoa-ink) 31%, transparent),
+      0 0.35rem 1rem color-mix(in srgb, var(--color-cocoa-ink) 17%, transparent);
+    transform: translate3d(0, -0.55rem, 0) scale(1.045) rotate(0deg);
+  }
+}
+
+@media (max-width: 980px) {
+  .stack {
+    width: min(100%, 42rem);
+    min-height: clamp(29rem, 68vw, 41rem);
+    margin-inline: auto;
+  }
+}
+
+@media (max-width: 760px) {
+  .stack {
+    min-height: clamp(22rem, 104vw, 31rem);
+  }
+
+  .card {
+    width: min(48%, 13.5rem);
+    border-width: 0.25rem;
+  }
+
+  .card[data-card="1"] { top: 15%; left: 0; --card-rotation: -3.5deg; }
+  .card[data-card="2"] { top: 3%; left: 27%; --card-rotation: 1deg; }
+  .card[data-card="3"] { top: 16%; right: 0.65rem; --card-rotation: 3.5deg; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    animation: none;
+    transition: none;
+  }
+
+  .card:hover,
+  .card:focus-within {
+    transform: rotate(var(--card-rotation));
+  }
+}

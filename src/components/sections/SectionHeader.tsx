@@ -1,6 +1,7 @@
 "use client";
 
-import { ScrollReveal } from "@/components/animation/ScrollReveal";
+import { Reveal } from "@/components/animation/Reveal";
+import { MixedHeadline } from "@/components/ui/MixedHeadline";
 
 import styles from "./SectionHeader.module.css";
 
@@ -31,25 +32,25 @@ export function SectionHeader({
     .filter(Boolean)
     .join(" ");
 
-  const textDirection = align === "start" ? "left" : "fade";
+  const textDirection = align === "start" ? "left" : "up";
   const HeadingTag = headingLevel;
 
   return (
     <header className={rootClass}>
       {eyebrow ? (
-        <ScrollReveal direction={textDirection} delay={0}>
+        <Reveal direction={textDirection} delay={0}>
           <p className={styles.eyebrow}>{eyebrow}</p>
-        </ScrollReveal>
+        </Reveal>
       ) : null}
-      <ScrollReveal direction={textDirection} delay={eyebrow ? 80 : 0}>
+      <Reveal direction={textDirection} delay={eyebrow ? 80 : 0}>
         <HeadingTag id={titleId} className={styles.title}>
-          {title}
+          <MixedHeadline text={title} />
         </HeadingTag>
-      </ScrollReveal>
+      </Reveal>
       {intro ? (
-        <ScrollReveal direction={textDirection} delay={eyebrow ? 140 : 80}>
+        <Reveal direction={textDirection} delay={eyebrow ? 140 : 80}>
           <p className={styles.intro}>{intro}</p>
-        </ScrollReveal>
+        </Reveal>
       ) : null}
     </header>
   );

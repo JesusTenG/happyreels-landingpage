@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import styles from "./WorkVideoCard.module.css";
@@ -19,6 +20,8 @@ export type WorkVideoCardProps = Readonly<{
   videoAriaLabel: string;
   isLightboxOpen: boolean;
   onOpen: () => void;
+  projectHref?: string;
+  detailLabel?: string;
 }>;
 
 export function WorkVideoCard({
@@ -30,6 +33,8 @@ export function WorkVideoCard({
   videoAriaLabel,
   isLightboxOpen,
   onOpen,
+  projectHref,
+  detailLabel,
 }: WorkVideoCardProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [canHoverPreview, setCanHoverPreview] = useState(false);
@@ -142,6 +147,12 @@ export function WorkVideoCard({
           </span>
         </div>
       </button>
+      {projectHref && detailLabel ? (
+        <Link className={styles["work-video-card__detail-link"]} href={projectHref}>
+          <span>{title}</span>
+          <span>{detailLabel} ↗</span>
+        </Link>
+      ) : null}
     </article>
   );
 }

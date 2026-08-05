@@ -3,8 +3,10 @@ import type { Metadata } from "next";
 import { defaultLocale, locales, type Locale } from "@/i18n/config";
 import { DEFAULT_OG_IMAGE_PATH, SITE_NAME } from "@/lib/site";
 
+export type LocalizedPathnames = Readonly<Record<Locale, string>>;
+
 /** Production site URL — used for metadataBase, canonicals, and sitemap. */
-export const siteUrl = new URL("https://simonsaadvisuals.de");
+export const siteUrl = new URL("https://happyreels.de");
 
 /**
  * Builds a locale-prefixed path (e.g. `/de`, `/de/work/slug`).
@@ -29,6 +31,17 @@ export function buildLanguageAlternates(pathname = ""): NonNullable<
   return languages;
 }
 
+/** hreflang map for pages whose route segments differ by locale. */
+export function buildLocalizedLanguageAlternates(
+  pathnames: LocalizedPathnames,
+): NonNullable<Metadata["alternates"]>["languages"] {
+  return {
+    de: pathnames.de,
+    en: pathnames.en,
+    "x-default": pathnames[defaultLocale],
+  };
+}
+
 /** Absolute canonical URL for a locale + pathname. */
 export function buildCanonical(locale: Locale, pathname = ""): string {
   return new URL(localePath(locale, pathname), siteUrl).toString();
@@ -45,6 +58,16 @@ export function buildPageAlternates(
   };
 }
 
+export function buildLocalizedPageAlternates(
+  locale: Locale,
+  pathnames: LocalizedPathnames,
+): NonNullable<Metadata["alternates"]> {
+  return {
+    canonical: new URL(pathnames[locale], siteUrl).toString(),
+    languages: buildLocalizedLanguageAlternates(pathnames),
+  };
+}
+
 type PageMetadataInput = Readonly<{
   locale: Locale;
   pathname?: string;
@@ -52,6 +75,7 @@ type PageMetadataInput = Readonly<{
   description: string;
   ogImagePath?: string;
   robots?: Metadata["robots"];
+  localizedPathnames?: LocalizedPathnames;
 }>;
 
 /** Full metadata bundle: alternates, Open Graph, Twitter, locale. */
@@ -62,15 +86,20 @@ export function buildPageMetadata({
   description,
   ogImagePath = DEFAULT_OG_IMAGE_PATH,
   robots,
+  localizedPathnames,
 }: PageMetadataInput): Metadata {
-  const canonical = buildCanonical(locale, pathname);
+  const canonical = localizedPathnames
+    ? new URL(localizedPathnames[locale], siteUrl).toString()
+    : buildCanonical(locale, pathname);
   const ogLocale = locale === "de" ? "de_DE" : "en_US";
   const alternateOgLocale = locale === "de" ? "en_US" : "de_DE";
 
   return {
     title,
     description,
-    alternates: buildPageAlternates(locale, pathname),
+    alternates: localizedPathnames
+      ? buildLocalizedPageAlternates(locale, localizedPathnames)
+      : buildPageAlternates(locale, pathname),
     robots,
     openGraph: {
       type: "website",

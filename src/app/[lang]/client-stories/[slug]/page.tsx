@@ -15,7 +15,6 @@ import {
 import { isLocale, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { buildPageMetadata } from "@/lib/seo";
-import { SITE_NAME } from "@/lib/site";
 import { buildClientStoryJsonLd, buildClientStoryVideoJsonLd } from "@/lib/structured-data";
 
 type Props = Readonly<{
@@ -37,7 +36,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const dict = await getDictionary(lang);
   const content = getClientStoryContent(story, lang);
   const pathname = `/client-stories/${slug}`;
-  const title = `${getClientStoryPageTitle(story, dict)} — ${SITE_NAME}`;
+  const title = getClientStoryPageTitle(story, dict);
 
   return buildPageMetadata({
     locale: lang,
@@ -70,7 +69,7 @@ export default async function ClientStoryPage({ params }: Props) {
       <JsonLd data={jsonLd} />
       <Navbar locale={locale} dict={dict} />
       <div className="page-spectrum page-spectrum--subtle flex flex-1 flex-col">
-        <main className="flex flex-1 flex-col section-flow">
+        <main id="main-content" className="flex flex-1 flex-col section-flow">
           <div className="container-base">
             <ClientStoryDetailView locale={locale} dict={dict} story={story} />
           </div>

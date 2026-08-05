@@ -1,0 +1,163 @@
+.grid {
+  display: grid;
+  max-width: 74rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: stretch;
+  gap: clamp(1.5rem, 3vw, 2rem) clamp(1.25rem, 2.4vw, 2rem);
+  margin-inline: auto;
+  padding-block: clamp(1rem, 2vw, 1.5rem) clamp(2rem, 4vw, 2.75rem);
+}
+
+.motionItem {
+  width: 100%;
+  min-width: 0;
+  height: 100%;
+}
+
+.motionItem > div { height: 100%; }
+
+.card {
+  --card-offset: 0rem;
+  --card-rotation: 0deg;
+
+  display: flex;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  align-self: start;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 0;
+  min-height: clamp(17rem, 23vw, 18rem);
+  padding: clamp(1.25rem, 2vw, 1.6rem);
+  border: 1px solid color-mix(in srgb, var(--color-cocoa-ink) 30%, transparent);
+  border-radius: 1.05rem 1.45rem 1.1rem 1.35rem;
+  color: var(--color-cocoa-ink);
+  background: var(--color-happy-gold);
+  box-shadow: 7px 7px 0 color-mix(in srgb, var(--color-cocoa-ink) 27%, transparent);
+  transform: translateY(var(--card-offset)) rotate(var(--card-rotation));
+  transform-origin: center;
+  transition: transform var(--hr-transition-card-hover), box-shadow var(--hr-transition-card-hover);
+}
+
+.motionItem:nth-child(odd) .card { --card-rotation: -1.35deg; }
+.motionItem:nth-child(even) .card { --card-rotation: 1.35deg; }
+
+.card blockquote {
+  margin: 0 0 1rem;
+}
+
+.card blockquote p {
+  margin: 0;
+  font-family: var(--font-instrument-serif), Georgia, serif;
+  font-size: clamp(1.08rem, 1.35vw, 1.32rem);
+  line-height: 1.24;
+}
+
+.card figcaption {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding-top: 0.8rem;
+  border-top: 1px solid color-mix(in srgb, var(--color-cocoa-ink) 17%, transparent);
+}
+
+.avatar {
+  position: relative;
+  display: grid;
+  width: 2.4rem;
+  height: 2.4rem;
+  flex: 0 0 auto;
+  overflow: hidden;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid color-mix(in srgb, var(--color-cocoa-ink) 18%, transparent);
+  background: var(--color-petal-white);
+}
+
+.avatar img { object-fit: cover; }
+
+.identity {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.identity cite {
+  font-size: 0.78rem;
+  font-style: normal;
+  font-weight: 780;
+}
+
+.identity small {
+  color: color-mix(in srgb, var(--color-cocoa-ink) 68%, transparent);
+  font-size: 0.66rem;
+  line-height: 1.3;
+}
+
+.real figcaption > a {
+  display: grid;
+  width: 2.35rem;
+  height: 2.35rem;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--color-cocoa-ink) 22%, transparent);
+  border-radius: 50%;
+  color: var(--color-cocoa-ink);
+  text-decoration: none;
+  transition: color 180ms ease, background-color 180ms ease, transform 180ms ease;
+}
+
+.real figcaption > a:hover {
+  color: var(--color-petal-white);
+  background: var(--color-cocoa-ink);
+  transform: translate3d(0, -2px, 0);
+}
+
+.placeholder {
+  border-style: dashed;
+  background: var(--color-happy-gold);
+}
+
+.placeholderAvatar {
+  border: 1px dashed color-mix(in srgb, var(--color-cocoa-ink) 42%, transparent);
+  background: transparent;
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+@media (max-width: 960px) {
+  .grid {
+    max-width: 46rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 3rem;
+  }
+
+  .card { min-height: 17rem; }
+}
+
+@media (max-width: 640px) {
+  .grid {
+    max-width: 22rem;
+    grid-template-columns: 1fr;
+    gap: 1.65rem;
+  }
+
+  .motionItem:nth-child(odd) .card { --card-rotation: -0.65deg; }
+  .motionItem:nth-child(even) .card { --card-rotation: 0.65deg; }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .card:hover { transform: translate3d(0, calc(var(--card-offset) - 0.25rem), 0) rotate(0deg); }
+  .card:hover { box-shadow: 10px 10px 0 color-mix(in srgb, var(--color-cocoa-ink) 32%, transparent); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .real figcaption > a { transition: none; }
+  .real figcaption > a:hover { transform: none; }
+  .card { transition: none; }
+  .motionItem .card:hover { transform: translateY(var(--card-offset)) rotate(var(--card-rotation)); }
+}

@@ -1,49 +1,43 @@
 import type { Metadata } from "next";
-import { Bebas_Neue, Geist_Mono, Inter, Orbitron } from "next/font/google";
+import { Instrument_Serif, Manrope } from "next/font/google";
 import { headers } from "next/headers";
 
-import { SmoothScrollHandler } from "@/components/layout/SmoothScrollHandler.client";
 import { readLocaleFromHeaders } from "@/lib/locale-header";
 import { siteUrl } from "@/lib/seo";
 
 import "./globals.css";
 
-/** UI / body — navbar, labels, buttons (replaces previous Geist Sans). */
-const inter = Inter({
+const manrope = Manrope({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-manrope",
   display: "swap",
 });
 
-/** Display — legacy condensed (available for other UI if needed). */
-const bebasNeue = Bebas_Neue({
+const instrumentSerif = Instrument_Serif({
   weight: "400",
+  style: ["normal", "italic"],
   subsets: ["latin"],
-  variable: "--font-bebas",
+  variable: "--font-instrument-serif",
   display: "swap",
-});
-
-/** Hero headline — “VISUALS”. */
-const orbitron = Orbitron({
-  weight: ["600", "700"],
-  subsets: ["latin"],
-  variable: "--font-orbitron",
-  display: "swap",
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
   metadataBase: siteUrl,
+  applicationName: "happyreels",
   title: {
-    default: "Simon Saad Visuals",
-    template: "%s",
+    default: "happyreels | Social-first Videoproduktion",
+    template: "%s | happyreels",
   },
   description:
-    "Premium video editing and production for brands and creators.",
+    "Social-first Videoproduktion für Creator und Marken. Shortform Editing, YouTube und Filmproduktion mit filmischem Anspruch.",
+  authors: [{ name: "Simon Saad" }],
+  creator: "HappyReels",
+  publisher: "HappyReels",
+  category: "Video production",
+  icons: {
+    icon: [{ url: "/assets/logo/happyreels-logo.svg", type: "image/svg+xml" }],
+    apple: "/assets/logo/happyreelslogoyellow.png",
+  },
 };
 
 export default async function RootLayout({
@@ -55,14 +49,8 @@ export default async function RootLayout({
   const lang = readLocaleFromHeaders(headerList.get("x-locale"));
 
   return (
-    <html
-      lang={lang}
-      className={`dark ${inter.variable} ${bebasNeue.variable} ${orbitron.variable} ${geistMono.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col">
-        <SmoothScrollHandler />
-        {children}
-      </body>
+    <html lang={lang} className={`${manrope.variable} ${instrumentSerif.variable}`}>
+      <body>{children}</body>
     </html>
   );
 }

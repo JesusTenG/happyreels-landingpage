@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 548 432" role="img" aria-labelledby="happyreels-logo-title happyreels-logo-description">
+  <title id="happyreels-logo-title">happyreels</title>
+  <desc id="happyreels-logo-description">Petal White h-r monogram with a Happy Gold smile.</desc>
+
+  <path id="happyreels-letter-h" fill="#F8EBE7" d="M7 1h44a5 5 0 0 1 5 5v143c15-13 34-21 55-21 59 0 101 39 101 94v80a5 5 0 0 1-5 5h-44a5 5 0 0 1-5-5v-78c0-31-20-52-49-52-30 0-53 22-53 53v106a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V6a5 5 0 0 1 5-5Z"/>
+
+  <path id="happyreels-letter-r" fill="#F8EBE7" d="M367 307a5 5 0 0 1-5-5v-79c0-57 43-95 105-95 36 0 66 16 82 45 2 4 2 8 0 11-1 3-4 4-8 4h-37c-8-13-20-20-37-20-30 0-50 22-50 55v79a5 5 0 0 1-5 5h-45Z"/>
+
+  <path id="happyreels-smile" fill="#F4B23E" d="M155 315h53c3 39 35 70 77 70s74-31 78-70h52c-4 66-60 116-130 116S159 381 155 315Z"/>
+</svg>

@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!isLocale(lang)) notFound();
 
   const dict = await getDictionary(lang);
-  const title = `${dict.legal.datenschutz.title} — ${dict.meta.title.split(" — ")[0]}`;
+  const title = dict.legal.datenschutz.title;
 
   return buildPageMetadata({
     locale: lang,
@@ -42,7 +42,7 @@ export default async function DatenschutzPage({ params }: Props) {
     <>
       <Navbar locale={locale} dict={dict} />
       <div className="page-spectrum page-spectrum--subtle flex flex-1 flex-col">
-        <main className="flex flex-1 flex-col section-flow">
+        <main id="main-content" className="flex flex-1 flex-col section-flow">
           <div className="container-base">
             <LegalPageView locale={locale} dict={dict} page="datenschutz" />
           </div>

@@ -14,7 +14,6 @@ import {
 import { isLocale, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { buildPageMetadata } from "@/lib/seo";
-import { SITE_NAME } from "@/lib/site";
 import {
   buildCaseJsonLd,
   buildCaseVideoJsonLd,
@@ -38,7 +37,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const content = getWorkCaseContent(workCase, lang);
   const pathname = `/work/${slug}`;
-  const title = `${content.title} — ${SITE_NAME}`;
+  const title = content.title;
 
   return buildPageMetadata({
     locale: lang,
@@ -75,7 +74,7 @@ export default async function WorkCasePage({ params }: Props) {
       <JsonLd data={jsonLd} />
       <Navbar locale={locale} dict={dict} />
       <div className="page-spectrum page-spectrum--subtle flex flex-1 flex-col">
-        <main className="flex flex-1 flex-col section-flow">
+        <main id="main-content" className="flex flex-1 flex-col section-flow">
           <div className="container-base">
             <WorkCaseDetailView
               locale={locale}

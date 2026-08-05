@@ -1,16 +1,19 @@
 /*//////////////CASE CONTENT DROP CARD//////////////////*/
 .case-drop-card {
+  --mixed-headline-fill: var(--color-happy-gold);
+  --mixed-headline-stroke: var(--color-dusty-blush);
+
   display: flex;
   flex-direction: column;
-  gap: var(--sv-space-3);
-  border-radius: var(--sv-radius-card);
+  gap: var(--hr-space-3);
+  border-radius: var(--hr-radius-card);
   border: 1px solid var(--color-border-faint);
   background: var(--gradient-glass-card);
   box-shadow: var(--shadow-glass-card);
-  padding: var(--sv-space-3);
+  padding: var(--hr-space-3);
   transition:
-    border-color var(--sv-transition-fast),
-    box-shadow var(--sv-transition-fast);
+    border-color var(--hr-transition-fast),
+    box-shadow var(--hr-transition-fast);
 }
 
 .case-drop-card:hover {
@@ -22,7 +25,7 @@
   position: relative;
   width: 100%;
   aspect-ratio: 9 / 16;
-  border-radius: var(--sv-radius-ui);
+  border-radius: var(--hr-radius-ui);
   overflow: hidden;
   border: 1px solid var(--color-border-faint);
 }
@@ -61,7 +64,7 @@
 }
 
 .case-drop-card__meta {
-  padding-inline: var(--sv-space-1);
+  padding-inline: var(--hr-space-1);
 }
 
 .case-drop-card__type {
@@ -74,7 +77,7 @@
 }
 
 .case-drop-card__title {
-  margin: var(--sv-space-1) 0 0;
+  margin: var(--hr-space-1) 0 0;
   font-size: 1rem;
   line-height: 1.3;
   color: var(--color-text-primary);

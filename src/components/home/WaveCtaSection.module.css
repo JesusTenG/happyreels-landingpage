@@ -1,0 +1,178 @@
+.stage {
+  --mixed-headline-fill: var(--color-happy-gold);
+  --mixed-headline-stroke: var(--color-petal-white);
+
+  position: relative;
+  z-index: 1;
+  overflow: visible;
+  overflow-anchor: none;
+  margin-top: -1px;
+  background: var(--color-petal-white);
+}
+
+.stage[data-ready] {
+  height: var(--cta-stage-height, 0);
+  will-change: height;
+}
+
+.connectorWave {
+  position: absolute;
+  right: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: clamp(3.25rem, 6.5vw, 6rem);
+  pointer-events: none;
+  fill: currentColor;
+  shape-rendering: geometricPrecision;
+}
+
+.upperConnector {
+  bottom: 100%;
+  z-index: 2;
+  color: var(--color-cocoa-ink);
+  background: var(--color-dusty-blush);
+}
+
+.lowerConnector {
+  bottom: 0;
+  z-index: 3;
+  overflow: visible;
+  color: var(--color-soft-clay);
+}
+
+.lowerConnector path {
+  stroke: currentColor;
+  stroke-width: 2px;
+  vector-effect: non-scaling-stroke;
+}
+
+.revealWindow {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: clip;
+}
+
+.surface {
+  background: var(--color-cocoa-ink);
+}
+
+.panel {
+  display: flex;
+  min-height: clamp(20rem, 30vw, 25rem);
+  align-items: center;
+  color: var(--color-petal-white);
+  background: var(--color-cocoa-ink);
+}
+
+.inner {
+  position: relative;
+  inset-block-start: clamp(-2.75rem, -3vw, -1.5rem);
+  display: grid;
+  width: min(74rem, calc(100% - clamp(2rem, 7vw, 6rem)));
+  grid-template-columns: minmax(0, 1fr) clamp(12rem, 22vw, 19rem);
+  align-items: center;
+  gap: clamp(3rem, 8vw, 8rem);
+  padding: clamp(2.5rem, 5vw, 4.5rem) 0;
+}
+
+.stage[data-ready] .inner {
+  will-change: auto;
+}
+
+.logoMark {
+  display: grid;
+  width: 100%;
+  aspect-ratio: 1;
+  justify-self: end;
+  place-items: center;
+  padding: clamp(1.25rem, 2.5vw, 2rem);
+  border: 1.5px solid color-mix(in srgb, var(--color-cocoa-ink) 36%, transparent);
+  border-radius: 50%;
+  opacity: var(--cta-logo-opacity, 0);
+  background: var(--color-soft-clay);
+  box-shadow:
+    clamp(0.5rem, 1vw, 0.85rem)
+    clamp(0.5rem, 1vw, 0.85rem)
+    0
+    var(--color-happy-gold);
+  transform: translate3d(0, var(--cta-logo-y, 76px), 0) rotate(-8deg);
+  transform-origin: 52% 58%;
+  will-change: opacity, transform;
+}
+
+.logo {
+  width: 100%;
+  transform: translate3d(3%, -3%, 0);
+}
+
+.copy {
+  display: grid;
+  justify-items: start;
+  gap: clamp(1.75rem, 3vw, 2.5rem);
+}
+
+.copy h2 {
+  max-width: 16ch;
+  margin: 0;
+  font-size: clamp(2.15rem, 4.2vw, 4.4rem);
+  font-weight: 780;
+  line-height: 0.94;
+  letter-spacing: -0.065em;
+  opacity: var(--cta-headline-opacity, 0);
+  transform: translate3d(0, var(--cta-headline-y, 62px), 0);
+  will-change: opacity, transform;
+}
+
+.cta {
+  justify-self: start;
+  opacity: var(--cta-button-opacity, 0);
+  transform: translate3d(0, var(--cta-button-y, 54px), 0);
+  will-change: opacity, transform;
+}
+
+@media (max-width: 900px) {
+  .panel { min-height: 27rem; }
+
+  .inner {
+    grid-template-columns: minmax(0, 1fr) clamp(9rem, 22vw, 12rem);
+    gap: clamp(2rem, 6vw, 4rem);
+  }
+
+  .copy { grid-column: 1; grid-row: 1; }
+  .logoMark { grid-column: 2; grid-row: 1; }
+}
+
+@media (max-width: 620px) {
+  .panel { min-height: 34rem; }
+  .inner { grid-template-columns: 1fr; }
+  .copy, .logoMark { grid-column: 1; }
+  .copy { grid-row: 1; }
+  .logoMark { grid-row: 2; width: clamp(9rem, 36vw, 12rem); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stage[data-ready],
+  .stage[data-ready] .inner {
+    height: auto;
+    opacity: 1;
+    transform: none;
+    transition: none;
+    will-change: auto;
+  }
+
+  .logoMark {
+    opacity: 1;
+    transform: rotate(-8deg);
+    will-change: auto;
+  }
+
+  .copy h2,
+  .cta {
+    opacity: 1;
+    transform: none;
+    transition: none;
+    will-change: auto;
+  }
+}

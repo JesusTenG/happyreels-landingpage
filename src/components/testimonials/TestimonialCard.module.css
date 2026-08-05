@@ -8,7 +8,7 @@
   min-height: 100%;
   margin: 0;
   padding: clamp(1.25rem, 2.4vw, 1.6rem);
-  border-radius: var(--sv-radius-ui);
+  border-radius: var(--hr-radius-ui);
   border: 1px solid var(--color-border-faint);
   background:
     linear-gradient(
@@ -20,8 +20,8 @@
     color-mix(in srgb, var(--color-gray-910) 88%, transparent);
   box-shadow: var(--shadow-glass-card);
   transition:
-    border-color var(--sv-transition-card-hover),
-    box-shadow var(--sv-transition-card-hover);
+    border-color var(--hr-transition-card-hover),
+    box-shadow var(--hr-transition-card-hover);
 }
 
 .testimonial-card::before {
@@ -33,7 +33,7 @@
   pointer-events: none;
   box-shadow: var(--shadow-card-hover-glow);
   opacity: 0;
-  transition: opacity var(--sv-transition-card-hover);
+  transition: opacity var(--hr-transition-card-hover);
 }
 
 @media (hover: hover) {
@@ -179,15 +179,15 @@
   justify-content: center;
   width: 1.85rem;
   height: 1.85rem;
-  border-radius: var(--sv-radius-ui);
+  border-radius: var(--hr-radius-ui);
   border: 1px solid color-mix(in srgb, var(--color-white) 10%, transparent);
   background: color-mix(in srgb, var(--color-white) 4%, transparent);
   color: color-mix(in srgb, var(--color-white) 58%, transparent);
   text-decoration: none;
   transition:
-    color var(--sv-transition-card-hover),
-    border-color var(--sv-transition-card-hover),
-    background-color var(--sv-transition-card-hover);
+    color var(--hr-transition-card-hover),
+    border-color var(--hr-transition-card-hover),
+    background-color var(--hr-transition-card-hover);
 }
 
 .testimonial-card__instagram-icon {

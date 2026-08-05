@@ -28,7 +28,7 @@
   width: fit-content;
   max-width: min(96vw, 40rem);
   max-height: 96vh;
-  border-radius: calc(var(--sv-radius-card) + 2px);
+  border-radius: calc(var(--hr-radius-card) + 2px);
   border: 1px solid var(--color-accent-border-muted);
   background: color-mix(in srgb, var(--color-black) 28%, transparent);
   box-shadow:
@@ -138,7 +138,7 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.35rem 0.45rem;
-  border-radius: var(--sv-radius-ui);
+  border-radius: var(--hr-radius-ui);
   border: 1px solid var(--color-accent-border-muted);
   background: color-mix(in srgb, var(--color-black) 42%, transparent);
   box-shadow: 0 0 24px var(--color-accent-glow-soft);
@@ -285,7 +285,7 @@
 
   .lightbox__panel {
     max-width: min(100vw - 1rem, 30rem);
-    border-radius: var(--sv-radius-card);
+    border-radius: var(--hr-radius-card);
   }
 
   .lightbox__video {

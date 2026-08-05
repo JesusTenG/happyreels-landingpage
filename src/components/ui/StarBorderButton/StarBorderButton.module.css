@@ -16,7 +16,7 @@
   position: relative;
   display: inline-flex;
   max-width: 100%;
-  border-radius: var(--sv-radius-ui);
+  border-radius: var(--hr-radius-pill);
   overflow: hidden;
   isolation: isolate;
   padding: var(--star-border-thickness);
@@ -63,7 +63,7 @@
   display: flex;
   width: 100%;
   overflow: hidden;
-  border-radius: calc(var(--sv-radius-ui) - var(--star-border-thickness));
+  border-radius: var(--hr-radius-pill);
 }
 
 .star-border-button__inner > * {
@@ -87,12 +87,12 @@
 .star-border-button--block .star-border-button__surface {
   display: block;
   width: 100%;
-  border-radius: var(--sv-radius-card);
+  border-radius: var(--hr-radius-card);
 }
 
 .star-border-button--block .star-border-button__inner {
   display: block;
-  border-radius: calc(var(--sv-radius-card) - var(--star-border-thickness));
+  border-radius: calc(var(--hr-radius-card) - var(--star-border-thickness));
 }
 
 /* Endlos-Loop ohne Pause: kein alternate (kein Rücklauf / Wartezeit am Ende) */

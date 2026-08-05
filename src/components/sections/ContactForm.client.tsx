@@ -2,12 +2,11 @@
 
 import { useEffect, useId, useRef, useState, type FormEvent } from "react";
 
-import { contactCtaClassNames } from "@/components/ui/contactCtaButton";
-import SVisualsButton from "@/components/ui/SVisualsButton";
+import HappyReelsButton from "@/components/ui/HappyReelsButton";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 
-import styles from "./FinalCtaSection.module.css";
+import styles from "./ContactForm.module.css";
 
 type Props = Readonly<{
   form: Dictionary["contact"]["form"];
@@ -244,14 +243,14 @@ export function ContactForm({ form, locale }: Props) {
       </div>
 
       <div className={styles["contact-section__actions"]}>
-        <SVisualsButton
+        <HappyReelsButton
           type="submit"
+          variant="on-yellow"
           showIcon={false}
           disabled={isSubmitting}
-          className={`${contactCtaClassNames.primary} ${contactCtaClassNames.prominent}`}
         >
           {isSubmitting ? form.sending : form.submit}
-        </SVisualsButton>
+        </HappyReelsButton>
       </div>
 
       {statusMessage ? (

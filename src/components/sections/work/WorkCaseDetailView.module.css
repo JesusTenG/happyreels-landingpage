@@ -1,10 +1,13 @@
 /*//////////////WORK CASE DETAIL//////////////////*/
 .work-case-detail {
-  padding-block: var(--sv-section-padding);
+  --mixed-headline-fill: var(--color-happy-gold);
+  --mixed-headline-stroke: var(--color-petal-white);
+
+  padding-block: var(--hr-section-padding);
 }
 
 .work-case-detail__back-wrap {
-  margin: 0 0 var(--sv-space-6);
+  margin: 0 0 var(--hr-space-6);
 }
 
 .work-case-detail__back {
@@ -16,7 +19,7 @@
   color: var(--color-accent);
   border-bottom: 1px solid var(--color-accent-border-interactive);
   padding-bottom: 0.1rem;
-  transition: color var(--sv-transition-fast), border-color var(--sv-transition-fast);
+  transition: color var(--hr-transition-fast), border-color var(--hr-transition-fast);
 }
 
 .work-case-detail__back:hover {
@@ -31,11 +34,11 @@
 
 .work-case-detail__header {
   max-width: 42rem;
-  margin-bottom: var(--sv-space-8);
+  margin-bottom: var(--hr-space-8);
 }
 
 .work-case-detail__label {
-  margin: 0 0 var(--sv-space-2);
+  margin: 0 0 var(--hr-space-2);
   font-size: 0.68rem;
   font-weight: 600;
   letter-spacing: 0.32em;
@@ -45,7 +48,7 @@
 }
 
 .work-case-detail__title {
-  margin: 0 0 var(--sv-space-4);
+  margin: 0 0 var(--hr-space-4);
   font-size: clamp(1.75rem, 4vw, 2.75rem);
   line-height: 1.1;
   color: var(--color-text-section-title);
@@ -63,11 +66,11 @@
   width: 100%;
   aspect-ratio: 21 / 9;
   min-height: 12rem;
-  border-radius: var(--sv-radius-card);
+  border-radius: var(--hr-radius-card);
   overflow: hidden;
   border: 1px solid var(--color-border-faint);
   box-shadow: var(--shadow-glass-card);
-  margin-bottom: var(--sv-space-10);
+  margin-bottom: var(--hr-space-10);
 }
 
 .work-case-detail__hero-image {
@@ -75,7 +78,7 @@
 }
 
 .work-case-detail__section-title {
-  margin: 0 0 var(--sv-space-6);
+  margin: 0 0 var(--hr-space-6);
   font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.28em;
@@ -84,17 +87,18 @@
 }
 
 .work-case-detail__overview {
-  margin-bottom: var(--sv-space-10);
+  --mixed-headline-stroke: var(--color-dusty-blush);
+  margin-bottom: var(--hr-space-10);
   max-width: 48rem;
   padding: clamp(1.25rem, 2.5vw, 1.65rem);
-  border-radius: var(--sv-radius-card);
+  border-radius: var(--hr-radius-card);
   border: 1px solid var(--color-border-faint);
   background: var(--gradient-glass-card);
   box-shadow: var(--shadow-glass-card);
 }
 
 .work-case-detail__overview-text {
-  margin: 0 0 var(--sv-space-6);
+  margin: 0 0 var(--hr-space-6);
   font-size: 1rem;
   line-height: 1.7;
   color: var(--color-text-muted);
@@ -103,7 +107,7 @@
 .work-case-detail__meta-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--sv-space-6);
+  gap: var(--hr-space-6);
 }
 
 .work-case-detail__meta-block {
@@ -111,7 +115,7 @@
 }
 
 .work-case-detail__meta-title {
-  margin: 0 0 var(--sv-space-2);
+  margin: 0 0 var(--hr-space-2);
   font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.1em;
@@ -129,7 +133,7 @@
 
 .work-case-detail__secondary-link {
   display: inline-block;
-  margin-top: var(--sv-space-4);
+  margin-top: var(--hr-space-4);
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.2em;
@@ -150,7 +154,7 @@
 }
 
 .work-case-detail__cta {
-  margin-top: var(--sv-space-10);
+  margin-top: var(--hr-space-10);
   display: flex;
   flex-direction: column;
   align-items: flex-start;

@@ -1,10 +1,13 @@
 .legal {
-  padding-block: var(--sv-section-padding);
+  --mixed-headline-fill: var(--color-happy-gold);
+  --mixed-headline-stroke: var(--color-petal-white);
+
+  padding-block: var(--hr-section-padding);
   font-family: var(--font-ui, system-ui, sans-serif);
 }
 
 .back {
-  margin: 0 0 var(--sv-space-6);
+  margin: 0 0 var(--hr-space-6);
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.2em;
@@ -14,7 +17,7 @@
 .back a {
   color: var(--color-accent-mix-nav-link);
   text-decoration: none;
-  transition: color var(--sv-transition-fast);
+  transition: color var(--hr-transition-fast);
 }
 
 .back a:hover,
@@ -23,26 +26,27 @@
 }
 
 .panel {
+  --mixed-headline-stroke: var(--color-dusty-blush);
   max-width: 44rem;
   padding: clamp(1.75rem, 3vw, 2.25rem);
-  border-radius: var(--sv-radius-card);
+  border-radius: var(--hr-radius-card);
   border: 1px solid var(--color-border-faint);
   background: var(--gradient-glass-card);
   box-shadow: var(--shadow-glass-card);
 }
 
 .header {
-  margin-bottom: var(--sv-space-6) !important;
+  margin-bottom: var(--hr-space-6) !important;
 }
 
 .block + .block {
-  margin-top: var(--sv-space-6);
-  padding-top: var(--sv-space-6);
+  margin-top: var(--hr-space-6);
+  padding-top: var(--hr-space-6);
   border-top: 1px solid var(--color-border-faint);
 }
 
 .heading {
-  margin: 0 0 var(--sv-space-3);
+  margin: 0 0 var(--hr-space-3);
   font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.22em;

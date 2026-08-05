@@ -1,0 +1,38 @@
+.parallax {
+  transform: translate3d(0, 0, 0);
+}
+
+@supports (animation-timeline: view()) {
+  .parallax {
+    animation-name: parallax-media;
+    animation-timing-function: linear;
+    animation-fill-mode: both;
+    animation-timeline: view();
+    animation-range: entry -10% exit 110%;
+  }
+
+  .soft {
+    --parallax-distance: 1.5rem;
+  }
+
+  .medium {
+    --parallax-distance: 3rem;
+  }
+}
+
+@keyframes parallax-media {
+  from {
+    transform: translate3d(0, calc(var(--parallax-distance) * -1), 0);
+  }
+
+  to {
+    transform: translate3d(0, var(--parallax-distance), 0);
+  }
+}
+
+@media (max-width: 760px), (prefers-reduced-motion: reduce) {
+  .parallax {
+    animation: none;
+    transform: none;
+  }
+}
