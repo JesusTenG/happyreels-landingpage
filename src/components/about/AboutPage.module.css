@@ -11,7 +11,7 @@
 .mediaWrap img { object-fit: cover; }
 .philosophy { --mixed-headline-fill: var(--color-petal-white); --mixed-headline-stroke: var(--color-soft-clay); padding: var(--section-space) 0; background: var(--color-soft-clay); }
 .philosophyGrid { grid-template-columns: minmax(22rem, 1.1fr) minmax(0, 0.9fr); }
-.cta { --mixed-headline-fill: var(--color-petal-white); --mixed-headline-stroke: var(--color-happy-gold); padding: var(--section-space) 0; background: var(--color-happy-gold); }
+.cta { --mixed-headline-fill: var(--color-petal-white); --mixed-headline-stroke: var(--color-cocoa-ink); padding: var(--section-space) 0; background: var(--color-happy-gold); }
 .ctaInner { display: flex; align-items: flex-end; justify-content: space-between; gap: 2rem; }
 .cta h2 { max-width: 10ch; font-size: clamp(3rem, 6.4vw, 6.8rem); }
 

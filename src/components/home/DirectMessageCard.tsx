@@ -1,7 +1,5 @@
 import { Instagram, MessageCircle } from "lucide-react";
-
 import type { Locale } from "@/i18n/config";
-import { MixedHeadline } from "@/components/ui/MixedHeadline";
 import {
   INSTAGRAM_HANDLE,
   INSTAGRAM_URL,
@@ -15,15 +13,25 @@ type Props = Readonly<{ locale: Locale }>;
 
 export function DirectMessageCard({ locale }: Props) {
   const whatsAppUrl = buildWhatsAppUrl();
+  const copy = locale === "de"
+    ? {
+        titleLineOne: "Lieber direkt",
+        titleLineTwo: "mit uns sprechen?",
+        body: "Schreib uns einfach auf WhatsApp oder Instagram.",
+      }
+    : {
+        titleLineOne: "Prefer to speak",
+        titleLineTwo: "with us directly?",
+        body: "Just message us on WhatsApp or Instagram.",
+      };
 
   return (
     <aside className={styles.card} aria-labelledby="direct-message-title">
       <h3 id="direct-message-title">
-        <MixedHeadline
-          text={locale === "de" ? "Lieber direkt schreiben?" : "Prefer a direct message?"}
-          tone="gold"
-        />
+        <span>{copy.titleLineOne}</span>
+        <span>{copy.titleLineTwo}</span>
       </h3>
+      <p className={styles.body}>{copy.body}</p>
       <div className={styles.links}>
         <a
           href={INSTAGRAM_URL}

@@ -39,17 +39,28 @@ export type HomeContent = Readonly<{
   };
   outcomes: OutcomesContent;
   services: {
-    title: string;
+    title: {
+      lineOne: string;
+      lineTwoLead: string;
+      lineTwoAccent: string;
+      lineThreeLead: string;
+      lineThreeAccent: string;
+      lineThreeEnd: string;
+    };
     items: readonly [Service, Service, Service, Service];
   };
   audiences: readonly [Audience, Audience];
   process: {
     title: string;
-    intro: string;
+    highlight: string;
     steps: readonly ProcessStep[];
   };
-  proof: { title: string };
-  contact: { title: string };
+  proof: { title: string; highlight: string };
+  contact: {
+    titleLineOne: string;
+    titleLineTwo: string;
+    titleAccent: string;
+  };
 }>;
 
 export const homeContent: Record<Locale, HomeContent> = {
@@ -88,23 +99,30 @@ export const homeContent: Record<Locale, HomeContent> = {
       ],
     },
     services: {
-      title: "From first frame to final feeling.",
+      title: {
+        lineOne: "Production, editing and finish.",
+        lineTwoLead: "Everything that turns ",
+        lineTwoAccent: "footage",
+        lineThreeLead: "into real ",
+        lineThreeAccent: "impact",
+        lineThreeEnd: ".",
+      },
       items: [
         {
           title: "Video Production",
-          text: "Concept, camera and direction for social-first shoots.",
+          text: "Professional shoots with concept, camera and direction—for social-first videos, campaigns and strong brand identities.",
         },
         {
           title: "Short-Form Editing",
-          text: "Fast, focused edits for Reels, Shorts and TikTok.",
+          text: "Precise edits with strong hooks, clear rhythm and the right pace for Reels, Shorts and TikTok.",
         },
         {
-          title: "YouTube Editing",
-          text: "Structured long-form edits that keep the story moving.",
+          title: "YouTube & Long-Form",
+          text: "Clearly structured edits for YouTube, podcasts and longer storytelling formats.",
         },
         {
           title: "Motion & Finishing",
-          text: "Motion design, color and sound that make every frame feel complete.",
+          text: "Motion design, color grading and sound design for a coherent, high-quality overall result.",
         },
       ],
     },
@@ -121,28 +139,31 @@ export const homeContent: Record<Locale, HomeContent> = {
       },
     ],
     process: {
-      title: "From idea to finished content.",
-      intro: "A clear process, direct communication and no unnecessary feedback loops.",
+      title: "From the first idea through production and finishing to the final upload.",
+      highlight: "production and finishing",
       steps: [
         {
-          title: "Direction",
-          description: "Goals, platforms and the visual direction are defined together.",
+          title: "Briefing & Direction",
+          description: "We define the goal, audience, platforms and visual language so the concept and format are clearly aligned from the start.",
         },
         {
-          title: "Production",
-          description: "Story, editing, motion, sound and color are precisely combined.",
+          title: "Production & Post",
+          description: "Footage, story, editing, motion design, sound and color grading are combined into one consistent, platform-ready result.",
         },
         {
-          title: "Delivery",
-          description: "After focused feedback, the final masters are delivered in all relevant formats.",
+          title: "Feedback & Upload",
+          description: "After focused feedback, every final file is exported, optimized for the agreed formats and delivered ready to upload.",
         },
       ],
     },
     proof: {
-      title: "Trust grows with every project.",
+      title: "Faces and voices that share stories from projects we created together.",
+      highlight: "stories from projects",
     },
     contact: {
-      title: "Got footage? Let’s give it feeling.",
+      titleLineOne: "Got an idea?",
+      titleLineTwo: "Let’s turn it into a",
+      titleAccent: "plan together.",
     },
   },
   de: {
@@ -180,23 +201,30 @@ export const homeContent: Record<Locale, HomeContent> = {
       ],
     },
     services: {
-      title: "Vom ersten Frame bis zum finalen Gefühl.",
+      title: {
+        lineOne: "Dreh, Schnitt und Finish.",
+        lineTwoLead: "Alles, was aus ",
+        lineTwoAccent: "Footage",
+        lineThreeLead: "echte ",
+        lineThreeAccent: "Wirkung",
+        lineThreeEnd: " macht.",
+      },
       items: [
         {
           title: "Video Production",
-          text: "Konzept, Kamera und Regie für Social-First-Produktionen.",
+          text: "Professionelle Drehs mit Konzept, Kamera und Regie – für Social-first Videos, Kampagnen und starke Markenauftritte.",
         },
         {
           title: "Short-Form Editing",
-          text: "Schnelle, fokussierte Edits für Reels, Shorts und TikTok.",
+          text: "Präzise Edits mit starken Hooks, klarem Rhythmus und dem richtigen Tempo für Reels, Shorts und TikTok.",
         },
         {
-          title: "YouTube Editing",
-          text: "Strukturierte Long-Form-Edits, die die Geschichte in Bewegung halten.",
+          title: "YouTube & Long-Form",
+          text: "Klar strukturierte Edits für YouTube, Podcasts und längere Storytelling-Formate.",
         },
         {
           title: "Motion & Finishing",
-          text: "Motion Design, Color und Sound für ein vollständiges visuelles und akustisches Finish.",
+          text: "Motion Design, Color Grading und Sound Design für ein stimmiges, hochwertiges Gesamtbild.",
         },
       ],
     },
@@ -213,28 +241,31 @@ export const homeContent: Record<Locale, HomeContent> = {
       },
     ],
     process: {
-      title: "Von der Idee zum fertigen Content.",
-      intro: "Ein klarer Ablauf, direkte Abstimmung und keine unnötigen Schleifen.",
+      title: "Von der ersten Idee über Produktion und Feinschliff bis zum fertigen Upload.",
+      highlight: "Produktion und Feinschliff",
       steps: [
         {
-          title: "Richtung",
-          description: "Ziele, Plattformen und visuelle Richtung werden gemeinsam definiert.",
+          title: "Briefing & Richtung",
+          description: "Wir klären Ziel, Zielgruppe, Plattformen und visuelle Sprache, damit Konzept und Format von Anfang an klar ausgerichtet sind.",
         },
         {
-          title: "Produktion",
-          description: "Story, Editing, Motion, Sound und Color werden präzise zusammengesetzt.",
+          title: "Produktion & Post",
+          description: "Footage, Story, Schnitt, Motion Design, Sound und Color Grading werden zu einem konsistenten, plattformgerechten Gesamtbild verbunden.",
         },
         {
-          title: "Auslieferung",
-          description: "Nach fokussiertem Feedback entstehen finale Masters für alle relevanten Formate.",
+          title: "Feedback & Upload",
+          description: "Nach fokussiertem Feedback werden alle finalen Dateien exportiert, für die vereinbarten Formate optimiert und uploadbereit übergeben.",
         },
       ],
     },
     proof: {
-      title: "Vertrauen wächst mit jedem Projekt.",
+      title: "Gesichter und Stimmen, die von gemeinsamen Projekten erzählen.",
+      highlight: "gemeinsamen Projekten",
     },
     contact: {
-      title: "Got footage? Let’s give it feeling.",
+      titleLineOne: "Du hast eine Idee?",
+      titleLineTwo: "Lass uns daraus einen",
+      titleAccent: "Plan machen.",
     },
   },
 };

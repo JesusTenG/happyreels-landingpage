@@ -11,6 +11,7 @@ const BROWN_TONES = [
   "cocoa",
   "rosewood",
   "plum",
+  "mauve",
 ] as const;
 type BrownToneId = (typeof BROWN_TONES)[number];
 
@@ -22,12 +23,14 @@ const LABELS: Record<Locale, Record<BrownToneId, string>> = {
     cocoa: "Kakaobraun",
     rosewood: "Rosenholz",
     plum: "Pflaumenbraun",
+    mauve: "Mauvebraun",
   },
   en: {
     burgundy: "Burgundy Brown",
     cocoa: "Cocoa Brown",
     rosewood: "Rosewood",
     plum: "Plum Brown",
+    mauve: "Mauve Brown",
   },
 };
 

@@ -64,7 +64,7 @@
 .on-yellow {
   color: var(--color-petal-white);
   background: var(--color-cocoa-ink);
-  box-shadow: 7px 6px 0 color-mix(in srgb, var(--color-cocoa-ink) 22%, transparent);
+  box-shadow: 7px 6px 0 var(--on-yellow-shadow, color-mix(in srgb, var(--color-cocoa-ink) 22%, transparent));
 }
 
 .on-brown {
@@ -142,7 +142,10 @@
   box-shadow: 4px 3px 0 color-mix(in srgb, var(--color-cocoa-ink) 24%, transparent);
 }
 
-.on-yellow:hover,
+.on-yellow:hover {
+  box-shadow: 4px 3px 0 var(--on-yellow-shadow, color-mix(in srgb, var(--color-cocoa-ink) 22%, transparent));
+}
+
 .on-brown:hover,
 .on-light:hover,
 .on-rose:hover {

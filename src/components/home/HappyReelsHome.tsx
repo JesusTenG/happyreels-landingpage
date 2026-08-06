@@ -1,3 +1,5 @@
+import { Clapperboard, Compass, Upload } from "lucide-react";
+
 import { Reveal } from "@/components/animation/Reveal";
 import {
   ScrollMotionGroup,
@@ -36,6 +38,14 @@ const OUTCOME_MOTION = [
   { yFrom: 30, yTo: -8, scaleFrom: 0.945, scaleTo: 1.015, start: 0.04, end: 0.9 },
   { yFrom: -12, yTo: 20, scaleFrom: 0.96, scaleTo: 1.02, start: 0.1, end: 0.98 },
 ] as const;
+
+const PROCESS_MOTION = [
+  { yFrom: 20, yTo: -14, scaleFrom: 0.92, scaleTo: 1.025, start: 0.03, end: 0.9 },
+  { yFrom: -14, yTo: 16, scaleFrom: 0.95, scaleTo: 1.035, start: 0.1, end: 0.98 },
+  { yFrom: 24, yTo: -10, scaleFrom: 0.93, scaleTo: 1.02, start: 0.05, end: 0.92 },
+] as const;
+
+const PROCESS_ICONS = [Compass, Clapperboard, Upload] as const;
 
 export function HappyReelsHome({ locale, dict }: Props) {
   const copy = homeContent[locale];
@@ -168,22 +178,41 @@ export function HappyReelsHome({ locale, dict }: Props) {
       <section id="process" className={styles.process} aria-labelledby="process-title" data-navbar-theme="brown">
         <div className={`container-base ${styles.processInner}`}>
           <div className={styles.processHeader}>
-            <Reveal><h2 id="process-title"><MixedHeadline text={copy.process.title} /></h2></Reveal>
-            <Reveal delay={100}><p>{copy.process.intro}</p></Reveal>
+            <Reveal><h2 id="process-title"><MixedHeadline text={copy.process.title} highlight={copy.process.highlight} /></h2></Reveal>
           </div>
-          <div className={styles.processCards} role="list">
-            {copy.process.steps.map((step, index) => (
-              <Reveal key={step.title} delay={120 + index * 90}>
-                <article className={styles.processCard} data-process-card={index + 1} role="listitem">
-                  <span className={styles.processNumber} aria-hidden="true">0{index + 1}</span>
-                  <div>
-                    <h3>{step.title}</h3>
-                    <p>{step.description}</p>
-                  </div>
-                </article>
-              </Reveal>
-            ))}
-          </div>
+          <ScrollMotionGroup className={styles.processCards}>
+            {copy.process.steps.map((step, index) => {
+              const ProcessIcon = PROCESS_ICONS[index];
+
+              return (
+                <ScrollMotionItem
+                  key={step.title}
+                  className={styles.processMotion}
+                  yFrom={PROCESS_MOTION[index].yFrom}
+                  yTo={PROCESS_MOTION[index].yTo}
+                  scaleFrom={PROCESS_MOTION[index].scaleFrom}
+                  scaleTo={PROCESS_MOTION[index].scaleTo}
+                  start={PROCESS_MOTION[index].start}
+                  end={PROCESS_MOTION[index].end}
+                >
+                  <Reveal className={styles.processReveal} delay={120 + index * 90}>
+                    <article className={styles.processCard} data-process-card={index + 1}>
+                      <div className={styles.processCardTop}>
+                        <span className={styles.processIcon} aria-hidden="true">
+                          <ProcessIcon />
+                        </span>
+                        <span className={styles.processNumber} aria-hidden="true">0{index + 1}</span>
+                      </div>
+                      <div className={styles.processCardCopy}>
+                        <h3>{step.title}</h3>
+                        <p>{step.description}</p>
+                      </div>
+                    </article>
+                  </Reveal>
+                </ScrollMotionItem>
+              );
+            })}
+          </ScrollMotionGroup>
         </div>
       </section>
 
@@ -191,7 +220,7 @@ export function HappyReelsHome({ locale, dict }: Props) {
       <section className={styles.proof} aria-labelledby="proof-title" data-navbar-theme="brown">
         <div className="container-base">
           <Reveal className={styles.proofHeading}>
-            <h2 id="proof-title"><MixedHeadline text={copy.proof.title} /></h2>
+            <h2 id="proof-title"><MixedHeadline text={copy.proof.title} highlight={copy.proof.highlight} /></h2>
           </Reveal>
           <HomeTestimonials locale={locale} testimonials={testimonials} />
         </div>
@@ -205,7 +234,15 @@ export function HappyReelsHome({ locale, dict }: Props) {
       <section id="contact" className={styles.contact} aria-labelledby="contact-title" data-navbar-theme="brown">
         <div className={`container-base ${styles.contactGrid}`}>
           <div className={styles.contactCopy}>
-            <Reveal><h2 id="contact-title"><MixedHeadline text={copy.contact.title} /></h2></Reveal>
+            <Reveal>
+              <h2 id="contact-title">
+                <span className={styles.contactTitleLine}>{copy.contact.titleLineOne}</span>
+                <span className={styles.contactTitleLine}>{copy.contact.titleLineTwo}</span>
+                <span className={styles.contactTitleLine}>
+                  <MixedHeadline text={copy.contact.titleAccent} highlight={copy.contact.titleAccent} />
+                </span>
+              </h2>
+            </Reveal>
             <Reveal className={styles.directMessageReveal} delay={100}>
               <DirectMessageCard locale={locale} />
             </Reveal>

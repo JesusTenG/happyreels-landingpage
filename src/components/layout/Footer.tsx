@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { BrandMark } from "@/components/brand/BrandMark";
+import { ConsentSettingsButton } from "@/components/layout/ConsentSettingsButton.client";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import {
@@ -56,6 +57,10 @@ export function Footer({ locale, dict }: Props) {
           <nav aria-label={locale === "de" ? "Rechtliches" : "Legal"}>
             <Link href={`/${locale}/impressum`}>{dict.footer.links.impressum}</Link>
             <Link href={`/${locale}/datenschutz`}>{dict.footer.links.datenschutz}</Link>
+            <ConsentSettingsButton
+              className={styles.consentSettings}
+              label={dict.footer.links.consentSettings}
+            />
           </nav>
         </div>
 

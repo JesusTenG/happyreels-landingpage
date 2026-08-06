@@ -103,8 +103,9 @@
 }
 
 .logo {
-  width: 100%;
-  transform: translate3d(3%, -3%, 0);
+  width: 72%;
+  place-self: center;
+  transform: none;
 }
 
 .copy {

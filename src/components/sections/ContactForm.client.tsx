@@ -246,6 +246,7 @@ export function ContactForm({ form, locale }: Props) {
         <HappyReelsButton
           type="submit"
           variant="on-yellow"
+          className={styles["contact-section__submit"]}
           showIcon={false}
           disabled={isSubmitting}
         >

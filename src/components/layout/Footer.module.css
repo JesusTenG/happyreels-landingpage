@@ -6,11 +6,12 @@
 .top em { color: var(--color-happy-gold); -webkit-text-fill-color: var(--color-happy-gold); -webkit-text-stroke: var(--hr-italic-stroke-width) var(--color-cocoa-ink); font-family: var(--font-instrument-serif), Georgia, serif; font-weight: 400; letter-spacing: var(--hr-italic-letter-spacing); paint-order: stroke fill; }
 .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem; }
 .grid nav, .contactLinks { display: flex; flex-direction: column; align-items: flex-start; gap: 0.75rem; }
-.grid a, .bottom a { color: inherit; font-size: 0.9rem; font-weight: 650; text-decoration-color: color-mix(in srgb, var(--color-happy-gold) 70%, transparent); text-underline-offset: 0.3rem; }
-.grid a:hover, .bottom a:hover { color: var(--color-happy-gold); }
+.grid a, .bottom a, .consentSettings { color: inherit; font-size: 0.9rem; font-weight: 650; text-decoration-color: color-mix(in srgb, var(--color-happy-gold) 70%, transparent); text-underline-offset: 0.3rem; }
+.grid a:hover, .bottom a:hover, .consentSettings:hover { color: var(--color-happy-gold); }
+.consentSettings { padding: 0; border: 0; font: inherit; text-decoration: underline; background: transparent; cursor: pointer; }
 .bottom { display: flex; justify-content: space-between; gap: 1rem; padding-top: 1.25rem; border-top: 1px solid color-mix(in srgb, var(--color-petal-white) 22%, transparent); color: color-mix(in srgb, var(--color-petal-white) 70%, transparent); font-size: 0.72rem; letter-spacing: 0.05em; text-transform: uppercase; }
 .bottom p { margin: 0; }
-.brand:focus-visible, .grid a:focus-visible, .bottom a:focus-visible { outline: 3px solid var(--color-happy-gold); outline-offset: 5px; }
+.brand:focus-visible, .grid a:focus-visible, .bottom a:focus-visible, .consentSettings:focus-visible { outline: 3px solid var(--color-happy-gold); outline-offset: 5px; }
 
 @media (max-width: 760px) {
   .top { align-items: flex-start; flex-direction: column; }

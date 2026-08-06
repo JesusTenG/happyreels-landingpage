@@ -13,6 +13,11 @@ export const faqContent: Record<Locale, readonly FaqItem[]> = {
         "Nein. HappyReels arbeitet sowohl mit Creatorn und Personal Brands als auch mit Unternehmen und Marken, die hochwertigen Social-Media-Content benötigen.",
     },
     {
+      question: "Was kostet ein Projekt mit HappyReels?",
+      answer:
+        "Einen festen Pauschalpreis gibt es nicht: Der Preis richtet sich nach Format, Materialmenge, Laufzeit, Anzahl der Videos und dem gewünschten Leistungsumfang. Nach einer kurzen Anfrage erhältst du ein transparentes, individuell auf dein Projekt abgestimmtes Angebot.",
+    },
+    {
       question: "Kann ich bereits aufgenommenes Rohmaterial einsenden?",
       answer:
         "Ja. Wir übernehmen vorhandenes Rohmaterial und schneiden daraus Reels, Shorts, YouTube-Videos oder andere Social-Formate.",
@@ -63,6 +68,11 @@ export const faqContent: Record<Locale, readonly FaqItem[]> = {
       question: "Does HappyReels only work with creators?",
       answer:
         "No. HappyReels works with creators and personal brands as well as companies and brands that need high-quality social media content.",
+    },
+    {
+      question: "How much does a HappyReels project cost?",
+      answer:
+        "There is no fixed flat rate: pricing depends on the format, amount of footage, duration, number of videos and the services required. After a short enquiry, you will receive a transparent quote tailored to your project.",
     },
     {
       question: "Can I send footage that has already been recorded?",

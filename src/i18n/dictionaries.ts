@@ -77,6 +77,7 @@ export type Dictionary = {
     links: {
       impressum: string;
       datenschutz: string;
+      consentSettings: string;
     };
   };
   legal: {
@@ -167,7 +168,13 @@ const dictionaries: Record<Locale, Dictionary> = {
       cta: "Start a project",
       ctaHref: "#contact",
     },
-    footer: { links: { impressum: "Imprint", datenschutz: "Privacy" } },
+    footer: {
+      links: {
+        impressum: "Imprint",
+        datenschutz: "Privacy",
+        consentSettings: "Analytics settings",
+      },
+    },
     legal: {
       impressum: {
         title: "Imprint",
@@ -192,6 +199,10 @@ const dictionaries: Record<Locale, Dictionary> = {
           {
             heading: "Hosting and server logs",
             body: "The hosting provider may process technical access data such as IP address, timestamp and requested URL to operate and secure the website.",
+          },
+          {
+            heading: "Vercel Web Analytics",
+            body: "With your consent, this website uses Vercel Web Analytics to measure page views and understand aggregated usage. According to Vercel, Web Analytics does not use cookies and records page views anonymously without associating them with an individual or IP address. The analytics script is loaded only after you consent. Your selection is stored locally in your browser and can be changed at any time via ‘Analytics settings’ in the footer.",
           },
           {
             heading: "External links",
@@ -269,7 +280,13 @@ const dictionaries: Record<Locale, Dictionary> = {
       cta: "Projekt starten",
       ctaHref: "#contact",
     },
-    footer: { links: { impressum: "Impressum", datenschutz: "Datenschutz" } },
+    footer: {
+      links: {
+        impressum: "Impressum",
+        datenschutz: "Datenschutz",
+        consentSettings: "Analytics-Einstellungen",
+      },
+    },
     legal: {
       impressum: {
         title: "Impressum",
@@ -294,6 +311,10 @@ const dictionaries: Record<Locale, Dictionary> = {
           {
             heading: "Hosting und Server Logs",
             body: "Der Hosting-Anbieter kann technische Zugriffsdaten wie IP-Adresse, Zeitstempel und aufgerufene URL verarbeiten, um die Website zu betreiben und abzusichern.",
+          },
+          {
+            heading: "Vercel Web Analytics",
+            body: "Mit deiner Zustimmung nutzt diese Website Vercel Web Analytics, um Seitenaufrufe zu messen und die Nutzung in zusammengefasster Form zu verstehen. Laut Vercel verwendet Web Analytics keine Cookies und erfasst Seitenaufrufe anonym, ohne sie einer einzelnen Person oder IP-Adresse zuzuordnen. Das Analytics-Skript wird erst nach deiner Zustimmung geladen. Deine Auswahl wird lokal in deinem Browser gespeichert und kann jederzeit über „Analytics-Einstellungen“ im Footer geändert werden.",
           },
           {
             heading: "Externe Links",

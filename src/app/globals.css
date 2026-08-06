@@ -12,6 +12,7 @@
   --brown-cocoa: #493632;
   --brown-rosewood: #50383b;
   --brown-plum: #543543;
+  --brown-mauve: #37252d;
 
   --color-happy-gold: var(--palette-original-accent);
   --color-cocoa-ink: var(--brown-burgundy);
@@ -202,6 +203,10 @@
 
 :root[data-brown-tone="plum"] {
   --color-cocoa-ink: var(--brown-plum);
+}
+
+:root[data-brown-tone="mauve"] {
+  --color-cocoa-ink: var(--brown-mauve);
 }
 
 @theme inline {
