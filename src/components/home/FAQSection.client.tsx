@@ -14,12 +14,12 @@ type Props = Readonly<{ locale: Locale }>;
 
 const COPY = {
   de: {
-    title: "Klarheit vor dem ersten Frame.",
-    intro: "Die wichtigsten Punkte zu Material, Produktion, Formaten und Zusammenarbeit.",
+    title: "Alles, was du vor dem ersten Frame wissen solltest.",
+    titleHighlight: "vor dem ersten Frame",
   },
   en: {
-    title: "Clarity before the first frame.",
-    intro: "The essentials about footage, production, formats and working together.",
+    title: "Everything you should know before the first frame begins.",
+    titleHighlight: "before the first frame",
   },
 } as const;
 
@@ -36,8 +36,7 @@ export function FAQSection({ locale }: Props) {
     >
       <div className={`container-base ${styles.layout}`}>
         <Reveal className={styles.heading}>
-          <h2 id="faq-title"><MixedHeadline text={copy.title} /></h2>
-          <p className={styles.intro}>{copy.intro}</p>
+          <h2 id="faq-title"><MixedHeadline text={copy.title} highlight={copy.titleHighlight} /></h2>
         </Reveal>
 
         <Accordion.Root className={styles.list} type="single" collapsible>

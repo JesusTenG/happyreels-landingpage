@@ -29,7 +29,7 @@
 .heroSolidYellow {
   --hero-background: var(--color-happy-gold);
   --hero-accent-fill: var(--color-petal-white);
-  --hero-accent-stroke: var(--color-dusty-blush);
+  --hero-accent-stroke: var(--color-cocoa-ink);
 }
 
 .heroBrown {
@@ -453,28 +453,20 @@
 }
 
 .processHeader {
-  display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(18rem, 0.85fr);
-  align-items: end;
-  gap: clamp(1.5rem, 5vw, 5rem);
+  display: flex;
+  justify-content: center;
   margin-bottom: clamp(2rem, 3.5vw, 3rem);
+  text-align: center;
 }
 
 .processHeader h2 {
-  max-width: 16ch;
+  max-width: 19ch;
   margin: 0;
   padding-bottom: 0.08em;
-  font-size: clamp(2.5rem, 4vw, 3.8rem);
+  font-size: clamp(2.8rem, 5.2vw, 5.25rem);
   font-weight: 780;
   line-height: 0.95;
   letter-spacing: -0.065em;
-}
-
-.processHeader p {
-  max-width: 34rem;
-  margin: 0 0 0.3rem;
-  font-size: clamp(1rem, 1.35vw, 1.15rem);
-  line-height: 1.55;
 }
 
 .processCards {
@@ -482,60 +474,117 @@
 
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  align-items: start;
+  align-items: stretch;
   gap: var(--process-card-gap);
 }
 
-.processCards > div {
+.processMotion {
   min-width: 0;
 }
+
+.processReveal { height: 100%; }
 
 .processCards > div:nth-child(2) {
   margin-top: 0.85rem;
 }
 
 .processCard {
+  --process-card-tilt: -1.1deg;
+  --process-card-shadow: color-mix(in srgb, var(--color-cocoa-ink) 18%, transparent);
+  --process-card-icon-bg: var(--color-cocoa-ink);
+  --process-card-icon-color: var(--color-happy-gold);
+
   display: flex;
-  min-height: clamp(13.5rem, 15vw, 14rem);
+  height: 100%;
+  min-height: clamp(18rem, 22vw, 20rem);
   flex-direction: column;
   justify-content: space-between;
-  gap: 2.4rem;
+  gap: 2rem;
   padding: clamp(1.35rem, 2.5vw, 2rem);
   border: 1px solid color-mix(in srgb, var(--color-cocoa-ink) 20%, transparent);
-  border-radius: var(--radius-card);
+  border-radius: 1.05rem 1.45rem 1.1rem 1.35rem;
   color: var(--color-cocoa-ink);
   background: var(--color-petal-white);
-  box-shadow: 7px 7px 0 color-mix(in srgb, var(--color-cocoa-ink) 14%, transparent);
-  transition: transform var(--hr-transition-card-hover);
+  box-shadow: 7px 7px 0 var(--process-card-shadow);
+  transform: rotate(var(--process-card-tilt));
+  transform-origin: center;
+  transition: transform var(--hr-transition-card-hover), box-shadow var(--hr-transition-card-hover);
 }
 
 .processCard[data-process-card="2"] {
+  --process-card-tilt: 1.2deg;
+  --process-card-shadow: color-mix(in srgb, var(--color-happy-gold) 82%, transparent);
+  --process-card-icon-bg: var(--color-happy-gold);
+  --process-card-icon-color: var(--color-cocoa-ink);
+
   color: var(--color-petal-white);
   background: var(--color-cocoa-ink);
-  box-shadow: 7px 7px 0 color-mix(in srgb, var(--color-petal-white) 24%, transparent);
 }
 
 .processCard[data-process-card="3"] {
-  background: var(--color-dusty-blush);
+  --process-card-tilt: -0.75deg;
+  --process-card-shadow: color-mix(in srgb, var(--color-cocoa-ink) 24%, transparent);
+  --process-card-icon-color: var(--color-petal-white);
+
+  background: var(--color-happy-gold);
+}
+
+.processCardTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.processIcon {
+  display: grid;
+  width: 3.2rem;
+  height: 3.2rem;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, currentColor 22%, transparent);
+  border-radius: 50%;
+  color: var(--process-card-icon-color);
+  background: var(--process-card-icon-bg);
+  box-shadow: 4px 3px 0 color-mix(in srgb, currentColor 18%, transparent);
+}
+
+.processIcon svg {
+  width: 1.35rem;
+  height: 1.35rem;
+  stroke-width: 1.8;
 }
 
 .processNumber {
+  display: inline-flex;
+  min-width: 2.6rem;
+  height: 2.35rem;
+  align-items: center;
+  justify-content: center;
+  padding-inline: 0.55rem;
+  border: 1px solid color-mix(in srgb, currentColor 24%, transparent);
+  border-radius: var(--radius-pill);
   font-size: 0.68rem;
   font-weight: 820;
   letter-spacing: 0.1em;
-  opacity: 0.72;
+  opacity: 0.8;
+}
+
+.processCardCopy {
+  display: grid;
+  gap: 0.8rem;
 }
 
 .processCard h3 {
   margin: 0;
-  font-size: clamp(1.65rem, 2.5vw, 2.45rem);
+  font-size: clamp(1.5rem, 2.2vw, 2.2rem);
   line-height: 1;
   letter-spacing: -0.045em;
 }
 
 .processCard p {
   max-width: 35ch;
-  margin: 0.8rem 0 0;
+  margin: 0;
   color: color-mix(in srgb, currentColor 76%, transparent);
   font-size: clamp(0.88rem, 1.05vw, 0.98rem);
   line-height: 1.5;
@@ -543,7 +592,8 @@
 
 @media (hover: hover) and (pointer: fine) {
   .processCard:hover {
-    transform: translate3d(0, -0.28rem, 0) scale(1.008);
+    box-shadow: 10px 10px 0 var(--process-card-shadow);
+    transform: translate3d(0, -0.28rem, 0) rotate(0deg) scale(1.008);
   }
 }
 
@@ -562,18 +612,22 @@
 }
 .proof h2 { max-width: 12ch; font-size: clamp(2.7rem, 5.4vw, 5.2rem); }
 
-.contact { --mixed-headline-fill: var(--color-petal-white); --mixed-headline-stroke: var(--color-happy-gold); padding: var(--section-space) 0; background: var(--color-happy-gold); }
+.contact { --mixed-headline-fill: var(--color-petal-white); --mixed-headline-stroke: var(--color-cocoa-ink); padding: var(--section-space) 0; background: var(--color-happy-gold); }
 .contactGrid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: clamp(2.5rem, 5vw, 5rem);
   align-items: start;
 }
-.contact h2 { max-width: none; font-size: clamp(3rem, 5.5vw, 5.5rem); }
+.contact h2 { max-width: none; font-size: clamp(2.65rem, 3.9vw, 4.5rem); line-height: 0.94; }
+.contactTitleLine {
+  display: block;
+  white-space: nowrap;
+}
 .contactCopy { display: grid; justify-items: start; gap: clamp(1.5rem, 3vw, 2.5rem); }
 .directMessageReveal {
   width: min(100%, 29rem);
-  justify-self: center;
+  justify-self: start;
 }
 .contactForm {
   width: 100%;
@@ -639,7 +693,8 @@
     line-height: 0.9;
   }
   .minimalMedia { width: min(78%, 20rem); }
-  .work h2, .proof h2, .contact h2 { font-size: clamp(2.75rem, 13vw, 5rem); line-height: 0.94; }
+  .work h2, .proof h2 { font-size: clamp(2.75rem, 13vw, 5rem); line-height: 0.94; }
+  .contact h2 { font-size: clamp(1.9rem, 8.8vw, 3.2rem); }
   .workTitleLine:last-child { white-space: normal; }
   .audienceGrid { grid-template-columns: 1fr; }
   .audienceMotion:last-child { margin-top: 0; }
@@ -681,12 +736,6 @@
 }
 
 @media (max-width: 900px) {
-  .processHeader {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-  }
-
-  .processHeader p { margin-bottom: 0; }
   .processCards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .processCards > div:nth-child(2) { margin-top: 0; }
   .processCards > div:nth-child(3) {
@@ -702,7 +751,7 @@
   }
 
   .processHeader h2 {
-    max-width: 13ch;
+    max-width: 16ch;
     font-size: clamp(2.55rem, 12vw, 4.3rem);
   }
 
@@ -713,7 +762,7 @@
   }
 
   .processCard {
-    min-height: 13.5rem;
+    min-height: 17rem;
     gap: 2rem;
   }
 }
@@ -748,7 +797,7 @@
   }
 
   .processCard:hover {
-    transform: none;
+    transform: rotate(var(--process-card-tilt));
   }
 
   .outcomeCard {

@@ -7,12 +7,28 @@
 }
 
 .title {
-  max-width: 12ch;
+  max-width: 18ch;
   margin: 0;
   font-size: clamp(3rem, 6vw, 5.7rem);
   font-weight: 760;
   line-height: 0.94;
   letter-spacing: -0.065em;
+}
+
+.titleLine {
+  display: block;
+}
+
+.titleAccent {
+  color: var(--color-petal-white);
+  -webkit-text-fill-color: var(--color-petal-white);
+  -webkit-text-stroke: var(--hr-italic-stroke-width) var(--color-soft-clay);
+  font-family: var(--font-instrument-serif), Georgia, serif;
+  font-size: 1.04em;
+  font-style: italic;
+  font-weight: var(--hr-italic-heading-weight);
+  letter-spacing: var(--hr-italic-letter-spacing);
+  paint-order: stroke fill;
 }
 
 .grid {
@@ -56,7 +72,7 @@
 .card[data-service-card="3"] { --card-rotation: 0.55deg; }
 .card[data-service-card="4"] {
   --mixed-headline-fill: var(--color-petal-white);
-  --mixed-headline-stroke: var(--color-happy-gold);
+  --mixed-headline-stroke: var(--color-cocoa-ink);
   --card-rotation: -0.75deg;
   min-height: clamp(17rem, 24vw, 19rem);
   color: var(--color-cocoa-ink);

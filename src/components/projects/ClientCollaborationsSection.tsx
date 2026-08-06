@@ -20,21 +20,19 @@ type Props = Readonly<{
 
 const COPY = {
   de: {
-    title: "Aus Projekten wird gemeinsame Entwicklung.",
-    intro:
-      "Für ausgewählte Creator und Personal Brands entstehen über längere Zeit Reels, Social Ads und wiederkehrende Formate.",
+    title: "Drei Partnerschaften, in denen aus starken Ideen wiedererkennbare Formate entstehen.",
+    highlight: "starken Ideen",
   },
   en: {
-    title: "Projects become shared momentum.",
-    intro:
-      "For selected creators and personal brands, reels, social ads and recurring formats are created over time.",
+    title: "Three partnerships where strong ideas grow into recognisable formats over time.",
+    highlight: "strong ideas",
   },
 } as const;
 
 const MOTION = [
-  { yFrom: 60, yTo: -40, scaleFrom: 0.91, scaleTo: 1.025, start: 0.02, end: 0.84 },
-  { yFrom: -44, yTo: -12, scaleFrom: 0.945, scaleTo: 1.015, start: 0.08, end: 0.72 },
-  { yFrom: 44, yTo: 12, scaleFrom: 0.94, scaleTo: 1.015, start: 0.08, end: 0.72 },
+  { yFrom: 60, yTo: 0, scaleFrom: 0.91, scaleTo: 1, start: 0.02, end: 0.5 },
+  { yFrom: -44, yTo: 0, scaleFrom: 0.945, scaleTo: 1, start: 0.08, end: 0.5 },
+  { yFrom: 44, yTo: 0, scaleFrom: 0.94, scaleTo: 1, start: 0.08, end: 0.5 },
 ] as const;
 
 function slotClass(story: ClientStory): string {
@@ -54,10 +52,7 @@ export function ClientCollaborationsSection({ locale, variant = "home" }: Props)
     >
       <div className="container-base">
         <Reveal className={styles.heading}>
-          <div className={styles.headingGrid}>
-            <h2 id={`${variant}-collaborations-title`}><MixedHeadline text={copy.title} /></h2>
-            <p>{copy.intro}</p>
-          </div>
+          <h2 id={`${variant}-collaborations-title`}><MixedHeadline text={copy.title} highlight={copy.highlight} /></h2>
         </Reveal>
 
         <ScrollMotionGroup className={styles.grid}>

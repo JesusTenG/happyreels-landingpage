@@ -19,6 +19,11 @@
 .card {
   --card-offset: 0rem;
   --card-rotation: 0deg;
+  --testimonial-card-bg: var(--color-cocoa-ink);
+  --testimonial-card-color: var(--color-petal-white);
+  --testimonial-card-contrast-bg: var(--color-petal-white);
+  --testimonial-card-contrast-color: var(--color-cocoa-ink);
+  --testimonial-card-shadow: color-mix(in srgb, var(--color-happy-gold) 84%, transparent);
 
   display: flex;
   width: 100%;
@@ -30,18 +35,25 @@
   margin: 0;
   min-height: clamp(17rem, 23vw, 18rem);
   padding: clamp(1.25rem, 2vw, 1.6rem);
-  border: 1px solid color-mix(in srgb, var(--color-cocoa-ink) 30%, transparent);
+  border: 1px solid color-mix(in srgb, currentColor 30%, transparent);
   border-radius: 1.05rem 1.45rem 1.1rem 1.35rem;
-  color: var(--color-cocoa-ink);
-  background: var(--color-happy-gold);
-  box-shadow: 7px 7px 0 color-mix(in srgb, var(--color-cocoa-ink) 27%, transparent);
+  color: var(--testimonial-card-color);
+  background: var(--testimonial-card-bg);
+  box-shadow: 7px 7px 0 var(--testimonial-card-shadow);
   transform: translateY(var(--card-offset)) rotate(var(--card-rotation));
   transform-origin: center;
   transition: transform var(--hr-transition-card-hover), box-shadow var(--hr-transition-card-hover);
 }
 
 .motionItem:nth-child(odd) .card { --card-rotation: -1.35deg; }
-.motionItem:nth-child(even) .card { --card-rotation: 1.35deg; }
+.motionItem:nth-child(even) .card {
+  --card-rotation: 1.35deg;
+  --testimonial-card-bg: var(--color-petal-white);
+  --testimonial-card-color: var(--color-cocoa-ink);
+  --testimonial-card-contrast-bg: var(--color-cocoa-ink);
+  --testimonial-card-contrast-color: var(--color-petal-white);
+  --testimonial-card-shadow: color-mix(in srgb, var(--color-cocoa-ink) 27%, transparent);
+}
 
 .card blockquote {
   margin: 0 0 1rem;
@@ -59,7 +71,7 @@
   align-items: center;
   gap: 0.65rem;
   padding-top: 0.8rem;
-  border-top: 1px solid color-mix(in srgb, var(--color-cocoa-ink) 17%, transparent);
+  border-top: 1px solid color-mix(in srgb, currentColor 20%, transparent);
 }
 
 .avatar {
@@ -71,8 +83,9 @@
   overflow: hidden;
   place-items: center;
   border-radius: 50%;
-  border: 1px solid color-mix(in srgb, var(--color-cocoa-ink) 18%, transparent);
-  background: var(--color-petal-white);
+  border: 1px solid color-mix(in srgb, currentColor 22%, transparent);
+  color: var(--testimonial-card-contrast-color);
+  background: var(--testimonial-card-contrast-bg);
 }
 
 .avatar img { object-fit: cover; }
@@ -92,7 +105,7 @@
 }
 
 .identity small {
-  color: color-mix(in srgb, var(--color-cocoa-ink) 68%, transparent);
+  color: color-mix(in srgb, currentColor 70%, transparent);
   font-size: 0.66rem;
   line-height: 1.3;
 }
@@ -103,26 +116,26 @@
   height: 2.35rem;
   flex: 0 0 auto;
   place-items: center;
-  border: 1px solid color-mix(in srgb, var(--color-cocoa-ink) 22%, transparent);
+  border: 1px solid color-mix(in srgb, currentColor 24%, transparent);
   border-radius: 50%;
-  color: var(--color-cocoa-ink);
+  color: currentColor;
   text-decoration: none;
   transition: color 180ms ease, background-color 180ms ease, transform 180ms ease;
 }
 
 .real figcaption > a:hover {
-  color: var(--color-petal-white);
-  background: var(--color-cocoa-ink);
+  color: var(--testimonial-card-contrast-color);
+  background: var(--testimonial-card-contrast-bg);
   transform: translate3d(0, -2px, 0);
 }
 
 .placeholder {
   border-style: dashed;
-  background: var(--color-happy-gold);
 }
 
 .placeholderAvatar {
-  border: 1px dashed color-mix(in srgb, var(--color-cocoa-ink) 42%, transparent);
+  border: 1px dashed color-mix(in srgb, currentColor 42%, transparent);
+  color: inherit;
   background: transparent;
   font-size: 0.62rem;
   font-weight: 800;
@@ -152,7 +165,7 @@
 
 @media (hover: hover) and (pointer: fine) {
   .card:hover { transform: translate3d(0, calc(var(--card-offset) - 0.25rem), 0) rotate(0deg); }
-  .card:hover { box-shadow: 10px 10px 0 color-mix(in srgb, var(--color-cocoa-ink) 32%, transparent); }
+  .card:hover { box-shadow: 10px 10px 0 var(--testimonial-card-shadow); }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -79,7 +79,7 @@
   background: var(--color-dusty-blush);
 }
 
-.approachCard { --mixed-headline-fill: var(--color-petal-white); --mixed-headline-stroke: var(--color-happy-gold); background: var(--color-happy-gold); }
+.approachCard { --mixed-headline-fill: var(--color-petal-white); --mixed-headline-stroke: var(--color-cocoa-ink); background: var(--color-happy-gold); }
 
 .sectionNumber {
   margin: 0 0 clamp(2.5rem, 6vw, 5rem);
@@ -167,7 +167,7 @@
 .relatedGrid a span:last-child { color: var(--color-happy-gold); }
 .relatedGrid a:hover { background: var(--color-dusty-blush); transform: translate3d(0, -0.22rem, 0); }
 
-.cta { --mixed-headline-fill: var(--color-petal-white); --mixed-headline-stroke: var(--color-happy-gold); padding: var(--section-space) 0; background: var(--color-happy-gold); }
+.cta { --mixed-headline-fill: var(--color-petal-white); --mixed-headline-stroke: var(--color-cocoa-ink); padding: var(--section-space) 0; background: var(--color-happy-gold); }
 .ctaInner { display: flex; align-items: flex-end; justify-content: space-between; gap: 2rem; }
 .cta h2 { max-width: 11ch; }
 .cta p { max-width: 38rem; margin: 1rem 0 0; line-height: 1.6; }

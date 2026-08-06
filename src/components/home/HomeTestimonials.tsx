@@ -17,22 +17,13 @@ type Props = Readonly<{
   testimonials: Testimonial[];
 }>;
 
-const PLACEHOLDERS: Record<Locale, readonly { quote: string; title: string; subtitle: string }[]> = {
-  de: [
-    { quote: "Neue Kundenstimme folgt.", title: "Nächste Zusammenarbeit", subtitle: "Feedback folgt" },
-    { quote: "Platz für die nächste Projektstimme.", title: "Neues Projekt", subtitle: "Stimme folgt" },
-    { quote: "Weitere Einblicke folgen.", title: "Fortlaufende Zusammenarbeit", subtitle: "Feedback folgt" },
-    { quote: "Hier entsteht eine neue Kundenstimme.", title: "Nächster Release", subtitle: "Stimme folgt" },
-    { quote: "Mehr Projektfeedback folgt bald.", title: "Weitere Zusammenarbeit", subtitle: "Feedback folgt" },
-  ],
-  en: [
-    { quote: "A new client voice is coming.", title: "Next collaboration", subtitle: "Feedback to follow" },
-    { quote: "Space for the next project voice.", title: "New project", subtitle: "Voice to follow" },
-    { quote: "More perspectives are coming.", title: "Ongoing collaboration", subtitle: "Feedback to follow" },
-    { quote: "A new client voice is taking shape.", title: "Next release", subtitle: "Voice to follow" },
-    { quote: "More project feedback is coming soon.", title: "Further collaboration", subtitle: "Feedback to follow" },
-  ],
-};
+const PLACEHOLDERS = [
+  { quote: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vitae sapien ut libero venenatis faucibus.", title: "Lorem Ipsum", subtitle: "Dolor sit amet" },
+  { quote: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.", title: "Consectetur", subtitle: "Adipiscing elit" },
+  { quote: "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur.", title: "Sed do eiusmod", subtitle: "Tempor incididunt" },
+  { quote: "Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam.", title: "Ut labore", subtitle: "Et dolore magna" },
+  { quote: "Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur.", title: "Magna aliqua", subtitle: "Lorem ipsum" },
+] as const;
 
 const MOTION = [
   { yFrom: 24, yTo: -18, scaleFrom: 0.94, scaleTo: 1.015, start: 0.03, end: 0.9 },
@@ -94,7 +85,7 @@ export function HomeTestimonials({ locale, testimonials }: Props) {
         </ScrollMotionItem>
       ))}
 
-      {PLACEHOLDERS[locale].map((placeholder, index) => {
+      {PLACEHOLDERS.map((placeholder, index) => {
         const motionIndex = testimonials.length + index;
         const motion = MOTION[motionIndex % MOTION.length];
         return (

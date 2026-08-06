@@ -34,8 +34,21 @@ export function ServicesSection({ locale }: Props) {
     >
       <div className="container-base">
         <Reveal>
-          <h2 id="services-title" className={styles.title}>
-            <MixedHeadline text={copy.title} />
+          <h2
+            id="services-title"
+            className={styles.title}
+            aria-label={`${copy.title.lineOne} ${copy.title.lineTwoLead}${copy.title.lineTwoAccent} ${copy.title.lineThreeLead}${copy.title.lineThreeAccent}${copy.title.lineThreeEnd}`}
+          >
+            <span className={styles.titleLine}>{copy.title.lineOne}</span>
+            <span className={styles.titleLine}>
+              {copy.title.lineTwoLead}
+              <em className={styles.titleAccent}>{copy.title.lineTwoAccent}</em>
+            </span>
+            <span className={styles.titleLine}>
+              {copy.title.lineThreeLead}
+              <em className={styles.titleAccent}>{copy.title.lineThreeAccent}</em>
+              {copy.title.lineThreeEnd}
+            </span>
           </h2>
         </Reveal>
 
