@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 
 import { HappyReelsHome } from "@/components/home/HappyReelsHome";
+import { HeroVariantProvider } from "@/components/hero/HeroVariantContext.client";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
 import { JsonLd } from "@/components/seo/JsonLd";
@@ -28,9 +29,11 @@ export default async function LangHomePage({ params }: Props) {
           buildFaqPageJsonLd(locale, faqContent[locale]),
         ]}
       />
-      <Navbar locale={locale} dict={dict} introAnimation />
-      <HappyReelsHome locale={locale} dict={dict} />
-      <Footer locale={locale} dict={dict} />
+      <HeroVariantProvider>
+        <Navbar locale={locale} dict={dict} introAnimation />
+        <HappyReelsHome locale={locale} dict={dict} />
+        <Footer locale={locale} dict={dict} />
+      </HeroVariantProvider>
     </>
   );
 }

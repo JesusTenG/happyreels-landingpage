@@ -24,10 +24,10 @@
   max-width: 11ch;
   margin: 0;
   padding-bottom: 0.1em;
-  font-size: clamp(2.8rem, 5.7vw, 5.3rem);
-  font-weight: 780;
-  line-height: 0.94;
-  letter-spacing: -0.065em;
+  font-size: var(--hr-section-heading-size);
+  font-weight: var(--hr-section-heading-weight);
+  line-height: var(--hr-section-heading-line-height);
+  letter-spacing: var(--hr-section-heading-letter-spacing);
 }
 
 .list {

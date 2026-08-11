@@ -1,0 +1,70 @@
+.root {
+  display: inline-block;
+  perspective: var(--depth-text-perspective);
+  perspective-origin: 50% 48%;
+  isolation: isolate;
+}
+
+.stage {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  transform: rotateX(-2.4deg) rotateY(3.15deg);
+  transform-origin: 50% 50%;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.layer,
+.face {
+  grid-area: 1 / 1;
+  display: inline-block;
+  font-size: var(--depth-text-font-size);
+  font-weight: var(--depth-text-font-weight);
+  font-kerning: normal;
+  text-rendering: geometricPrecision;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+
+.layer {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  color: var(--depth-text-layer-color);
+  filter: saturate(0.95) brightness(0.92);
+  pointer-events: none;
+}
+
+.face {
+  position: relative;
+  z-index: 1;
+  color: var(--depth-text-face-color);
+  text-shadow: var(--depth-text-shadow);
+  transform: translateZ(0.6px);
+}
+
+.layer :global([data-depth-word]) {
+  color: var(
+    --depth-word-solid-side,
+    color-mix(
+      in srgb,
+      var(--depth-word-face) var(--depth-word-layer-mix, var(--depth-layer-face-mix)),
+      var(--depth-word-side)
+    )
+  ) !important;
+  -webkit-text-fill-color: currentColor !important;
+}
+
+.face :global([data-depth-word]) {
+  color: var(--depth-word-face) !important;
+  -webkit-text-fill-color: var(--depth-word-face) !important;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .root { cursor: default; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stage { will-change: auto; }
+}

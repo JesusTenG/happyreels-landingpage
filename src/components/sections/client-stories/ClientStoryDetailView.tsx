@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 import {
   getClientStoryContent,
@@ -11,6 +12,8 @@ import { TestimonialCard } from "@/components/testimonials/TestimonialCard";
 import HappyReelsButton from "@/components/ui/HappyReelsButton";
 import { MixedHeadline } from "@/components/ui/MixedHeadline";
 import { getProjectsPath } from "@/lib/route-config";
+import { getServiceContent } from "@/data/service-content";
+import { getServicePath, type ServiceKey } from "@/lib/route-config";
 
 import type { ClientStory } from "@/data/client-stories";
 import { ClientStoryDetailReels } from "./ClientStoryDetailReels.client";
@@ -22,6 +25,12 @@ type Props = Readonly<{
   story: ClientStory;
 }>;
 
+const STORY_SERVICES: Record<string, readonly ServiceKey[]> = {
+  "leon-haegele": ["videoProduction", "shortFormEditing", "youtubeEditing", "motionFinishing"],
+  "ramon-limacher": ["shortFormEditing", "motionFinishing"],
+  "mario-scherthan": ["shortFormEditing", "youtubeEditing", "motionFinishing"],
+};
+
 export function ClientStoryDetailView({ locale, dict, story }: Props) {
   const content = getClientStoryContent(story, locale);
   const { clientStoryDetail } = dict;
@@ -32,6 +41,7 @@ export function ClientStoryDetailView({ locale, dict, story }: Props) {
   const testimonial = getTestimonialForClientStory(story.slug, locale);
   const workItems = getWorkItemsForClientStory(story, dict, locale);
   const hasTestimonial = testimonial !== undefined;
+  const relatedServices = STORY_SERVICES[story.slug] ?? [];
 
   return (
     <article className={styles["collaboration-detail"]} data-navbar-theme="brown">
@@ -91,6 +101,29 @@ export function ClientStoryDetailView({ locale, dict, story }: Props) {
             </ul>
           </div>
         </section>
+
+        {relatedServices.length > 0 ? (
+          <section
+            className={styles["collaboration-detail-services"]}
+            aria-labelledby="client-project-services-title"
+          >
+            <div>
+              <p className={styles["collaboration-detail-section-label"]}>
+                {locale === "de" ? "Eingesetzte Leistungen" : "Services involved"}
+              </p>
+              <h2 id="client-project-services-title">
+                {locale === "de" ? "Von diesem Projekt zu den passenden Leistungen." : "From this project to the relevant services."}
+              </h2>
+            </div>
+            <nav aria-label={locale === "de" ? "Leistungen dieses Projekts" : "Services used in this project"}>
+              {relatedServices.map((key) => (
+                <Link key={key} href={getServicePath(locale, key)}>
+                  {getServiceContent(key, locale).navTitle}<span aria-hidden="true"> ↗</span>
+                </Link>
+              ))}
+            </nav>
+          </section>
+        ) : null}
 
         {workItems.length > 0 || hasTestimonial ? (
           <section

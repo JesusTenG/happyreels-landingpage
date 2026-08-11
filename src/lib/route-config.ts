@@ -50,6 +50,17 @@ export function getServicePath(locale: Locale, key: ServiceKey): string {
   return `/${locale}/${serviceSegments[locale]}/${serviceSlugs[key][locale]}`;
 }
 
+export function getServicesPath(locale: Locale): string {
+  return `/${locale}/${serviceSegments[locale]}`;
+}
+
+export function getServicesPathnames(): Record<Locale, string> {
+  return {
+    de: getServicesPath("de"),
+    en: getServicesPath("en"),
+  };
+}
+
 export function getServicePathnames(key: ServiceKey): Record<Locale, string> {
   return {
     de: getServicePath("de", key),

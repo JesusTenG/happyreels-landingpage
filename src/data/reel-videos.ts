@@ -208,3 +208,13 @@ export function getReelVideos(locale: Locale): ReelVideo[] {
 export function getFeaturedReelVideos(locale: Locale): ReelVideo[] {
   return getReelVideos(locale).slice(0, 5);
 }
+
+export function getReelVideosById(
+  locale: Locale,
+  ids: readonly string[],
+): ReelVideo[] {
+  const videos = getReelVideos(locale);
+  return ids
+    .map((id) => videos.find((video) => video.id === id))
+    .filter((video): video is ReelVideo => video !== undefined);
+}

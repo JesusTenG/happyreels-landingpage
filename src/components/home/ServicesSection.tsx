@@ -1,13 +1,15 @@
 import { Camera, Film, Scissors, Sparkles } from "lucide-react";
+import Link from "next/link";
 
 import { Reveal } from "@/components/animation/Reveal";
 import {
   ScrollMotionGroup,
   ScrollMotionItem,
 } from "@/components/animation/ScrollMotionGroup.client";
-import { MixedHeadline } from "@/components/ui/MixedHeadline";
 import { homeContent } from "@/data/home-content";
+import { serviceKeys } from "@/data/service-content";
 import type { Locale } from "@/i18n/config";
+import { getServicePath } from "@/lib/route-config";
 
 import styles from "./ServicesSection.module.css";
 
@@ -42,11 +44,11 @@ export function ServicesSection({ locale }: Props) {
             <span className={styles.titleLine}>{copy.title.lineOne}</span>
             <span className={styles.titleLine}>
               {copy.title.lineTwoLead}
-              <em className={styles.titleAccent}>{copy.title.lineTwoAccent}</em>
+              <em className={`${styles.titleAccent} hr-italic-marker`}>{copy.title.lineTwoAccent}</em>
             </span>
             <span className={styles.titleLine}>
               {copy.title.lineThreeLead}
-              <em className={styles.titleAccent}>{copy.title.lineThreeAccent}</em>
+              <em className={`${styles.titleAccent} hr-italic-marker`}>{copy.title.lineThreeAccent}</em>
               {copy.title.lineThreeEnd}
             </span>
           </h2>
@@ -56,6 +58,7 @@ export function ServicesSection({ locale }: Props) {
           {copy.items.map((service, index) => {
             const Icon = SERVICE_ICONS[index];
             const motion = MOTION[index];
+            const href = getServicePath(locale, serviceKeys[index]);
 
             return (
               <ScrollMotionItem
@@ -69,14 +72,19 @@ export function ServicesSection({ locale }: Props) {
                 end={motion.end}
               >
                 <Reveal delay={120 + index * 90}>
-                  <article className={styles.card} data-service-card={index + 1}>
-                    <span className={styles.number} aria-hidden="true">0{index + 1}</span>
-                    <span className={styles.icon} aria-hidden="true"><Icon /></span>
-                    <div>
-                      <h3><MixedHeadline text={service.title} /></h3>
-                      <p>{service.text}</p>
+                  <Link
+                    href={href}
+                    className={styles.card}
+                    data-service-card={index + 1}
+                  >
+                    <div className={styles.cardHeader}>
+                      <h3>{service.title}</h3>
+                      <span className={styles.icon} aria-hidden="true">
+                        <Icon />
+                      </span>
                     </div>
-                  </article>
+                    <p>{service.text}</p>
+                  </Link>
                 </Reveal>
               </ScrollMotionItem>
             );

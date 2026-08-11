@@ -1,4 +1,9 @@
-import { Clapperboard, Compass, Upload } from "lucide-react";
+import {
+  Eye,
+  Fingerprint,
+  Heart,
+  MousePointerClick,
+} from "lucide-react";
 
 import { Reveal } from "@/components/animation/Reveal";
 import {
@@ -8,6 +13,7 @@ import {
 import { SectionWave } from "@/components/layout/SectionWave";
 import { ClientCollaborationsSection } from "@/components/projects/ClientCollaborationsSection";
 import { ContactForm } from "@/components/sections/ContactForm.client";
+import { Hero } from "@/components/hero/Hero";
 import HappyReelsButton from "@/components/ui/HappyReelsButton";
 import { MixedHeadline } from "@/components/ui/MixedHeadline";
 import { getSectionTestimonials } from "@/content/testimonials";
@@ -19,7 +25,6 @@ import { getProjectsPath } from "@/lib/route-config";
 
 import { DirectMessageCard } from "./DirectMessageCard";
 import { FAQSection } from "./FAQSection.client";
-import { HeroShowcase } from "./HeroShowcase";
 import { HomeTestimonials } from "./HomeTestimonials";
 import { ReelMarquee } from "./ReelMarquee.client";
 import { ResultsSection } from "./ResultsSection";
@@ -45,16 +50,19 @@ const PROCESS_MOTION = [
   { yFrom: 24, yTo: -10, scaleFrom: 0.93, scaleTo: 1.02, start: 0.05, end: 0.92 },
 ] as const;
 
-const PROCESS_ICONS = [Compass, Clapperboard, Upload] as const;
+const OUTCOME_ICONS = [Eye, Heart, MousePointerClick, Fingerprint] as const;
 
 export function HappyReelsHome({ locale, dict }: Props) {
   const copy = homeContent[locale];
   const testimonials = getSectionTestimonials(locale);
   const projectsHref = getProjectsPath(locale);
+  const contactJoinAt = copy.contact.titleLineTwo.lastIndexOf(" ");
+  const contactLineLead = copy.contact.titleLineTwo.slice(0, contactJoinAt);
+  const contactLineJoin = copy.contact.titleLineTwo.slice(contactJoinAt + 1);
 
   return (
     <main id="main-content" className={styles.main}>
-      <HeroShowcase
+      <Hero
         locale={locale}
         ctaLabel={copy.hero.primaryCta}
         projectsHref={projectsHref}
@@ -66,7 +74,7 @@ export function HappyReelsHome({ locale, dict }: Props) {
             <span className={styles.workTitleLine}>{copy.work.titleLineOne}</span>
             <span className={styles.workTitleLine}>
               <span>{copy.work.titleLineTwoLead}</span>{" "}
-              <em>{copy.work.titleAccent}</em>
+              <em className="hr-italic-marker">{copy.work.titleAccent}</em>
               <span>{copy.work.titleLineTwoEnd}</span>
             </span>
           </h2>
@@ -92,7 +100,7 @@ export function HappyReelsHome({ locale, dict }: Props) {
             >
               <span>{copy.outcomes.title}</span>
               <span className={styles.outcomesTitleAccentLine}>
-                <em>{copy.outcomes.titleAccent}</em>
+                <em className="hr-italic-marker">{copy.outcomes.titleAccent}</em>
                 <span>{copy.outcomes.titleEnd}</span>
               </span>
             </h2>
@@ -101,6 +109,7 @@ export function HappyReelsHome({ locale, dict }: Props) {
           <ScrollMotionGroup className={styles.outcomesGrid}>
             {copy.outcomes.items.map((outcome, index) => {
               const motion = OUTCOME_MOTION[index];
+              const Icon = OUTCOME_ICONS[index];
 
               return (
                 <ScrollMotionItem
@@ -115,7 +124,12 @@ export function HappyReelsHome({ locale, dict }: Props) {
                 >
                   <Reveal className={styles.outcomeReveal} delay={90 + index * 80}>
                     <article className={styles.outcomeCard} data-outcome-card={index + 1}>
-                      <h3>{outcome.title}</h3>
+                      <div className={styles.outcomeCardHeader}>
+                        <h3>{outcome.title}</h3>
+                        <span className={styles.outcomeIcon} aria-hidden="true">
+                          <Icon />
+                        </span>
+                      </div>
                       <p>{outcome.description}</p>
                     </article>
                   </Reveal>
@@ -181,10 +195,7 @@ export function HappyReelsHome({ locale, dict }: Props) {
             <Reveal><h2 id="process-title"><MixedHeadline text={copy.process.title} highlight={copy.process.highlight} /></h2></Reveal>
           </div>
           <ScrollMotionGroup className={styles.processCards}>
-            {copy.process.steps.map((step, index) => {
-              const ProcessIcon = PROCESS_ICONS[index];
-
-              return (
+            {copy.process.steps.map((step, index) => (
                 <ScrollMotionItem
                   key={step.title}
                   className={styles.processMotion}
@@ -197,21 +208,15 @@ export function HappyReelsHome({ locale, dict }: Props) {
                 >
                   <Reveal className={styles.processReveal} delay={120 + index * 90}>
                     <article className={styles.processCard} data-process-card={index + 1}>
-                      <div className={styles.processCardTop}>
-                        <span className={styles.processIcon} aria-hidden="true">
-                          <ProcessIcon />
-                        </span>
+                      <div className={styles.processCardHeader}>
+                        <h3>{step.title}</h3>
                         <span className={styles.processNumber} aria-hidden="true">0{index + 1}</span>
                       </div>
-                      <div className={styles.processCardCopy}>
-                        <h3>{step.title}</h3>
-                        <p>{step.description}</p>
-                      </div>
+                      <p>{step.description}</p>
                     </article>
                   </Reveal>
                 </ScrollMotionItem>
-              );
-            })}
+              ))}
           </ScrollMotionGroup>
         </div>
       </section>
@@ -235,10 +240,14 @@ export function HappyReelsHome({ locale, dict }: Props) {
         <div className={`container-base ${styles.contactGrid}`}>
           <div className={styles.contactCopy}>
             <Reveal>
-              <h2 id="contact-title">
+              <h2
+                id="contact-title"
+                aria-label={`${copy.contact.titleLineOne} ${copy.contact.titleLineTwo} ${copy.contact.titleAccent}`}
+              >
                 <span className={styles.contactTitleLine}>{copy.contact.titleLineOne}</span>
-                <span className={styles.contactTitleLine}>{copy.contact.titleLineTwo}</span>
-                <span className={styles.contactTitleLine}>
+                <span className={styles.contactTitleLine}>{contactLineLead}</span>
+                <span className={styles.contactTitleTogether}>
+                  <span>{contactLineJoin} </span>
                   <MixedHeadline text={copy.contact.titleAccent} highlight={copy.contact.titleAccent} />
                 </span>
               </h2>

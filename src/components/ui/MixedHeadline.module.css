@@ -6,7 +6,6 @@
   letter-spacing: var(--hr-italic-letter-spacing);
   color: var(--mixed-headline-fill, var(--color-happy-gold));
   -webkit-text-fill-color: var(--mixed-headline-fill, var(--color-happy-gold));
-  -webkit-text-stroke: var(--hr-italic-stroke-width) var(--mixed-headline-stroke, var(--color-petal-white));
   paint-order: stroke fill;
 }
 

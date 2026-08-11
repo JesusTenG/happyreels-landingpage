@@ -195,7 +195,7 @@ export const homeContent: Record<Locale, HomeContent> = {
           description: "Klare Botschaften führen vom Feed zu Profil, Angebot oder Website.",
         },
         {
-          title: "Mehr Wiedererkennung.",
+          title: "Mehr Identität.",
           description: "Ein wiedererkennbarer Look baut über einzelne Posts hinaus Vertrauen auf.",
         },
       ],

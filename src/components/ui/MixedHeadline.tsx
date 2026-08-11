@@ -19,6 +19,7 @@ export function MixedHeadline({ text, highlight, tone = "warm" }: Props) {
 
   const accentClass = [
     styles.accent,
+    "hr-italic-marker",
     tone === "gold" ? styles.gold : null,
     tone === "petal" ? styles.petal : null,
   ]

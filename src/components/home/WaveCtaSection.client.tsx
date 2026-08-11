@@ -131,14 +131,14 @@ export function WaveCtaSection({ locale }: Props) {
               <div className={styles.copy}>
                 <h2 id="wave-cta-title">
                   {copy.title.lead}{" "}
-                  <em className={styles.headlineAccent}>{copy.title.footage}</em>{" "}
+                  <em className={`${styles.headlineAccent} hr-italic-marker`}>{copy.title.footage}</em>{" "}
                   {copy.title.middle}{" "}
-                  <em className={styles.headlineAccent}>{copy.title.feeling}</em>
+                  <em className={`${styles.headlineAccent} hr-italic-marker`}>{copy.title.feeling}</em>
                   {copy.title.end}
                 </h2>
                 <HappyReelsButton
                   href={`/${locale}#contact`}
-                  variant="on-brown"
+                  variant="on-yellow"
                   enableMovingBorder={false}
                   className={styles.cta}
                 >
@@ -148,7 +148,7 @@ export function WaveCtaSection({ locale }: Props) {
               <span className={styles.logoMark} aria-hidden="true">
                 <BrandMark
                   size="footer"
-                  accent="white"
+                  accent="solid-brown"
                   reveal="viewport"
                   revealDelay={260}
                   className={styles.logo}

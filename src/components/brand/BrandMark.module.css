@@ -129,6 +129,11 @@
   --logo-smile-color: var(--color-cocoa-ink);
 }
 
+.mark[data-accent="solid-brown"] {
+  --logo-letter-color: var(--color-cocoa-ink);
+  --logo-smile-color: var(--color-cocoa-ink);
+}
+
 .mark[data-accent="light"] {
   --logo-letter-color: var(--color-happy-gold);
   --logo-smile-color: var(--color-cocoa-ink);

@@ -1,5 +1,3 @@
-import { Eye, Fingerprint, Timer } from "lucide-react";
-
 import { Reveal } from "@/components/animation/Reveal";
 import {
   ScrollMotionGroup,
@@ -14,42 +12,38 @@ type Props = Readonly<{ locale: Locale }>;
 
 const RESULTS = {
   en: {
-    title: "Great edits do more than look good. They perform.",
+    title: "Great edits turn attention into lasting impact.",
+    titleHighlight: "attention",
     cards: [
       {
         title: "Stops the scroll",
         text: "Strong openings and clear pacing stop the scroll.",
-        icon: Eye,
       },
       {
         title: "Holds attention",
         text: "Every cut is designed to keep the story moving.",
-        icon: Timer,
       },
       {
         title: "Builds recall",
         text: "A consistent visual language makes your content recognizable.",
-        icon: Fingerprint,
       },
     ],
   },
   de: {
-    title: "Starke Edits sehen nicht nur gut aus. Sie wirken.",
+    title: "Starke Edits verwandeln Aufmerksamkeit in echte Wirkung.",
+    titleHighlight: "Aufmerksamkeit",
     cards: [
       {
         title: "Stoppt den Scroll",
         text: "Starke Einstiege und klares Pacing stoppen den Scroll.",
-        icon: Eye,
       },
       {
         title: "Hält die Spannung",
         text: "Jeder Cut hält die Geschichte gezielt in Bewegung.",
-        icon: Timer,
       },
       {
         title: "Bleibt im Kopf",
         text: "Eine konsistente Bildsprache macht deinen Content wiedererkennbar.",
-        icon: Fingerprint,
       },
     ],
   },
@@ -74,12 +68,11 @@ export function ResultsSection({ locale }: Props) {
       <div className="container-base">
         <Reveal>
           <h2 id="results-title" className={styles.title}>
-            <MixedHeadline text={copy.title} tone="gold" />
+            <MixedHeadline text={copy.title} highlight={copy.titleHighlight} />
           </h2>
         </Reveal>
         <ScrollMotionGroup className={styles.grid}>
           {copy.cards.map((card, index) => {
-            const Icon = card.icon;
             const motion = MOTION[index];
 
             return (
@@ -93,15 +86,10 @@ export function ResultsSection({ locale }: Props) {
                 start={motion.start}
                 end={motion.end}
               >
-                <Reveal delay={120 + index * 95}>
+                <Reveal className={styles.cardReveal} delay={120 + index * 95}>
                   <article className={styles.card} data-result-card={index + 1}>
-                    <span className={styles.icon} aria-hidden="true">
-                      <Icon />
-                    </span>
-                    <div>
-                      <h3><MixedHeadline text={card.title} /></h3>
-                      <p>{card.text}</p>
-                    </div>
+                    <h3>{card.title}</h3>
+                    <p>{card.text}</p>
                   </article>
                 </Reveal>
               </ScrollMotionItem>

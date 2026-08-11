@@ -8,7 +8,12 @@ import type {
   ClientStory,
   ClientStoryLocaleContent,
 } from "@/data/client-stories";
-import type { ServiceLandingContent } from "@/data/service-content";
+import {
+  getServiceContent,
+  serviceKeys,
+  type ServiceLandingContent,
+} from "@/data/service-content";
+import type { ServiceSeoContent } from "@/data/service-seo-content";
 import { homeContent } from "@/data/home-content";
 import { buildCanonical, siteUrl } from "@/lib/seo";
 import { INSTAGRAM_URL, SITE_NAME } from "@/lib/site";
@@ -16,6 +21,7 @@ import {
   getClientProjectPath,
   getProjectsPath,
   getServicePath,
+  getServicesPath,
   type ServiceKey,
 } from "@/lib/route-config";
 
@@ -351,27 +357,45 @@ export function buildServiceJsonLd(
   locale: Locale,
   serviceKey: ServiceKey,
   content: ServiceLandingContent,
+  seoContent: ServiceSeoContent,
 ) {
   const url = new URL(getServicePath(locale, serviceKey), siteUrl).toString();
+  const servicesUrl = new URL(getServicesPath(locale), siteUrl).toString();
   const homeUrl = buildCanonical(locale);
+  const serviceId = `${url}#service`;
+  const webpageId = `${url}#webpage`;
+  const organizationId = `${homeUrl}#organization`;
+  const inLanguage = locale === "de" ? "de-DE" : "en-US";
 
   return [
     {
       "@context": "https://schema.org",
+      "@type": "WebPage",
+      "@id": webpageId,
+      name: content.seoTitle,
+      headline: content.h1,
+      description: content.metaDescription,
+      url,
+      inLanguage,
+      isPartOf: { "@id": `${homeUrl}#website` },
+      mainEntity: { "@id": serviceId },
+      about: { "@id": organizationId },
+    },
+    {
+      "@context": "https://schema.org",
       "@type": "Service",
+      "@id": serviceId,
       name: content.navTitle,
       serviceType: content.navTitle,
       description: content.metaDescription,
       url,
-      inLanguage: locale === "de" ? "de-DE" : "en-US",
+      inLanguage,
       areaServed: {
         "@type": "Country",
         name: "Germany",
       },
       provider: {
-        "@type": "ProfessionalService",
-        name: SITE_NAME,
-        url: homeUrl,
+        "@id": organizationId,
       },
     },
     {
@@ -388,12 +412,81 @@ export function buildServiceJsonLd(
           "@type": "ListItem",
           position: 2,
           name: locale === "de" ? "Leistungen" : "Services",
-          item: `${homeUrl}#services`,
+          item: servicesUrl,
         },
         {
           "@type": "ListItem",
           position: 3,
           name: content.navTitle,
+          item: url,
+        },
+      ],
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "@id": `${url}#faq`,
+      url: `${url}#faq`,
+      inLanguage,
+      mainEntity: seoContent.faqs.map((item) => ({
+        "@type": "Question",
+        name: item.question,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: item.answer,
+        },
+      })),
+    },
+  ];
+}
+
+export function buildServicesOverviewJsonLd(
+  locale: Locale,
+  meta: Readonly<{ title: string; description: string }>,
+) {
+  const url = new URL(getServicesPath(locale), siteUrl).toString();
+  const homeUrl = buildCanonical(locale);
+  const inLanguage = locale === "de" ? "de-DE" : "en-US";
+
+  return [
+    {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "@id": `${url}#webpage`,
+      name: meta.title,
+      description: meta.description,
+      url,
+      inLanguage,
+      isPartOf: { "@id": `${homeUrl}#website` },
+      about: { "@id": `${homeUrl}#organization` },
+      mainEntity: {
+        "@type": "ItemList",
+        itemListElement: serviceKeys.map((key, index) => {
+          const service = getServiceContent(key, locale);
+          return {
+            "@type": "ListItem",
+            position: index + 1,
+            name: service.navTitle,
+            description: service.metaDescription,
+            url: new URL(getServicePath(locale, key), siteUrl).toString(),
+          };
+        }),
+      },
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: locale === "de" ? "Start" : "Home",
+          item: homeUrl,
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: locale === "de" ? "Leistungen" : "Services",
           item: url,
         },
       ],

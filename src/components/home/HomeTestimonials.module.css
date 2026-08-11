@@ -159,6 +159,8 @@
     gap: 1.65rem;
   }
 
+  .motionItem:nth-child(n + 4) { display: none; }
+
   .motionItem:nth-child(odd) .card { --card-rotation: -0.65deg; }
   .motionItem:nth-child(even) .card { --card-rotation: 0.65deg; }
 }

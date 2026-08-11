@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Instrument_Serif, Manrope } from "next/font/google";
+import localFont from "next/font/local";
 import { headers } from "next/headers";
 
 import { ConsentBanner } from "@/components/layout/ConsentBanner.client";
@@ -9,16 +9,27 @@ import { siteUrl } from "@/lib/seo";
 
 import "./globals.css";
 
-const manrope = Manrope({
-  subsets: ["latin"],
+const manrope = localFont({
+  src: "./fonts/Manrope-Variable.ttf",
+  weight: "200 800",
+  style: "normal",
   variable: "--font-manrope",
   display: "swap",
 });
 
-const instrumentSerif = Instrument_Serif({
-  weight: "400",
-  style: ["normal", "italic"],
-  subsets: ["latin"],
+const instrumentSerif = localFont({
+  src: [
+    {
+      path: "./fonts/InstrumentSerif-Regular.ttf",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "./fonts/InstrumentSerif-Italic.ttf",
+      weight: "400",
+      style: "italic",
+    },
+  ],
   variable: "--font-instrument-serif",
   display: "swap",
 });
