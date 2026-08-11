@@ -20,12 +20,12 @@ type Props = Readonly<{
 
 const COPY = {
   de: {
-    title: "Drei Partnerschaften, in denen aus starken Ideen wiedererkennbare Formate entstehen.",
-    highlight: "starken Ideen",
+    title: "Partnerschaften, in denen aus starken Ideen wiedererkennbare Formate entstehen.",
+    highlight: "wiedererkennbare Formate",
   },
   en: {
-    title: "Three partnerships where strong ideas grow into recognisable formats over time.",
-    highlight: "strong ideas",
+    title: "Partnerships where strong ideas grow into recognisable formats over time.",
+    highlight: "recognisable formats",
   },
 } as const;
 
@@ -52,7 +52,9 @@ export function ClientCollaborationsSection({ locale, variant = "home" }: Props)
     >
       <div className="container-base">
         <Reveal className={styles.heading}>
-          <h2 id={`${variant}-collaborations-title`}><MixedHeadline text={copy.title} highlight={copy.highlight} /></h2>
+          <h2 id={`${variant}-collaborations-title`}>
+            <MixedHeadline text={copy.title} highlight={copy.highlight} />
+          </h2>
         </Reveal>
 
         <ScrollMotionGroup className={styles.grid}>

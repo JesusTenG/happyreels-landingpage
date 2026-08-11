@@ -172,7 +172,7 @@ const dictionaries: Record<Locale, Dictionary> = {
       links: {
         impressum: "Imprint",
         datenschutz: "Privacy",
-        consentSettings: "Analytics settings",
+        consentSettings: "Cookie settings",
       },
     },
     legal: {
@@ -202,7 +202,7 @@ const dictionaries: Record<Locale, Dictionary> = {
           },
           {
             heading: "Vercel Web Analytics",
-            body: "With your consent, this website uses Vercel Web Analytics to measure page views and understand aggregated usage. According to Vercel, Web Analytics does not use cookies and records page views anonymously without associating them with an individual or IP address. The analytics script is loaded only after you consent. Your selection is stored locally in your browser and can be changed at any time via ‘Analytics settings’ in the footer.",
+            body: "With your consent, this website uses Vercel Web Analytics to measure page views and understand aggregated usage. According to Vercel, Web Analytics does not use cookies and records page views anonymously without associating them with an individual or IP address. The analytics script is loaded only after you consent. Your selection is stored locally in your browser and can be changed at any time via ‘Cookie settings’ in the footer.",
           },
           {
             heading: "External links",
@@ -284,7 +284,7 @@ const dictionaries: Record<Locale, Dictionary> = {
       links: {
         impressum: "Impressum",
         datenschutz: "Datenschutz",
-        consentSettings: "Analytics-Einstellungen",
+        consentSettings: "Cookie-Einstellungen",
       },
     },
     legal: {
@@ -314,7 +314,7 @@ const dictionaries: Record<Locale, Dictionary> = {
           },
           {
             heading: "Vercel Web Analytics",
-            body: "Mit deiner Zustimmung nutzt diese Website Vercel Web Analytics, um Seitenaufrufe zu messen und die Nutzung in zusammengefasster Form zu verstehen. Laut Vercel verwendet Web Analytics keine Cookies und erfasst Seitenaufrufe anonym, ohne sie einer einzelnen Person oder IP-Adresse zuzuordnen. Das Analytics-Skript wird erst nach deiner Zustimmung geladen. Deine Auswahl wird lokal in deinem Browser gespeichert und kann jederzeit über „Analytics-Einstellungen“ im Footer geändert werden.",
+            body: "Mit deiner Zustimmung nutzt diese Website Vercel Web Analytics, um Seitenaufrufe zu messen und die Nutzung in zusammengefasster Form zu verstehen. Laut Vercel verwendet Web Analytics keine Cookies und erfasst Seitenaufrufe anonym, ohne sie einer einzelnen Person oder IP-Adresse zuzuordnen. Das Analytics-Skript wird erst nach deiner Zustimmung geladen. Deine Auswahl wird lokal in deinem Browser gespeichert und kann jederzeit über „Cookie-Einstellungen“ im Footer geändert werden.",
           },
           {
             heading: "Externe Links",

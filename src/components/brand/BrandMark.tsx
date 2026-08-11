@@ -6,7 +6,7 @@ import styles from "./BrandMark.module.css";
 
 type Props = Readonly<{
   size?: "navigation" | "footer";
-  accent?: "yellow" | "brown" | "light" | "dark" | "white" | "progress";
+  accent?: "yellow" | "brown" | "solid-brown" | "light" | "dark" | "white" | "progress";
   className?: string;
   reveal?: "viewport" | "intro" | "immediate" | "none";
   revealDelay?: number;

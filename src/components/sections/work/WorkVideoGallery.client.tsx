@@ -34,14 +34,10 @@ export function WorkVideoGallery({ items, gridClassName }: Props) {
         {items.map((item) => (
           <div key={item.previewSrc} className={styles["work-section__card-wrap"]}>
             <WorkVideoCard
-              title={item.title}
-              description={item.description}
               posterSrc={item.posterSrc}
               previewSrc={item.previewSrc}
               alt={item.alt}
               videoAriaLabel={item.videoAriaLabel}
-              projectHref={item.projectHref}
-              detailLabel={item.detailLabel}
               isLightboxOpen={isLightboxOpen}
               onOpen={() => setActiveVideo(toLightboxItem(item))}
             />

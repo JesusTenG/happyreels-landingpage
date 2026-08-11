@@ -60,7 +60,7 @@ export function InitialLoader({ locale }: Props) {
           className={styles.logo}
         />
         <p className={styles.wordmark} aria-hidden="true">
-          happy<em>reels</em>
+          happyreels
         </p>
       </div>
     </div>

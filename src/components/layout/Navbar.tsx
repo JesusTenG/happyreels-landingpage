@@ -5,11 +5,13 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 import { BrandMark } from "@/components/brand/BrandMark";
+import { useHeroVariant } from "@/components/hero/HeroVariantContext.client";
+import { HERO_VARIANTS, HERO_VARIANT_NUMBERS } from "@/components/hero/Hero.types";
 import HappyReelsButton from "@/components/ui/HappyReelsButton";
 import { otherLocale, type Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { switchLocalePath } from "@/lib/locale-path";
-import { getProjectsPath } from "@/lib/route-config";
+import { getProjectsPath, getServicesPath } from "@/lib/route-config";
 
 import { LanguageToggle } from "./LanguageToggle";
 import { PaletteToggle } from "./PaletteToggle";
@@ -22,11 +24,13 @@ type Props = Readonly<{
 }>;
 
 const MOBILE_MENU_ID = "happyreels-mobile-menu";
-type NavbarTheme = "rose" | "brown";
+const MOBILE_NAVBAR_MEDIA = "(max-width: 940px)";
+type NavbarTheme = "rose" | "paper" | "blush" | "gold" | "brown";
 
 export function Navbar({ locale, dict, introAnimation = false }: Props) {
   const [open, setOpen] = useState(false);
   const [theme, setTheme] = useState<NavbarTheme>("brown");
+  const heroVariant = useHeroVariant();
   const pathname = usePathname();
   const headerRef = useRef<HTMLElement>(null);
   const firstMobileLink = useRef<HTMLAnchorElement>(null);
@@ -37,7 +41,7 @@ export function Navbar({ locale, dict, introAnimation = false }: Props) {
 
   const links = [
     { href: getProjectsPath(locale), label: dict.nav.links.work },
-    { href: `${home}#services`, label: dict.nav.links.services },
+    { href: getServicesPath(locale), label: dict.nav.links.services },
     { href: `${home}#process`, label: dict.nav.links.process },
     { href: `${home}/about`, label: dict.nav.links.about },
     { href: `${home}#faq`, label: dict.nav.links.faq },
@@ -63,20 +67,36 @@ export function Navbar({ locale, dict, introAnimation = false }: Props) {
 
   useEffect(() => {
     const header = headerRef.current;
-    const themedSections = Array.from(
-      document.querySelectorAll<HTMLElement>("[data-navbar-theme]"),
-    );
-    if (!header || themedSections.length === 0) {
+    if (!header) {
       setTheme("brown");
       return;
     }
 
+    let themedSections: HTMLElement[] = [];
     let observer: IntersectionObserver | null = null;
     let themeObserver: MutationObserver | null = null;
+    let sectionTreeObserver: MutationObserver | null = null;
+    let headerResizeObserver: ResizeObserver | null = null;
     let resizeFrame = 0;
 
     const observeContactPoint = () => {
       observer?.disconnect();
+      themeObserver?.disconnect();
+
+      if (window.matchMedia(MOBILE_NAVBAR_MEDIA).matches) {
+        themedSections = [];
+        setTheme((currentTheme) => currentTheme === "brown" ? currentTheme : "brown");
+        return;
+      }
+
+      themedSections = Array.from(
+        document.querySelectorAll<HTMLElement>("[data-navbar-theme]"),
+      );
+      if (themedSections.length === 0) {
+        setTheme("brown");
+        return;
+      }
+
       const navbarHeight = header.getBoundingClientRect().height;
       const bottomMargin = Math.max(window.innerHeight - navbarHeight - 1, 0);
 
@@ -84,8 +104,14 @@ export function Navbar({ locale, dict, introAnimation = false }: Props) {
         const activeSection = themedSections.findLast(
           (section) => section.getBoundingClientRect().top <= navbarHeight,
         ) ?? themedSections[0];
+        const requestedTheme = activeSection.dataset.navbarTheme;
         const nextTheme: NavbarTheme =
-          activeSection.dataset.navbarTheme === "brown" ? "brown" : "rose";
+          requestedTheme === "brown" ||
+          requestedTheme === "paper" ||
+          requestedTheme === "blush" ||
+          requestedTheme === "gold"
+            ? requestedTheme
+            : "rose";
         setTheme((currentTheme) => currentTheme === nextTheme ? currentTheme : nextTheme);
       };
 
@@ -101,7 +127,6 @@ export function Navbar({ locale, dict, introAnimation = false }: Props) {
 
       themedSections.forEach((section) => observer?.observe(section));
 
-      themeObserver?.disconnect();
       themeObserver = new MutationObserver(updateTheme);
       themedSections.forEach((section) => {
         themeObserver?.observe(section, {
@@ -117,13 +142,121 @@ export function Navbar({ locale, dict, introAnimation = false }: Props) {
     };
 
     observeContactPoint();
+    const mainContent = document.querySelector("#main-content");
+    if (mainContent) {
+      sectionTreeObserver = new MutationObserver(observeContactPoint);
+      sectionTreeObserver.observe(mainContent, { childList: true });
+    }
     window.addEventListener("resize", handleResize);
+    headerResizeObserver = new ResizeObserver(handleResize);
+    headerResizeObserver.observe(header);
 
     return () => {
       observer?.disconnect();
       themeObserver?.disconnect();
+      sectionTreeObserver?.disconnect();
+      headerResizeObserver?.disconnect();
       window.removeEventListener("resize", handleResize);
       if (resizeFrame) window.cancelAnimationFrame(resizeFrame);
+    };
+  }, [pathname]);
+
+  useEffect(() => {
+    const header = headerRef.current;
+    if (!header) return;
+
+    let animationFrame = 0;
+    let deferredFadeDistance = 1;
+    let deferredFadeStart = 0;
+    let heroStart = 0;
+    let heroScrollDistance = 1;
+    let hasHero = false;
+    let useDeferredFade = false;
+
+    const setShellProgress = (progress: number) => {
+      const clamped = Math.min(1, Math.max(0, progress));
+      header.style.setProperty("--nav-shell-progress", clamped.toFixed(4));
+      header.style.setProperty("--nav-shell-alpha", `${(clamped * 100).toFixed(2)}%`);
+    };
+
+    const updateShell = () => {
+      animationFrame = 0;
+      if (!hasHero) {
+        setShellProgress(1);
+        return;
+      }
+
+      const fadeProgress = useDeferredFade
+        ? Math.min(
+            1,
+            Math.max(0, (window.scrollY - deferredFadeStart) / deferredFadeDistance),
+          )
+        : Math.min(
+            1,
+            Math.max(
+              0,
+              ((window.scrollY - heroStart) / heroScrollDistance - 0.9) / 0.1,
+            ),
+          );
+      const easedProgress = fadeProgress * fadeProgress * (3 - 2 * fadeProgress);
+      setShellProgress(easedProgress);
+    };
+
+    const requestShellUpdate = () => {
+      if (animationFrame) return;
+      animationFrame = window.requestAnimationFrame(updateShell);
+    };
+
+    const measureHero = () => {
+      const hero = document.querySelector<HTMLElement>("[data-navbar-hero]");
+      hasHero = Boolean(hero);
+
+      if (!hero) {
+        setShellProgress(1);
+        return;
+      }
+
+      const heroHeight = hero.offsetHeight;
+      const stickyScrollDistance = heroHeight - window.innerHeight;
+      const standardExitDistance = heroHeight - header.offsetHeight;
+      heroStart = window.scrollY + hero.getBoundingClientRect().top;
+      useDeferredFade = hero.dataset.navbarHero === "deferred";
+      heroScrollDistance = Math.max(
+        stickyScrollDistance > window.innerHeight * 0.25
+          ? stickyScrollDistance
+          : standardExitDistance,
+        1,
+      );
+
+      if (useDeferredFade) {
+        const themedSections = Array.from(
+          document.querySelectorAll<HTMLElement>("[data-navbar-theme]"),
+        );
+        const heroIndex = themedSections.indexOf(hero);
+        const nextSection = heroIndex >= 0 ? themedSections[heroIndex + 1] : null;
+        const nextSectionTop = nextSection
+          ? window.scrollY + nextSection.getBoundingClientRect().top
+          : heroStart + heroHeight;
+
+        deferredFadeStart = nextSectionTop - window.innerHeight;
+        deferredFadeDistance = Math.max(header.offsetHeight * 1.25, 1);
+      }
+
+      updateShell();
+    };
+
+    measureHero();
+    const mainContent = document.querySelector("#main-content");
+    const heroTreeObserver = mainContent ? new MutationObserver(measureHero) : null;
+    heroTreeObserver?.observe(mainContent!, { childList: true });
+    window.addEventListener("scroll", requestShellUpdate, { passive: true });
+    window.addEventListener("resize", measureHero);
+
+    return () => {
+      heroTreeObserver?.disconnect();
+      window.removeEventListener("scroll", requestShellUpdate);
+      window.removeEventListener("resize", measureHero);
+      if (animationFrame) window.cancelAnimationFrame(animationFrame);
     };
   }, [pathname]);
 
@@ -148,7 +281,7 @@ export function Navbar({ locale, dict, introAnimation = false }: Props) {
           >
             <BrandMark
               size="navigation"
-              accent={theme === "brown" ? "yellow" : "light"}
+              accent={theme === "brown" ? "yellow" : theme === "gold" ? "brown" : "light"}
               reveal={introAnimation ? "none" : "immediate"}
               interactive
             />
@@ -163,7 +296,28 @@ export function Navbar({ locale, dict, introAnimation = false }: Props) {
         </div>
 
         <div className={styles.actions}>
-          <LanguageToggle locale={locale} href={switchHref} />
+          {heroVariant ? (
+            <div
+              className={styles.heroToggle}
+              role="group"
+              aria-label={locale === "de" ? "Hero-Variante" : "Hero variant"}
+            >
+              {HERO_VARIANTS.map((variant) => (
+                <button
+                  key={variant}
+                  type="button"
+                  aria-label={`${locale === "de" ? "Hero" : "Hero"} ${HERO_VARIANT_NUMBERS[variant]}`}
+                  aria-pressed={heroVariant.variant === variant}
+                  onClick={() => heroVariant.setVariant(variant)}
+                >
+                  {HERO_VARIANT_NUMBERS[variant]}
+                </button>
+              ))}
+            </div>
+          ) : null}
+          <span className={styles.navLanguage}>
+            <LanguageToggle locale={locale} href={switchHref} />
+          </span>
           <PaletteToggle locale={locale} />
           <HappyReelsButton
             href={`${home}#contact`}
@@ -205,16 +359,39 @@ export function Navbar({ locale, dict, introAnimation = false }: Props) {
               href={item.href}
               onClick={() => setOpen(false)}
             >
-              <span aria-hidden="true">0{index + 1}</span>
               {item.label}
             </Link>
           ))}
         </nav>
         <div className={styles.mobileFooter}>
-          <LanguageToggle locale={locale} href={switchHref} onClick={() => setOpen(false)} />
-          <HappyReelsButton href={`${home}#contact`} variant="on-brown" onClick={() => setOpen(false)}>
-            {dict.nav.cta}
-          </HappyReelsButton>
+          <div className={styles.mobileUtilities}>
+            {heroVariant ? (
+              <div
+                className={`${styles.heroToggle} ${styles.mobileHeroToggle}`}
+                role="group"
+                aria-label={locale === "de" ? "Hero-Variante" : "Hero variant"}
+              >
+                {HERO_VARIANTS.map((variant) => (
+                  <button
+                    key={variant}
+                    type="button"
+                    aria-label={`Hero ${HERO_VARIANT_NUMBERS[variant]}`}
+                    aria-pressed={heroVariant.variant === variant}
+                    onClick={() => heroVariant.setVariant(variant)}
+                  >
+                    {HERO_VARIANT_NUMBERS[variant]}
+                  </button>
+                ))}
+              </div>
+            ) : null}
+            <PaletteToggle locale={locale} />
+          </div>
+          <div className={styles.mobileCtaRow}>
+            <LanguageToggle locale={locale} href={switchHref} onClick={() => setOpen(false)} />
+            <HappyReelsButton href={`${home}#contact`} variant="on-brown" onClick={() => setOpen(false)}>
+              {dict.nav.cta}
+            </HappyReelsButton>
+          </div>
         </div>
         </div>
       </header>

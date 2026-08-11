@@ -46,24 +46,18 @@
   width: clamp(7.5rem, 17vw, 10.5rem);
 }
 
+.logo:not([data-logo-ready]) {
+  visibility: hidden;
+}
+
 .wordmark {
   margin: 0;
+  color: var(--color-cocoa-ink);
   font-size: clamp(2.6rem, 7vw, 5.25rem);
   font-weight: 820;
   line-height: 0.9;
   letter-spacing: -0.075em;
   animation: loader-wordmark-reveal 720ms cubic-bezier(0.16, 1, 0.3, 1) 480ms both;
-}
-
-.wordmark em {
-  color: var(--color-happy-gold);
-  -webkit-text-fill-color: var(--color-happy-gold);
-  -webkit-text-stroke: var(--hr-italic-stroke-width) var(--color-cocoa-ink);
-  font-family: var(--font-instrument-serif), Georgia, serif;
-  font-style: italic;
-  font-weight: 400;
-  letter-spacing: var(--hr-italic-letter-spacing);
-  paint-order: stroke fill;
 }
 
 @keyframes loader-wordmark-reveal {

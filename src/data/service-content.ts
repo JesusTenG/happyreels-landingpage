@@ -49,11 +49,11 @@ export const serviceDefinitions: Record<ServiceKey, ServiceDefinition> = {
     localized: {
       de: {
         navTitle: "Video-Produktion",
-        seoTitle: "Videoproduktion für Social Media",
+        seoTitle: "Social Media Videoproduktion für Marken & Creator",
         metaDescription:
-          "Social-first Videoproduktion von HappyReels: Konzept, Planung, Dreh und Postproduktion für Creator, Markencontent und Werbevideos.",
+          "Social Media Videoproduktion mit Konzept, Dreh und Postproduktion für Reels, Ads, Creator Content und digitale Markenkampagnen.",
         eyebrow: "Konzept · Dreh · Postproduktion",
-        h1: "Von der Idee zum Film, der für Social geboren ist.",
+        h1: "Social Media Videoproduktion für Marken und Creator.",
         lead:
           "HappyReels entwickelt und produziert Videos, die filmisch gedacht und von Beginn an für ihren digitalen Einsatz geplant sind.",
         overviewTitle: "Jede starke Produktion beginnt mit Richtung.",
@@ -87,11 +87,11 @@ export const serviceDefinitions: Record<ServiceKey, ServiceDefinition> = {
       },
       en: {
         navTitle: "Video production",
-        seoTitle: "Social media video production",
+        seoTitle: "Social media video production for brands and creators",
         metaDescription:
           "Social-first video production by HappyReels: concept, planning, filming and postproduction for creators, brand content and commercials.",
         eyebrow: "Concept · shoot · postproduction",
-        h1: "From first idea to a film built for social.",
+        h1: "Social media video production for brands and creators.",
         lead:
           "HappyReels develops and produces films that are cinematic in their thinking and planned for digital use from the start.",
         overviewTitle: "Every strong production starts with direction.",
@@ -130,11 +130,11 @@ export const serviceDefinitions: Record<ServiceKey, ServiceDefinition> = {
     localized: {
       de: {
         navTitle: "Short-Form Editing",
-        seoTitle: "Short-Form Editing für Reels, TikTok und Shorts",
+        seoTitle: "Reels schneiden lassen: Short-Form Editing",
         metaDescription:
-          "Short-Form Editing für Instagram Reels, TikTok und YouTube Shorts – mit klarem Pacing, Sound Design, Untertiteln, Motion Graphics und Color Grading.",
+          "Reels schneiden lassen: Short-Form Editing für Instagram, TikTok und YouTube Shorts mit Untertiteln, Sound, Motion Graphics und Color Grading.",
         eyebrow: "Reels · TikTok · YouTube Shorts",
-        h1: "Short-Form Editing, das Tempo in Wirkung verwandelt.",
+        h1: "Reels schneiden lassen – mit Short-Form Editing, das wirkt.",
         lead:
           "Aus vorhandenem oder neu produziertem Material entstehen kompakte Social Videos, die schnell verständlich sind und visuell zusammengehören.",
         overviewTitle: "Jeder Cut braucht einen Grund.",
@@ -168,11 +168,11 @@ export const serviceDefinitions: Record<ServiceKey, ServiceDefinition> = {
       },
       en: {
         navTitle: "Short-form editing",
-        seoTitle: "Short-form editing for Reels, TikTok and Shorts",
+        seoTitle: "Reels and short-form video editing",
         metaDescription:
           "Short-form editing for Instagram Reels, TikTok and YouTube Shorts with clear pacing, sound design, captions, motion graphics and color grading.",
         eyebrow: "Reels · TikTok · YouTube Shorts",
-        h1: "Short-form editing that turns pace into impact.",
+        h1: "Reels and short-form video editing built for impact.",
         lead:
           "Existing or newly produced footage becomes concise social video that communicates quickly and feels visually connected.",
         overviewTitle: "Every cut needs a reason.",
@@ -211,11 +211,11 @@ export const serviceDefinitions: Record<ServiceKey, ServiceDefinition> = {
     localized: {
       de: {
         navTitle: "YouTube Editing",
-        seoTitle: "YouTube Editing für Long-Form, Podcasts und Education",
+        seoTitle: "YouTube Videos schneiden lassen | Video Editing",
         metaDescription:
-          "Strukturiertes YouTube Editing für Long-Form-Videos, Podcasts, Educational Content und Entertainment – inklusive daraus abgeleiteter Short-Form-Clips.",
+          "YouTube Videos schneiden lassen: strukturiertes Editing für Long-Form, Podcasts und Education – auf Wunsch mit Trailern und Short-Form-Cutdowns.",
         eyebrow: "Long-Form · Podcasts · Education",
-        h1: "Long-Form Editing, das Länge in Spannung verwandelt.",
+        h1: "YouTube Videos schneiden lassen – mit Struktur und Spannung.",
         lead:
           "HappyReels formt Gespräche, Wissen und Entertainment zu Long-Form-Videos mit verständlichem Aufbau, Tempo und visueller Kontinuität.",
         overviewTitle: "Struktur gibt starken Inhalten Raum.",
@@ -249,11 +249,11 @@ export const serviceDefinitions: Record<ServiceKey, ServiceDefinition> = {
       },
       en: {
         navTitle: "YouTube editing",
-        seoTitle: "YouTube editing for long-form, podcasts and education",
+        seoTitle: "YouTube video editing for long-form and podcasts",
         metaDescription:
           "Structured YouTube editing for long-form video, podcasts, educational content and entertainment, including derived short-form clips.",
         eyebrow: "Long-form · podcasts · education",
-        h1: "Long-form editing that turns length into tension.",
+        h1: "YouTube video editing with structure and momentum.",
         lead:
           "HappyReels shapes conversations, knowledge and entertainment into long-form video with a clear flow, considered pacing and visual continuity.",
         overviewTitle: "Structure gives strong content room to work.",
@@ -292,11 +292,11 @@ export const serviceDefinitions: Record<ServiceKey, ServiceDefinition> = {
     localized: {
       de: {
         navTitle: "Motion & Finishing",
-        seoTitle: "Motion Design und Video Finishing",
+        seoTitle: "Motion Design, Color Grading & Video Finishing",
         metaDescription:
           "Motion Design, Typografieanimation, Compositing, Sound Design und Color Grading für ein konsistentes, hochwertiges Finish bestehender Videoproduktionen.",
         eyebrow: "Motion · Color · Sound",
-        h1: "Motion & Finishing, das jedes Detail zusammenführt.",
+        h1: "Motion Design und Video Finishing aus einer Hand.",
         lead:
           "HappyReels verfeinert bestehende Produktionen mit Motion Design, Typografie, Compositing, Sound und Farbe zu einem stimmigen Gesamtbild.",
         overviewTitle: "Wenn jedes Detail dieselbe Sprache spricht.",
@@ -330,11 +330,11 @@ export const serviceDefinitions: Record<ServiceKey, ServiceDefinition> = {
       },
       en: {
         navTitle: "Motion & finishing",
-        seoTitle: "Motion design and video finishing",
+        seoTitle: "Motion design, color grading and video finishing",
         metaDescription:
           "Motion design, typography animation, compositing, sound design and color grading for a consistent premium finish across existing video productions.",
         eyebrow: "Motion · color · sound",
-        h1: "Motion & finishing that brings every detail together.",
+        h1: "Motion design and video finishing from one creative partner.",
         lead:
           "HappyReels refines existing productions with motion design, typography, compositing, sound and color to create one coherent visual result.",
         overviewTitle: "When every detail speaks one language.",

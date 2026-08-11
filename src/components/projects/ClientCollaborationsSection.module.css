@@ -31,10 +31,31 @@
   max-width: 22ch;
   margin: 0;
   padding-bottom: 0.08em;
-  font-size: clamp(2.75rem, 6vw, 5.5rem);
-  font-weight: 780;
-  line-height: 0.94;
-  letter-spacing: -0.065em;
+  font-size: var(--hr-section-heading-size);
+  font-weight: var(--hr-section-heading-weight);
+  line-height: var(--hr-section-heading-line-height);
+  letter-spacing: var(--hr-section-heading-letter-spacing);
+}
+
+.section:not([data-variant="projects"]) .heading :global(.hr-italic-marker) {
+  --hr-italic-marker-color: var(--brown-plum);
+  margin-inline: 0;
+  border-radius: 0;
+  padding: 0;
+  color: var(--color-happy-gold) !important;
+  background-color: transparent;
+  background-image:
+    radial-gradient(circle at center, var(--brown-plum) 0 66%, transparent 69%),
+    linear-gradient(var(--brown-plum), var(--brown-plum)),
+    radial-gradient(circle at center, var(--brown-plum) 0 66%, transparent 69%);
+  background-position: left 64%, center 64%, right 64%;
+  background-size:
+    0.72em 0.72em,
+    calc(100% - 0.62em) 0.72em,
+    0.72em 0.72em;
+  font-size: 1.02em;
+  line-height: inherit;
+  -webkit-text-fill-color: var(--color-happy-gold) !important;
 }
 
 .grid {
@@ -116,7 +137,7 @@
   width: 100%;
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: end;
-  gap: 0.35rem 1rem;
+  gap: 1rem;
   padding: clamp(1.25rem, 3vw, 2.2rem);
 }
 
@@ -129,26 +150,64 @@
 
 .stackSlot .cardName { font-size: clamp(1.35rem, 2.2vw, 2.25rem); }
 
-.cardLabel {
-  max-width: 34rem;
-  color: color-mix(in srgb, var(--color-petal-white) 82%, transparent);
-  font-size: clamp(0.76rem, 1vw, 0.92rem);
-  line-height: 1.45;
-}
-
 .cardLink {
   grid-column: 2;
-  grid-row: 1 / span 2;
+  grid-row: 1;
+  position: relative;
   display: inline-flex;
+  min-height: 2.45rem;
   align-items: center;
-  gap: 0.45rem;
-  padding: 0.62rem 0.82rem;
+  justify-content: center;
+  gap: 0.35rem;
+  overflow: hidden;
+  border: 1px solid var(--color-cocoa-ink);
   border-radius: var(--radius-pill);
+  padding: 0.55rem 0.68rem 0.55rem 0.9rem;
   color: var(--color-cocoa-ink);
   background: var(--color-happy-gold);
-  font-size: 0.7rem;
-  font-weight: 800;
+  box-shadow: 4px 4px 0 color-mix(in srgb, var(--color-cocoa-ink) 30%, transparent);
+  font: 750 0.68rem/1 var(--font-manrope), sans-serif;
+  letter-spacing: 0.025em;
   white-space: nowrap;
+  transition:
+    transform 240ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 240ms ease;
+}
+
+.cardLinkLabel {
+  position: relative;
+  z-index: 1;
+}
+
+.cardLinkIcon {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  width: 1.45rem;
+  height: 1.45rem;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--color-petal-white);
+  background: var(--color-cocoa-ink);
+  transition: transform 240ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.cardLinkIcon::before {
+  content: "";
+  width: 0.43rem;
+  height: 0.43rem;
+  border-top: 1.35px solid currentColor;
+  border-right: 1.35px solid currentColor;
+  transform: rotate(45deg) translate(-1px, 1px);
+}
+
+.cardLinkIcon span {
+  position: absolute;
+  width: 0.52rem;
+  height: 1.35px;
+  background: currentColor;
+  transform: translateX(-1px);
 }
 
 .card:focus-visible {
@@ -158,6 +217,11 @@
 
 @media (hover: hover) and (pointer: fine) {
   .card:hover .media img { transform: scale(1.045); }
+  .card:hover .cardLink {
+    box-shadow: 2px 2px 0 color-mix(in srgb, var(--color-cocoa-ink) 30%, transparent);
+    transform: translate(1px, 1px);
+  }
+  .card:hover .cardLinkIcon { transform: translateX(3px); }
 }
 
 @media (max-width: 1040px) {
@@ -175,14 +239,14 @@
 @media (max-width: 680px) {
   .section,
   .section[data-variant="projects"] { padding-block: clamp(4rem, 14vw, 5.5rem); }
-  .heading h2 { font-size: clamp(2.6rem, 13vw, 4.4rem); }
+  .heading h2 { font-size: var(--hr-section-heading-size); }
   .grid {
     grid-template-columns: 1fr;
     row-gap: 2.5rem;
   }
   .featureSlot,
-  .stackSlot { grid-column: 1; min-height: 24rem; }
-  .stackSlot { min-height: 21rem; }
+  .stackSlot { grid-column: 1; min-height: 21rem; }
+  .stackSlot { min-height: 18rem; }
   .cardCopy { grid-template-columns: 1fr; }
   .cardLink { grid-column: 1; grid-row: auto; width: fit-content; margin-top: 0.45rem; }
   .cardName,
@@ -191,7 +255,11 @@
 
 @media (prefers-reduced-motion: reduce) {
   .card,
-  .media img { transition: none; }
+  .media img,
+  .cardLink,
+  .cardLinkIcon { transition: none; }
   .card:hover { transform: none; }
   .card:hover .media img { transform: none; }
+  .card:hover .cardLink,
+  .card:hover .cardLinkIcon { transform: none; }
 }

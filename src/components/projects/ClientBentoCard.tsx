@@ -15,7 +15,7 @@ type Props = Readonly<{
 export function ClientBentoCard({ locale, story }: Props) {
   const content = story.localized[locale];
   const imageSrc = story.cardImageSrc ?? story.heroImageSrc;
-  const linkLabel = locale === "de" ? "Projekt ansehen" : "View project";
+  const linkLabel = locale === "de" ? "Mehr erfahren" : "Learn more";
 
   return (
     <Link
@@ -40,8 +40,12 @@ export function ClientBentoCard({ locale, story }: Props) {
       <span className={styles.overlay} aria-hidden="true" />
       <span className={styles.cardCopy}>
         <span className={styles.cardName}>{story.name}</span>
-        <span className={styles.cardLabel}>{content.cardLabel}</span>
-        <span className={styles.cardLink}>{linkLabel}<span aria-hidden="true">↗</span></span>
+        <span className={styles.cardLink}>
+          <span className={styles.cardLinkLabel}>{linkLabel}</span>
+          <span className={styles.cardLinkIcon} aria-hidden="true">
+            <span />
+          </span>
+        </span>
       </span>
     </Link>
   );

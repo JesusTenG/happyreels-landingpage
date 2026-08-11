@@ -5,6 +5,7 @@ import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { getServiceContent } from "@/data/service-content";
+import { getServiceSeoContent } from "@/data/service-seo-content";
 import type { Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import {
@@ -41,11 +42,12 @@ export async function ServiceRoute({
 }: Readonly<{ locale: Locale; slug: string }>) {
   const serviceKey = resolveServiceKey(locale, slug);
   const content = getServiceContent(serviceKey, locale);
+  const seoContent = getServiceSeoContent(serviceKey, locale);
   const dict = await getDictionary(locale);
 
   return (
     <>
-      <JsonLd data={buildServiceJsonLd(locale, serviceKey, content)} />
+      <JsonLd data={buildServiceJsonLd(locale, serviceKey, content, seoContent)} />
       <Navbar locale={locale} dict={dict} />
       <ServiceLandingPage locale={locale} serviceKey={serviceKey} content={content} />
       <Footer locale={locale} dict={dict} />

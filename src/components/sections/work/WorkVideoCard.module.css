@@ -3,23 +3,30 @@
   position: relative;
   isolation: isolate;
   display: flex;
+  width: 100%;
+  max-width: 13rem;
+  justify-self: center;
   flex-direction: column;
   gap: 0;
-  border-radius: var(--hr-radius-card);
-  border: 1px solid var(--color-border-faint);
-  background: var(--color-cocoa-ink);
-  box-shadow: var(--shadow-glass-card);
   padding: 0;
   overflow: hidden;
+  border: 1px solid var(--color-border-faint);
+  border-radius: var(--hr-radius-card);
+  background: var(--color-cocoa-ink);
+  box-shadow: var(--shadow-glass-card);
   transition:
     border-color var(--hr-transition-card-hover),
-    box-shadow var(--hr-transition-card-hover);
+    box-shadow var(--hr-transition-card-hover),
+    transform var(--hr-transition-card-hover);
 }
 
 @media (hover: hover) {
   .work-video-card:hover {
     border-color: var(--color-border-strong);
-    box-shadow: var(--shadow-glass-card), var(--shadow-card-hover-glow);
+    box-shadow:
+      6px 6px 0 color-mix(in srgb, var(--color-happy-gold) 78%, transparent),
+      var(--shadow-card-hover-depth);
+    transform: translateY(-0.2rem);
   }
 }
 
@@ -29,70 +36,24 @@
   margin: 0;
   padding: 0;
   border: none;
+  border-radius: inherit;
   background: transparent;
   cursor: pointer;
   text-align: inherit;
-  border-radius: inherit;
-}
-
-.work-video-card__label {
-  position: absolute;
-  inset-inline: 0;
-  bottom: 0;
-  z-index: 3;
-  display: flex;
-  flex-direction: column;
-  gap: 0.32rem;
-  padding: clamp(2rem, 4vw, 2.5rem) clamp(0.8rem, 1.5vw, 1rem) clamp(0.85rem, 1.35vw, 1rem);
-  pointer-events: none;
-  text-align: left;
-  transition: opacity var(--hr-transition-card-hover);
-}
-
-.work-video-card__label::before {
-  content: "";
-  position: absolute;
-  inset: -35% 0 0;
-  z-index: -1;
-  border-radius: inherit;
-  background: linear-gradient(
-    180deg,
-    transparent 0%,
-    color-mix(in srgb, var(--color-black) 42%, transparent) 22%,
-    color-mix(in srgb, var(--color-black) 78%, transparent) 52%,
-    color-mix(in srgb, var(--color-black) 90%, transparent) 100%
-  );
-}
-
-.work-video-card__label-title {
-  font-size: clamp(0.8rem, 0.98vw, 0.9rem);
-  font-weight: 600;
-  line-height: 1.2;
-  letter-spacing: 0.015em;
-  color: color-mix(in srgb, var(--color-white) 96%, transparent);
-}
-
-.work-video-card__label-description {
-  font-size: clamp(0.66rem, 0.78vw, 0.72rem);
-  line-height: 1.48;
-  letter-spacing: 0.01em;
-  color: color-mix(in srgb, var(--color-white) 72%, transparent);
-  text-wrap: pretty;
 }
 
 .work-video-card__media-trigger:focus-visible {
-  outline: 2px solid var(--color-accent-outline-focus);
-  outline-offset: 3px;
+  outline: 3px solid var(--color-happy-gold);
+  outline-offset: -4px;
 }
 
 .work-video-card__media {
   position: relative;
   width: 100%;
+  min-height: 11rem;
   aspect-ratio: 9 / 16;
-  min-height: 12rem;
-  border-radius: 0;
   overflow: hidden;
-  border: none;
+  border-radius: inherit;
   background: var(--color-cocoa-ink);
 }
 
@@ -113,11 +74,11 @@
   position: absolute;
   inset: 0;
   z-index: 2;
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
   pointer-events: none;
-  display: block;
   opacity: 0;
   background: transparent;
   transition: opacity var(--hr-transition-card-hover);
@@ -127,88 +88,69 @@
   opacity: 1;
 }
 
-.work-video-card__detail-link {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 1rem;
-  color: var(--color-petal-white);
-  background: var(--color-cocoa-ink);
-  font-size: 0.75rem;
-  font-weight: 730;
-  text-decoration: none;
+.work-video-card__play-badge {
+  position: absolute;
+  top: 0.72rem;
+  right: 0.72rem;
+  z-index: 3;
+  display: grid;
+  width: 2.15rem;
+  height: 2.15rem;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--color-cocoa-ink) 25%, transparent);
+  border-radius: 50%;
+  color: var(--color-cocoa-ink);
+  background: var(--color-happy-gold);
+  box-shadow: 4px 4px 0 color-mix(in srgb, var(--color-cocoa-ink) 18%, transparent);
+  pointer-events: none;
+  transition:
+    transform var(--hr-transition-card-hover),
+    box-shadow var(--hr-transition-card-hover);
 }
 
-.work-video-card__detail-link span:last-child {
-  color: var(--color-happy-gold);
-  white-space: nowrap;
+.work-video-card__play-icon {
+  width: 0.8rem;
+  height: 0.8rem;
+  margin-left: 0.08rem;
 }
 
-.work-video-card__detail-link:hover span:last-child { text-decoration: underline; text-underline-offset: 0.25rem; }
-
-/*//////////////WORK VIDEO CARD — LABEL//////////////////*/
 @media (hover: hover) and (pointer: fine) {
-  .work-video-card__label {
-    opacity: 0;
-  }
-
-  .work-video-card__media-trigger:hover .work-video-card__label,
-  .work-video-card__media-trigger:focus-visible .work-video-card__label {
-    opacity: 1;
+  .work-video-card__media-trigger:hover .work-video-card__play-badge,
+  .work-video-card__media-trigger:focus-visible .work-video-card__play-badge {
+    box-shadow: 2px 2px 0 color-mix(in srgb, var(--color-cocoa-ink) 18%, transparent);
+    transform: translate(2px, 2px);
   }
 }
 
-/*//////////////WORK VIDEO CARD — MOBILE (≤768px)//////////////////*/
+/*//////////////WORK VIDEO CARD — MOBILE//////////////////*/
 @media (max-width: 768px) {
   .work-video-card {
-    width: 100%;
-    max-width: 100%;
-    margin-inline: 0;
+    max-width: 13rem;
+    margin-inline: auto;
   }
 
   .work-video-card__media {
-    aspect-ratio: 9 / 16;
-    min-height: 11rem;
-    max-height: none;
+    min-height: 10rem;
   }
 
-  .work-video-card__label {
-    padding: clamp(1.75rem, 4vw, 2.25rem) clamp(0.85rem, 2.5vw, 1rem)
-      clamp(0.85rem, 2.5vw, 1rem);
-  }
-
-  .work-video-card__label-title {
-    font-size: clamp(0.8rem, 3.2vw, 0.9rem);
-  }
-
-  .work-video-card__label-description {
-    font-size: clamp(0.66rem, 2.6vw, 0.72rem);
-    line-height: 1.48;
-  }
-}
-
-@media (max-width: 768px), (hover: none) {
-  .work-video-card__label {
-    opacity: 0.92;
+  .work-video-card__play-badge {
+    top: 0.55rem;
+    right: 0.55rem;
+    width: 1.9rem;
+    height: 1.9rem;
   }
 }
 
 /*//////////////REDUCED MOTION//////////////////*/
 @media (prefers-reduced-motion: reduce) {
   .work-video-card,
-  .work-video-card__media-trigger,
-  .work-video-card__media,
   .work-video-card__poster-layer,
-  .work-video-card__video-preview {
+  .work-video-card__video-preview,
+  .work-video-card__play-badge {
     transition: none;
   }
 
   .work-video-card:hover {
-    box-shadow: var(--shadow-glass-card), var(--shadow-card-hover-glow);
-  }
-
-  .work-video-card__label {
-    opacity: 0.92;
+    transform: none;
   }
 }

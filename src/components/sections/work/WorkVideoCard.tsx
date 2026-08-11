@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
+import { Play } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import styles from "./WorkVideoCard.module.css";
@@ -12,29 +12,21 @@ function encodePublicAssetSrc(src: string): string {
 }
 
 export type WorkVideoCardProps = Readonly<{
-  title: string;
-  description: string;
   posterSrc: string;
   previewSrc: string;
   alt: string;
   videoAriaLabel: string;
   isLightboxOpen: boolean;
   onOpen: () => void;
-  projectHref?: string;
-  detailLabel?: string;
 }>;
 
 export function WorkVideoCard({
-  title,
-  description,
   posterSrc,
   previewSrc,
   alt,
   videoAriaLabel,
   isLightboxOpen,
   onOpen,
-  projectHref,
-  detailLabel,
 }: WorkVideoCardProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [canHoverPreview, setCanHoverPreview] = useState(false);
@@ -121,7 +113,7 @@ export function WorkVideoCard({
             src={encodedPosterSrc}
             alt={alt}
             fill
-            sizes="(max-width: 768px) 92vw, (max-width: 980px) 45vw, 30vw"
+            sizes="(max-width: 480px) 17.5rem, (max-width: 820px) 48vw, 17.5rem"
             loading="lazy"
           />
           {shouldLoadPreview ? (
@@ -141,18 +133,11 @@ export function WorkVideoCard({
               onPlaying={markPreviewReady}
             />
           ) : null}
-          <span className={styles["work-video-card__label"]}>
-            <span className={styles["work-video-card__label-title"]}>{title}</span>
-            <span className={styles["work-video-card__label-description"]}>{description}</span>
+          <span className={styles["work-video-card__play-badge"]} aria-hidden="true">
+            <Play className={styles["work-video-card__play-icon"]} fill="currentColor" />
           </span>
         </div>
       </button>
-      {projectHref && detailLabel ? (
-        <Link className={styles["work-video-card__detail-link"]} href={projectHref}>
-          <span>{title}</span>
-          <span>{detailLabel} ↗</span>
-        </Link>
-      ) : null}
     </article>
   );
 }
