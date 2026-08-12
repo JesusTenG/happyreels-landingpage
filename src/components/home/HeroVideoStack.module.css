@@ -209,6 +209,7 @@
   .stack[data-variant="large"] {
     width: min(calc(100% - 0.5rem), 32rem);
     min-height: clamp(23rem, 104vw, 30rem);
+    justify-self: center;
   }
 
   .stack[data-variant="large"] .card {

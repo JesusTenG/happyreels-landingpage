@@ -21,9 +21,6 @@ export interface DepthTextProps {
   pointerTracking?: boolean;
   smoothing?: number;
   perspective?: number;
-  autoOrbit?: boolean;
-  disableAutoOrbitOnMobile?: boolean;
-  orbitSpeed?: number;
   fontSize?: string;
   fontWeight?: number | string;
   shadow?: boolean;
@@ -57,9 +54,6 @@ export default function DepthText({
   pointerTracking = true,
   smoothing = 0.14,
   perspective = 900,
-  autoOrbit = true,
-  disableAutoOrbitOnMobile = false,
-  orbitSpeed = 0.35,
   fontSize = "clamp(3rem, 12vw, 7rem)",
   fontWeight = 900,
   shadow = true,
@@ -74,7 +68,6 @@ export default function DepthText({
   const safeTilt = clamp(Number(tilt) || 0, 0, 12);
   const safeSmoothing = clamp(Number(smoothing) || 0.14, 0.02, 0.35);
   const safePerspective = clamp(Number(perspective) || 900, 300, 2000);
-  const safeOrbitSpeed = clamp(Number(orbitSpeed) || 0, 0, 2);
   const content = children ?? text;
 
   const baseRotation = useMemo(
@@ -103,16 +96,18 @@ export default function DepthText({
     const root = rootRef.current;
     const stage = stageRef.current;
     if (!root || !stage) return;
+    const interactiveRoot = root;
 
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
     const canTrackPointer = pointerTracking && finePointer && !reducedMotion;
-    const canAutoOrbit =
-      autoOrbit &&
-      !(disableAutoOrbitOnMobile && window.matchMedia("(max-width: 760px)").matches);
+    const viewportTarget = interactiveRoot.closest("h1") ?? interactiveRoot;
+    const minimumFrameInterval = 1000 / 60;
+    const rotationEpsilon = 0.01;
     let frameId = 0;
-    let activePointer = false;
-    const startTime = performance.now();
+    let lastFrameTime = 0;
+    let isInViewport = false;
+    let pendingPointer: Readonly<{ x: number; y: number }> | null = null;
     const current = { ...baseRotation };
     const target = { ...baseRotation };
 
@@ -120,74 +115,121 @@ export default function DepthText({
       stage.style.transform = getTransform(current.x, current.y);
     };
 
-    if (reducedMotion || (!canTrackPointer && !canAutoOrbit)) {
+    const stopAndReset = () => {
+      if (frameId) window.cancelAnimationFrame(frameId);
+      frameId = 0;
+      lastFrameTime = 0;
+      pendingPointer = null;
+      current.x = baseRotation.x;
+      current.y = baseRotation.y;
+      target.x = baseRotation.x;
+      target.y = baseRotation.y;
+      applyTransform();
+    };
+
+    function scheduleFrame() {
+      if (frameId || !isInViewport || document.hidden) return;
+      frameId = window.requestAnimationFrame(tick);
+    }
+
+    function tick(now: number) {
+      frameId = 0;
+      if (!isInViewport || document.hidden) return;
+
+      if (lastFrameTime && now - lastFrameTime < minimumFrameInterval - 0.5) {
+        scheduleFrame();
+        return;
+      }
+      lastFrameTime = now;
+
+      if (pendingPointer) {
+        const rect = interactiveRoot.getBoundingClientRect();
+        if (rect.width && rect.height) {
+          const x = clamp(
+            (pendingPointer.x - (rect.left + rect.width / 2)) / (rect.width * 0.8),
+            -1,
+            1,
+          );
+          const y = clamp(
+            (pendingPointer.y - (rect.top + rect.height / 2)) / (rect.height * 0.8),
+            -1,
+            1,
+          );
+
+          target.x = baseRotation.x - y * safeTilt;
+          target.y = baseRotation.y + x * safeTilt;
+        }
+        pendingPointer = null;
+      }
+
+      const deltaX = target.x - current.x;
+      const deltaY = target.y - current.y;
+      const isSettled =
+        Math.abs(deltaX) <= rotationEpsilon &&
+        Math.abs(deltaY) <= rotationEpsilon;
+
+      if (isSettled) {
+        current.x = target.x;
+        current.y = target.y;
+        applyTransform();
+        lastFrameTime = 0;
+        return;
+      }
+
+      current.x += deltaX * safeSmoothing;
+      current.y += deltaY * safeSmoothing;
+      applyTransform();
+      scheduleFrame();
+    }
+
+    if (!canTrackPointer) {
       applyTransform();
       return;
     }
 
     const handlePointerMove = (event: PointerEvent) => {
-      const rect = root.getBoundingClientRect();
-      if (!rect.width || !rect.height) return;
+      if (!isInViewport || document.hidden) return;
 
-      activePointer = true;
-      const x = clamp(
-        (event.clientX - (rect.left + rect.width / 2)) / (rect.width * 0.8),
-        -1,
-        1,
-      );
-      const y = clamp(
-        (event.clientY - (rect.top + rect.height / 2)) / (rect.height * 0.8),
-        -1,
-        1,
-      );
-
-      target.x = baseRotation.x - y * safeTilt;
-      target.y = baseRotation.y + x * safeTilt;
+      pendingPointer = { x: event.clientX, y: event.clientY };
+      scheduleFrame();
     };
 
     const resetPointer = () => {
-      activePointer = false;
+      pendingPointer = null;
       target.x = baseRotation.x;
       target.y = baseRotation.y;
+      scheduleFrame();
     };
 
-    if (canTrackPointer) {
-      window.addEventListener("pointermove", handlePointerMove, { passive: true });
-      window.addEventListener("pointerleave", resetPointer);
-      window.addEventListener("blur", resetPointer);
-    }
-
-    const tick = (now: number) => {
-      if ((!canTrackPointer || !activePointer) && canAutoOrbit) {
-        const orbit = ((now - startTime) / 1000) * safeOrbitSpeed * Math.PI * 2;
-        const amount = canTrackPointer ? 0.18 : 0.55;
-        target.x = baseRotation.x + Math.sin(orbit) * safeTilt * amount;
-        target.y = baseRotation.y + Math.cos(orbit * 0.85) * safeTilt * amount;
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        stopAndReset();
       }
-
-      current.x += (target.x - current.x) * safeSmoothing;
-      current.y += (target.y - current.y) * safeSmoothing;
-      applyTransform();
-      frameId = window.requestAnimationFrame(tick);
     };
+
+    const viewportObserver = new IntersectionObserver(([entry]) => {
+      isInViewport = Boolean(entry?.isIntersecting);
+      if (!isInViewport) stopAndReset();
+    });
 
     applyTransform();
-    frameId = window.requestAnimationFrame(tick);
+    viewportObserver.observe(viewportTarget);
+    window.addEventListener("pointermove", handlePointerMove, { passive: true });
+    window.addEventListener("pointerleave", resetPointer);
+    window.addEventListener("blur", resetPointer);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
 
     return () => {
-      if (canTrackPointer) {
-        window.removeEventListener("pointermove", handlePointerMove);
-        window.removeEventListener("pointerleave", resetPointer);
-        window.removeEventListener("blur", resetPointer);
-      }
-      window.cancelAnimationFrame(frameId);
+      viewportObserver.disconnect();
+      window.removeEventListener("pointermove", handlePointerMove);
+      window.removeEventListener("pointerleave", resetPointer);
+      window.removeEventListener("blur", resetPointer);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      if (frameId) window.cancelAnimationFrame(frameId);
     };
   }, [
-    autoOrbit,
     baseRotation,
-    disableAutoOrbitOnMobile,
     pointerTracking,
-    safeOrbitSpeed,
     safeSmoothing,
     safeTilt,
   ]);
