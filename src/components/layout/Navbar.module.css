@@ -105,7 +105,7 @@
   align-items: center;
   justify-content: space-between;
   gap: clamp(1rem, 2.5vw, 2.5rem);
-  padding-inline: clamp(1rem, 2vw, 2rem);
+  padding-inline: clamp(0.75rem, 1.2vw, 1rem);
   color: inherit;
 }
 
@@ -391,7 +391,7 @@
   outline-offset: 4px;
 }
 
-@media (max-width: 940px) {
+@media (max-width: 1080px) {
   .header {
     --mobile-nav-swipe-duration: 280ms;
     --mobile-menu-drop-duration: 320ms;
