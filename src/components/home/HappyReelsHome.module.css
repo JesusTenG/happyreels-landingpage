@@ -868,20 +868,42 @@
     min-width: 0;
     flex: 1 1 0;
     justify-content: center;
-    padding-inline: 0.7rem;
+    gap: clamp(0.45rem, 2vw, 0.7rem);
+    padding-inline: clamp(0.6rem, 2.5vw, 0.85rem);
+    font-size: clamp(0.75rem, 3.2vw, 0.82rem);
+    line-height: 1.2;
+    letter-spacing: clamp(0.015em, 0.6vw, 0.04em);
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+  .heroActions > * > span:last-child {
+    width: clamp(1.5rem, 6.5vw, 1.75rem);
+    height: clamp(1.5rem, 6.5vw, 1.75rem);
   }
   .contactTitleTogether { white-space: normal; }
 }
 
-@media (max-width: 370px) {
-  .heroTitle { font-size: clamp(2.6rem, 13.4vw, 3.1rem); }
+@media (max-width: 400px) {
   .heroActions {
     flex-direction: column;
   }
   .heroActions > * {
     width: 100%;
     flex-basis: auto;
+    gap: 0.85rem;
+    padding-inline: 1.15rem;
+    font-size: 0.82rem;
+    line-height: 1.2;
+    letter-spacing: 0.04em;
   }
+  .heroActions > * > span:last-child {
+    width: 1.85rem;
+    height: 1.85rem;
+  }
+}
+
+@media (max-width: 370px) {
+  .heroTitle { font-size: clamp(2.6rem, 13.4vw, 3.1rem); }
 }
 
 @media (prefers-reduced-motion: reduce) {
