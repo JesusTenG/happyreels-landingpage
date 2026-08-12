@@ -887,22 +887,9 @@
   .contactTitleTogether { white-space: normal; }
 }
 
-@media (max-width: 400px) {
-  .heroActions {
-    flex-direction: column;
-  }
-  .heroActions > * {
-    width: 100%;
-    flex-basis: auto;
-    gap: 0.85rem;
-    padding-inline: 1.15rem;
-    font-size: 0.82rem;
-    line-height: 1.2;
-    letter-spacing: 0.04em;
-  }
+@media (max-width: 374px) {
   .heroActions > * > span:last-child {
-    width: 1.85rem;
-    height: 1.85rem;
+    display: none;
   }
 }
 
