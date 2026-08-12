@@ -38,12 +38,18 @@
 }
 
 .top em {
-  color: var(--color-happy-gold);
-  -webkit-text-fill-color: var(--color-happy-gold);
+  color: inherit;
+  -webkit-text-fill-color: currentColor;
   font-family: var(--font-instrument-serif), Georgia, serif;
+  font-style: italic;
   font-weight: 400;
   letter-spacing: var(--hr-italic-letter-spacing);
   paint-order: stroke fill;
+}
+
+.top em span {
+  color: var(--color-happy-gold);
+  -webkit-text-fill-color: var(--color-happy-gold);
 }
 
 .grid {

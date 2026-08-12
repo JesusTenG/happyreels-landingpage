@@ -122,9 +122,11 @@
 
 .focus {
   display: grid;
-  width: min(84%, 48rem);
+  width: min(92%, 68rem);
+  place-self: center;
   justify-items: center;
   gap: clamp(1.4rem, 2.5vw, 2rem);
+  margin-inline: auto;
   text-align: center;
   pointer-events: auto;
 }
@@ -132,17 +134,34 @@
 .focus h1 {
   display: grid;
   width: 100%;
+  place-items: center;
   justify-items: center;
   margin: 0;
   color: var(--leo-paper);
-  font-size: clamp(3.4rem, 5.2vw, 6.25rem);
-  font-weight: var(--hr-section-heading-weight);
+  -webkit-text-fill-color: var(--leo-paper);
+  font-family: var(--font-instrument-serif), Georgia, serif;
+  font-size: clamp(3rem, 3.8vw, 4.8rem);
+  font-style: italic;
+  font-weight: var(--hr-italic-heading-weight);
   line-height: 0.88;
-  letter-spacing: -0.07em;
+  letter-spacing: var(--hr-italic-letter-spacing);
+  overflow: visible;
   text-align: center;
   text-shadow:
     0 0.07em 0.18em rgba(0, 0, 0, 0.24),
     0 0.18em 0.5em rgba(0, 0, 0, 0.2);
+}
+
+.headlineSwap {
+  grid-area: 1 / 1;
+  display: grid;
+  width: 100%;
+  place-self: center;
+  justify-items: center;
+  overflow: visible;
+  padding-inline: 0.08em;
+  text-align: center;
+  pointer-events: none;
 }
 
 .focusLine {
@@ -150,41 +169,74 @@
   width: 100%;
   align-items: baseline;
   justify-content: center;
-  gap: 0.1em;
-  opacity: 0;
+  gap: 0;
+  margin-inline: auto;
+  overflow: visible;
+  padding-inline: 0.08em;
+  text-align: center;
   white-space: nowrap;
 }
 
-.root[data-hero-ready] .focusLine {
-  animation: leo-content-reveal 720ms cubic-bezier(0.16, 1, 0.3, 1) both;
+.warpLetter {
+  --warp-index: 0;
+
+  display: inline-block;
+  min-width: 0;
+  opacity: 0;
+  filter: blur(0.12em);
+  transform: translate3d(0, 0.48em, 0);
+  transition:
+    opacity 300ms ease,
+    filter 440ms ease,
+    transform 540ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: calc(var(--warp-index) * 4ms);
+  will-change: opacity, filter, transform;
 }
 
-.root[data-hero-ready] .focusLine:first-child {
-  animation-delay: 830ms;
+.warpLetter:not(.warpSpace):not(.warpJoin) {
+  margin-inline-end: -0.012em;
 }
 
-.root[data-hero-ready] .focusLine:last-child {
-  animation-delay: 930ms;
+.warpSpace {
+  flex: 0 0 0.24em;
+  width: 0.24em;
 }
 
-.focusAccent {
-  color: var(--leo-gold);
-  -webkit-text-fill-color: var(--leo-gold);
-  font-family: var(--font-instrument-serif), Georgia, serif;
-  font-style: italic;
-  font-weight: var(--hr-italic-heading-weight);
-  letter-spacing: var(--hr-italic-letter-spacing);
-  paint-order: stroke fill;
+.warpJoin {
+  flex: 0 0 0.1em;
+  width: 0.1em;
+}
+
+.root[data-hero-ready] .headlineSwap[data-active] .warpLetter {
+  opacity: 1;
+  filter: blur(0);
+  transform: translate3d(0, 0, 0);
+  transition-delay: calc(80ms + var(--warp-index) * 11ms);
+}
+
+.root[data-hero-ready] .headlineSwap[data-previous] .warpLetter {
+  opacity: 0;
+  filter: blur(0.1em);
+  transform: translate3d(0, -0.38em, 0);
+  transition-delay: calc(var(--warp-index) * 5ms);
+}
+
+.root[data-hero-ready] .headlineInitial[data-active] .warpLetter {
+  transition-delay: calc(830ms + var(--warp-index) * 11ms);
 }
 
 .actions {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   justify-content: center;
   gap: clamp(0.75rem, 1.4vw, 1rem);
+  margin-inline: auto;
+  text-align: center;
 }
 
 .actions > * {
+  justify-content: center;
   opacity: 0;
 }
 
@@ -418,14 +470,18 @@
   }
 
   .focus {
-    width: calc(var(--leo-back-wall-width) - 2rem);
-    max-width: 34rem;
+    width: min(88vw, 38rem);
+    max-width: none;
     gap: 1.15rem;
   }
 
   .focus h1 {
-    font-size: clamp(2.75rem, 10.3vw, 4.4rem);
+    font-size: clamp(2.75rem, 7.5vw, 4rem);
     line-height: 0.92;
+  }
+
+  .headlineSwap:not([data-active]) {
+    display: none;
   }
 
   .actions {
@@ -473,12 +529,8 @@
   }
 
   .focus {
-    width: calc(var(--leo-back-wall-width) - 1.4rem);
+    width: 92vw;
     gap: 0.9rem;
-  }
-
-  .focus h1 {
-    font-size: clamp(2.4rem, 10.3vw, 2.9rem);
   }
 
   .actions {
@@ -506,10 +558,28 @@
     will-change: auto;
   }
 
-  .root[data-hero-ready] .focusLine,
+  .root[data-hero-ready] .headlineSwap,
+  .root[data-hero-ready] .actions > * {
+    animation: none;
+  }
+
+  .root[data-hero-ready] .headlineSwap {
+    transition: none;
+  }
+
+  .root[data-hero-ready] .headlineSwap .warpLetter {
+    opacity: 0;
+    filter: none;
+    transform: none;
+    transition: none;
+  }
+
+  .root[data-hero-ready] .headlineSwap[data-active] .warpLetter {
+    opacity: 1;
+  }
+
   .root[data-hero-ready] .actions > * {
     opacity: 1;
-    animation: none;
   }
 
   .root[data-hero-ready] .scrollCue {
