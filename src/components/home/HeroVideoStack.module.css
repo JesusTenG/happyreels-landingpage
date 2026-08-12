@@ -160,6 +160,7 @@
   .stack[data-variant="large"] {
     width: min(calc(100% - 1rem), 45rem);
     min-height: clamp(31rem, 72vw, 42rem);
+    justify-self: center;
     transform: none;
   }
 
@@ -209,7 +210,6 @@
   .stack[data-variant="large"] {
     width: min(calc(100% - 0.5rem), 32rem);
     min-height: clamp(23rem, 104vw, 30rem);
-    justify-self: center;
   }
 
   .stack[data-variant="large"] .card {
