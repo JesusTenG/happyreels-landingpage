@@ -38,9 +38,6 @@ export function HeroShowcase({ locale, ctaLabel, projectsHref }: Props) {
                 pointerTracking
                 smoothing={0.14}
                 perspective={900}
-                autoOrbit
-                disableAutoOrbitOnMobile
-                orbitSpeed={0.35}
                 fontSize="inherit"
                 fontWeight="inherit"
                 shadow
