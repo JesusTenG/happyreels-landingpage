@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import type { CSSProperties } from "react";
 
 import { SectionWave } from "@/components/layout/SectionWave";
 import HappyReelsButton from "@/components/ui/HappyReelsButton";
@@ -19,13 +20,172 @@ const WORD_LAYER_CLASSES: Readonly<Record<string, string>> = {
   production: styles.wordProduction,
 };
 
+const HERO_HEADLINE_INTERVAL_MS = 5_000;
+
+const HERO_HEADLINES = [
+  {
+    id: "footage-feeling",
+    label: "From Footage to Feeling",
+    lines: [
+      { lead: "From", accent: "Footage" },
+      { lead: "to", accent: "Feeling" },
+    ],
+  },
+  {
+    id: "stories-move",
+    label: "Turning Raw Footage into Stories That Move",
+    lines: [
+      { lead: "Turning Raw", accent: "Footage" },
+      { lead: "into Stories That", accent: "Move" },
+    ],
+  },
+  {
+    id: "stop-scroll",
+    label: "Every Frame Crafted to Stop the Scroll",
+    lines: [
+      { lead: "Every Frame", accent: "Crafted" },
+      { lead: "to Stop the", accent: "Scroll" },
+    ],
+  },
+  {
+    id: "stories-matter",
+    label: "We Turn Raw Moments into Stories That Matter",
+    lines: [
+      { lead: "We Turn Raw", accent: "Moments" },
+      { lead: "into Stories That", accent: "Matter" },
+    ],
+  },
+  {
+    id: "lasting-impression",
+    label: "From the First Frame to a Lasting Impression",
+    lines: [
+      { lead: "From the First", accent: "Frame" },
+      { lead: "to a Lasting", accent: "Impression" },
+    ],
+  },
+  {
+    id: "attention-lasts",
+    label: "Turn Seconds of Attention into Something That Lasts",
+    lines: [
+      { lead: "Turn Seconds of", accent: "Attention" },
+      { lead: "into Something That", accent: "Lasts" },
+    ],
+  },
+] as const;
+
+function WarpedHeadlineLine({
+  lead,
+  accent,
+  startIndex,
+}: Readonly<{ lead: string; accent: string; startIndex: number }>) {
+  const text = `${lead} ${accent}`;
+
+  return (
+    <span className={styles.focusLine}>
+      {Array.from(text).map((character, index) => (
+        <span
+          key={`${startIndex + index}-${character}`}
+          className={`${styles.warpLetter} ${
+            character === " "
+              ? index === lead.length
+                ? styles.warpJoin
+                : styles.warpSpace
+              : ""
+          }`}
+          style={{ "--warp-index": startIndex + index } as CSSProperties}
+        >
+          {character === " " ? "\u00a0" : character}
+        </span>
+      ))}
+    </span>
+  );
+}
+
 export function HeroLeonardo({ locale, ctaLabel, projectsHref }: HeroVariantProps) {
   const rootRef = useRef<HTMLElement>(null);
+  const headlineRef = useRef<HTMLHeadingElement>(null);
   const zoomLayerRef = useRef<HTMLDivElement>(null);
   const sceneRef = useRef<HTMLDivElement>(null);
   const wordCanvasRefs = useRef<Array<HTMLCanvasElement | null>>([]);
   const backWallMeasureRef = useRef<HTMLDivElement>(null);
+  const [headlineStep, setHeadlineStep] = useState(0);
   const isGerman = locale === "de";
+  const headline = HERO_HEADLINES[headlineStep % HERO_HEADLINES.length];
+
+  useEffect(() => {
+    const root = rootRef.current;
+    const headlineElement = headlineRef.current;
+    if (!root || !headlineElement) return;
+
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const mobileViewport = window.matchMedia("(max-width: 820px)");
+    let interval = 0;
+    let isHeadlineVisible = false;
+    let isHeroReady = root.dataset.heroReady === "true";
+
+    const stopHeadlineCycle = () => {
+      if (!interval) return;
+      window.clearInterval(interval);
+      interval = 0;
+    };
+
+    const syncHeadlineCycle = () => {
+      const shouldCycle =
+        isHeadlineVisible &&
+        isHeroReady &&
+        document.visibilityState === "visible" &&
+        !mobileViewport.matches &&
+        !reducedMotion.matches;
+
+      if (!shouldCycle) {
+        stopHeadlineCycle();
+        return;
+      }
+
+      if (interval) return;
+      interval = window.setInterval(() => {
+        setHeadlineStep((step) => step + 1);
+      }, HERO_HEADLINE_INTERVAL_MS);
+    };
+
+    const visibilityObserver = new IntersectionObserver(
+      ([entry]) => {
+        isHeadlineVisible = entry.isIntersecting;
+        syncHeadlineCycle();
+      },
+      { threshold: 0.5 },
+    );
+    visibilityObserver.observe(headlineElement);
+
+    const readinessObserver = new MutationObserver(() => {
+      isHeroReady = root.dataset.heroReady === "true";
+      syncHeadlineCycle();
+    });
+    readinessObserver.observe(root, {
+      attributes: true,
+      attributeFilter: ["data-hero-ready"],
+    });
+
+    const handleActivityChange = () => {
+      if (mobileViewport.matches) {
+        setHeadlineStep(0);
+      }
+      syncHeadlineCycle();
+    };
+    document.addEventListener("visibilitychange", handleActivityChange);
+    reducedMotion.addEventListener("change", handleActivityChange);
+    mobileViewport.addEventListener("change", handleActivityChange);
+    handleActivityChange();
+
+    return () => {
+      stopHeadlineCycle();
+      visibilityObserver.disconnect();
+      readinessObserver.disconnect();
+      document.removeEventListener("visibilitychange", handleActivityChange);
+      reducedMotion.removeEventListener("change", handleActivityChange);
+      mobileViewport.removeEventListener("change", handleActivityChange);
+    };
+  }, []);
 
   useLayoutEffect(() => {
     const root = rootRef.current;
@@ -243,15 +403,48 @@ export function HeroLeonardo({ locale, ctaLabel, projectsHref }: HeroVariantProp
 
           <div className={styles.focusOverlay}>
             <div className={styles.focus}>
-              <h1 id="hero-title" aria-label="From Footage to Feeling">
-                <span className={styles.focusLine}>
-                  <span>From</span>
-                  <em className={styles.focusAccent}>Footage</em>
-                </span>
-                <span className={styles.focusLine}>
-                  <span>to</span>
-                  <em className={styles.focusAccent}>Feeling</em>
-                </span>
+              <h1 ref={headlineRef} id="hero-title" aria-label={headline.label}>
+                {HERO_HEADLINES.map((candidate, index) => {
+                  const isActive = index === headlineStep % HERO_HEADLINES.length;
+                  const wasActive =
+                    headlineStep > 0 &&
+                    index === (headlineStep - 1) % HERO_HEADLINES.length;
+
+                  return (
+                    <span
+                      key={candidate.id}
+                      className={`${styles.headlineSwap} ${
+                        index === 0 && headlineStep === 0
+                          ? styles.headlineInitial
+                          : styles.headlineRotating
+                      }`}
+                      data-active={isActive ? "true" : undefined}
+                      data-previous={wasActive ? "true" : undefined}
+                      aria-hidden="true"
+                    >
+                      {candidate.lines.map((line, lineIndex) => {
+                        const text = `${line.lead} ${line.accent}`;
+                        const startIndex =
+                          candidate.lines
+                            .slice(0, lineIndex)
+                            .reduce(
+                              (total, previousLine) =>
+                                total + Array.from(`${previousLine.lead} ${previousLine.accent}`).length,
+                              0,
+                            ) + lineIndex * 3;
+
+                        return (
+                          <WarpedHeadlineLine
+                            key={text}
+                            lead={line.lead}
+                            accent={line.accent}
+                            startIndex={startIndex}
+                          />
+                        );
+                      })}
+                    </span>
+                  );
+                })}
               </h1>
               <div className={styles.actions}>
                 <HappyReelsButton

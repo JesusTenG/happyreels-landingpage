@@ -14,7 +14,7 @@
 }
 
 .footer {
-  width: 8rem;
+  width: clamp(5rem, 7vw, 6rem);
   aspect-ratio: 548 / 432;
 }
 

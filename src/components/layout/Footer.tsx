@@ -74,7 +74,9 @@ export function Footer({ locale, dict }: Props) {
             <BrandMark size="footer" reveal="viewport" interactive />
           </Link>
           <p>
-            From footage to <em>feeling.</em>
+            <em>
+              From footage to <span>feeling.</span>
+            </em>
           </p>
         </div>
 
