@@ -27,7 +27,8 @@
     radial-gradient(circle closest-side at center, var(--hr-marker-paint) 98%, transparent 100%);
   background-position: right 58%, left 58%, center 58%, right 58%;
   background-size:
-    var(--hr-marker-cover-width) 0.78em,
+    calc(var(--hr-marker-cover-width) + var(--hr-marker-cover-overscan))
+      calc(0.78em + 4px),
     0.78em 0.78em,
     calc(100% - 0.68em) 0.78em,
     0.78em 0.78em;

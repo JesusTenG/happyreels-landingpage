@@ -270,6 +270,12 @@ video {
   initial-value: 0%;
 }
 
+@property --hr-marker-cover-overscan {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 0px;
+}
+
 .hr-italic-marker {
   --hr-marker-paint: var(--hr-italic-marker-color, var(--color-happy-gold));
 
@@ -298,7 +304,8 @@ video {
   background-position: right 58%, left 58%, center 58%, right 58%;
   background-repeat: no-repeat;
   background-size:
-    var(--hr-marker-cover-width) 0.78em,
+    calc(var(--hr-marker-cover-width) + var(--hr-marker-cover-overscan))
+      calc(0.78em + 4px),
     0.78em 0.78em,
     calc(100% - 0.68em) 0.78em,
     0.78em 0.78em;
@@ -315,7 +322,14 @@ video {
 .site-variant-root[data-site-color-mode="dark"] .hr-italic-marker {
   --hr-marker-cover-width: 100%;
 
-  transition: --hr-marker-cover-width 620ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition:
+    --hr-marker-cover-width 620ms cubic-bezier(0.16, 1, 0.3, 1),
+    --hr-marker-cover-overscan 620ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.site-variant-root[data-site-variant="perspective"][data-site-color-mode="dark"]
+  .hr-italic-marker {
+  --hr-marker-cover-overscan: 2px;
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -323,6 +337,7 @@ video {
     :where(h1, h2, h3, h4):hover
     .hr-italic-marker {
     --hr-marker-cover-width: 0%;
+    --hr-marker-cover-overscan: 0px;
   }
 }
 
@@ -414,6 +429,26 @@ video {
     --hr-section-heading-line-height: 0.96;
     --hr-section-heading-letter-spacing: -0.055em;
   }
+}
+
+/* Hero 01: italic words keep the heading color and use the marker as the accent. */
+.site-variant-root[data-site-variant="current"][data-site-color-mode]
+  main
+  :where(h1, h2, h3, h4)
+  .hr-italic-marker {
+  --hr-italic-marker-color: var(--color-happy-gold) !important;
+  --hr-marker-cover-width: 0%;
+
+  color: inherit !important;
+  -webkit-text-fill-color: currentColor !important;
+}
+
+/* A yellow surface needs a neutral marker to retain contrast. */
+.site-variant-root[data-site-variant="current"][data-site-color-mode="light"]
+  [data-home-section="contact"]
+  :where(h1, h2, h3, h4)
+  .hr-italic-marker {
+  --hr-italic-marker-color: var(--color-soft-clay) !important;
 }
 
 
@@ -543,6 +578,61 @@ video {
   color: var(--color-petal-white);
   background: var(--hero-two-dark-bg);
   color-scheme: dark;
+}
+
+/* Hero 02: section-aware brown text markers for the warm dark palette. */
+.site-variant-root[data-site-variant="perspective"][data-site-color-mode="dark"] {
+  --hero-two-marker-on-bg: color-mix(
+    in srgb,
+    var(--brown-mauve) 68%,
+    var(--color-soft-clay)
+  );
+  --hero-two-marker-on-surface: color-mix(
+    in srgb,
+    var(--brown-plum) 58%,
+    var(--color-soft-clay)
+  );
+  --hero-two-marker-on-surface-alt: color-mix(
+    in srgb,
+    var(--brown-mauve) 38%,
+    var(--color-soft-clay)
+  );
+  --hero-two-marker-on-deep: color-mix(
+    in srgb,
+    var(--brown-plum) 78%,
+    var(--color-dusty-blush)
+  );
+  --hr-italic-marker-color: var(--hero-two-marker-on-bg);
+}
+
+.site-variant-root[data-site-variant="perspective"][data-site-color-mode="dark"]
+  :is([data-home-section="outcomes"], [data-home-section="wave-cta"], [data-variant="home"]) {
+  --hr-italic-marker-color: var(--hero-two-marker-on-surface);
+}
+
+.site-variant-root[data-site-variant="perspective"][data-site-color-mode="dark"]
+  [data-home-section="wave-cta"] {
+  --wave-cta-marker: var(--hero-two-marker-on-surface);
+}
+
+.site-variant-root[data-site-variant="perspective"][data-site-color-mode="dark"]
+  [data-variant="home"] {
+  --collaboration-marker-color: var(--hero-two-marker-on-surface);
+}
+
+.site-variant-root[data-site-variant="perspective"][data-site-color-mode="dark"]
+  :is(#services, [data-home-section="proof"]) {
+  --hr-italic-marker-color: var(--hero-two-marker-on-surface-alt);
+}
+
+.site-variant-root[data-site-variant="perspective"][data-site-color-mode="dark"]
+  :is(#results, [data-home-section="process"], #faq) {
+  --hr-italic-marker-color: var(--hero-two-marker-on-deep);
+}
+
+.site-variant-root[data-site-variant="perspective"][data-site-color-mode="dark"]
+  [data-home-section="contact"] {
+  --hr-italic-marker-color: var(--hero-two-marker-on-bg);
 }
 
 .site-variant-root[data-site-color-mode="dark"] #hero {
@@ -845,6 +935,12 @@ video {
 
 .site-variant-root[data-site-color-mode="dark"] #hero + [data-section-wave] {
   --wave-from: var(--hero-two-dark-bg) !important;
+  --wave-to: var(--hero-two-dark-bg) !important;
+}
+
+.site-variant-root[data-site-variant="current"][data-site-color-mode="dark"]
+  #hero + [data-section-wave] {
+  --wave-from: var(--hero-two-dark-deep) !important;
   --wave-to: var(--hero-two-dark-bg) !important;
 }
 

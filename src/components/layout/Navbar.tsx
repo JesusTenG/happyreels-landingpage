@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Settings2 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useId, useRef, useState } from "react";
@@ -143,6 +143,119 @@ function HeroVariantDropdown({
             <strong>{HERO_VARIANT_NUMBERS[variant]}</strong>
           </button>
         ))}
+      </div>
+    </div>
+  );
+}
+
+type NavbarUtilitiesDropdownProps = Readonly<{
+  locale: Locale;
+  heroValue?: HeroVariant;
+  onHeroChange?: (variant: HeroVariant) => void;
+  switchHref: string;
+}>;
+
+function NavbarUtilitiesDropdown({
+  locale,
+  heroValue,
+  onHeroChange,
+  switchHref,
+}: NavbarUtilitiesDropdownProps) {
+  const [open, setOpen] = useState(false);
+  const rootRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const panelId = `navbar-utilities-${useId().replaceAll(":", "")}`;
+
+  useEffect(() => {
+    if (!open) return;
+
+    const handlePointerDown = (event: PointerEvent) => {
+      if (!rootRef.current?.contains(event.target as Node)) setOpen(false);
+    };
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== "Escape") return;
+      setOpen(false);
+      triggerRef.current?.focus();
+    };
+
+    document.addEventListener("pointerdown", handlePointerDown);
+    document.addEventListener("keydown", handleKeyDown);
+    rootRef.current
+      ?.querySelector<HTMLElement>("[data-utilities-panel] button, [data-utilities-panel] a")
+      ?.focus();
+
+    return () => {
+      document.removeEventListener("pointerdown", handlePointerDown);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [open]);
+
+  return (
+    <div
+      ref={rootRef}
+      className={styles.compactUtilities}
+      data-open={open ? "true" : undefined}
+    >
+      <button
+        ref={triggerRef}
+        type="button"
+        className={styles.compactUtilitiesTrigger}
+        aria-label={locale === "de" ? "Zusatzoptionen öffnen" : "Open additional options"}
+        aria-haspopup="dialog"
+        aria-expanded={open}
+        aria-controls={panelId}
+        onClick={() => setOpen((current) => !current)}
+      >
+        <Settings2 aria-hidden="true" />
+        <span>{locale === "de" ? "Optionen" : "Options"}</span>
+        <ChevronDown aria-hidden="true" />
+      </button>
+
+      <div
+        id={panelId}
+        className={styles.compactUtilitiesPanel}
+        role="dialog"
+        aria-label={locale === "de" ? "Zusatzoptionen" : "Additional options"}
+        aria-hidden={!open}
+        inert={!open}
+        data-utilities-panel
+      >
+        {heroValue && onHeroChange ? (
+          <div className={styles.compactUtilityRow}>
+            <span>{locale === "de" ? "Hero-Variante" : "Hero variant"}</span>
+            <div className={styles.compactHeroToggle} role="group" aria-label={locale === "de" ? "Hero-Variante" : "Hero variant"}>
+              {HERO_VARIANTS.map((variant) => (
+                <button
+                  key={variant}
+                  type="button"
+                  aria-pressed={heroValue === variant}
+                  onClick={() => onHeroChange(variant)}
+                >
+                  {HERO_VARIANT_NUMBERS[variant]}
+                </button>
+              ))}
+            </div>
+          </div>
+        ) : null}
+
+        <div className={styles.compactUtilityRow}>
+          <span>{locale === "de" ? "Sprache" : "Language"}</span>
+          <LanguageToggle
+            locale={locale}
+            href={switchHref}
+            onClick={() => setOpen(false)}
+          />
+        </div>
+
+        {heroValue ? (
+          <div className={styles.compactUtilityRow}>
+            <span>{locale === "de" ? "Darstellung" : "Appearance"}</span>
+            <div className={styles.compactVisualToggles}>
+              <PaletteToggle locale={locale} />
+              <TextMarkerToggle locale={locale} />
+            </div>
+          </div>
+        ) : null}
       </div>
     </div>
   );
@@ -531,18 +644,26 @@ export function Navbar({ locale, dict, introAnimation = false }: Props) {
         </div>
 
         <div className={styles.actions}>
-          {heroVariant ? (
-            <HeroVariantDropdown
-              locale={locale}
-              value={heroVariant.variant}
-              onChange={heroVariant.setVariant}
-            />
-          ) : null}
-          <span className={styles.navLanguage}>
-            <LanguageToggle locale={locale} href={switchHref} />
-          </span>
-          <PaletteToggle locale={locale} />
-          <TextMarkerToggle locale={locale} />
+          <div className={styles.desktopUtilities}>
+            {heroVariant ? (
+              <HeroVariantDropdown
+                locale={locale}
+                value={heroVariant.variant}
+                onChange={heroVariant.setVariant}
+              />
+            ) : null}
+            <span className={styles.navLanguage}>
+              <LanguageToggle locale={locale} href={switchHref} />
+            </span>
+            <PaletteToggle locale={locale} />
+            <TextMarkerToggle locale={locale} />
+          </div>
+          <NavbarUtilitiesDropdown
+            locale={locale}
+            heroValue={heroVariant?.variant}
+            onHeroChange={heroVariant?.setVariant}
+            switchHref={switchHref}
+          />
           <HappyReelsButton
             href={`${home}#contact`}
             variant="on-rose"
