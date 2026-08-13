@@ -103,7 +103,7 @@ export function HappyReelsHome({ locale, dict }: Props) {
         data-navbar-theme="brown"
         data-home-section="outcomes"
       >
-        <div className={`container-base ${styles.outcomesInner}`}>
+        <div className={styles.outcomesInner}>
           <Reveal className={styles.outcomesHeader}>
             <h2
               id="outcomes-title"
@@ -212,7 +212,7 @@ export function HappyReelsHome({ locale, dict }: Props) {
         data-navbar-theme="brown"
         data-home-section="process"
       >
-        <div className={`container-base ${styles.processInner}`}>
+        <div className={styles.processInner}>
           <div className={styles.processHeader}>
             <Reveal><h2 id="process-title"><MixedHeadline text={copy.process.title} highlight={copy.process.highlight} /></h2></Reveal>
           </div>

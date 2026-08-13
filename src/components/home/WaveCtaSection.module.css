@@ -95,6 +95,7 @@
   inset-block-start: clamp(-2.75rem, -3vw, -1.5rem);
   display: grid;
   width: min(82rem, calc(100% - clamp(2rem, 5vw, 4rem)));
+  margin-inline: auto;
   grid-template-columns: minmax(0, 1fr) clamp(18rem, 29vw, 26rem);
   align-items: center;
   gap: clamp(3rem, 8vw, 8rem);

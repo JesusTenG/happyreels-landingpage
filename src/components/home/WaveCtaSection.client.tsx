@@ -128,7 +128,7 @@ export function WaveCtaSection({ locale }: Props) {
       <div className={styles.revealWindow}>
         <div className={styles.surface} data-cta-surface>
           <div className={styles.panel}>
-            <div className={`container-base ${styles.inner}`}>
+            <div className={styles.inner}>
               <div className={styles.copy}>
                 <h2 id="wave-cta-title">
                   {copy.title.lead}{" "}

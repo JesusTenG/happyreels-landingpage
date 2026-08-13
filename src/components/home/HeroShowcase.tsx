@@ -26,7 +26,7 @@ export function HeroShowcase({ locale, ctaLabel, projectsHref }: Props) {
         data-navbar-theme="brown"
         data-navbar-hero="collapsing"
       >
-        <div className={`container-base ${styles.heroInner}`}>
+        <div className={styles.heroInner}>
           <div className={styles.heroCopy}>
             <h1 id="hero-title" className={styles.heroTitle} aria-label="From Footage to Feeling">
               <DepthText
