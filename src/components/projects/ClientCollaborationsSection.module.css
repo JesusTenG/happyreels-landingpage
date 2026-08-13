@@ -4,7 +4,7 @@
   --collaboration-card-shadow: color-mix(in srgb, var(--color-happy-gold) 84%, transparent);
   --collaboration-marker-color: var(--brown-plum);
   --collaboration-highlight-color: var(--color-happy-gold);
-  --hr-section-heading-size: clamp(1.35rem, 6vw, 5.85rem);
+  --collaboration-heading-size: clamp(1.35rem, 6vw, 5.85rem);
 
   overflow: clip;
   padding: clamp(4.5rem, 8vw, 6rem) 0;
@@ -35,7 +35,7 @@
   max-width: none !important;
   margin: 0;
   padding-bottom: 0.08em;
-  font-size: var(--hr-section-heading-size);
+  font-size: var(--collaboration-heading-size);
   font-weight: var(--hr-section-heading-weight);
   line-height: var(--hr-section-heading-line-height);
   letter-spacing: var(--hr-section-heading-letter-spacing);
@@ -60,7 +60,8 @@
     radial-gradient(circle closest-side at center, var(--hr-marker-paint) 98%, transparent 100%);
   background-position: right 64%, left 64%, center 64%, right 64%;
   background-size:
-    var(--hr-marker-cover-width) 0.72em,
+    calc(var(--hr-marker-cover-width) + var(--hr-marker-cover-overscan))
+      calc(0.72em + 4px),
     0.72em 0.72em,
     calc(100% - 0.62em) 0.72em,
     0.72em 0.72em;
@@ -250,7 +251,17 @@
 @media (max-width: 680px) {
   .section,
   .section[data-variant="projects"] { padding-block: clamp(4rem, 14vw, 5.5rem); }
-  .heading h2 { font-size: var(--hr-section-heading-size); }
+  .heading {
+    justify-content: center;
+    text-align: center;
+  }
+  .heading h2 {
+    width: 100%;
+    max-width: 16ch !important;
+    margin-inline: auto;
+    font-size: var(--hr-section-heading-size);
+  }
+  .headingLine { white-space: normal; }
   .grid {
     grid-template-columns: 1fr;
     row-gap: 2.5rem;

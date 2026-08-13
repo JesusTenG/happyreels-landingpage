@@ -163,9 +163,11 @@
 
 .desktopLinks {
   display: flex;
+  flex: none;
   align-items: center;
   justify-content: center;
   gap: clamp(0.2rem, 0.9vw, 0.85rem);
+  white-space: nowrap;
 }
 
 .desktopLinks a {
@@ -179,6 +181,7 @@
   letter-spacing: 0.06em;
   text-decoration: none;
   text-transform: uppercase;
+  white-space: nowrap;
   transition: color 220ms ease, transform 220ms ease;
 }
 
@@ -212,6 +215,15 @@
 
 .actions {
   display: flex;
+  flex: none;
+  align-items: center;
+  gap: 0.7rem;
+  white-space: nowrap;
+}
+
+.desktopUtilities {
+  display: flex;
+  flex: none;
   align-items: center;
   gap: 0.7rem;
 }
@@ -390,6 +402,134 @@
   transform-origin: bottom left;
 }
 
+.compactUtilities {
+  position: relative;
+  display: none;
+  flex: none;
+}
+
+.compactUtilitiesTrigger {
+  display: inline-flex;
+  min-height: 2.8rem;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.55rem 0.7rem;
+  border: 1px solid color-mix(in srgb, currentColor 22%, transparent);
+  border-radius: var(--radius-pill);
+  color: inherit;
+  background: color-mix(in srgb, var(--nav-bg) 86%, transparent);
+  font: 760 0.67rem/1 var(--font-manrope), sans-serif;
+  letter-spacing: 0.045em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.compactUtilitiesTrigger svg:first-child {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+.compactUtilitiesTrigger svg:last-child {
+  width: 0.8rem;
+  height: 0.8rem;
+  transition: transform 180ms ease;
+}
+
+.compactUtilities[data-open] .compactUtilitiesTrigger svg:last-child {
+  transform: rotate(180deg);
+}
+
+.compactUtilitiesPanel {
+  --language-toggle-bg: var(--color-happy-gold);
+  --language-toggle-border: var(--color-cocoa-ink);
+  --language-toggle-thumb: var(--color-cocoa-ink);
+  --language-toggle-active: var(--color-petal-white);
+  --language-toggle-label: var(--color-cocoa-ink);
+  --language-toggle-shadow: color-mix(in srgb, var(--color-cocoa-ink) 16%, transparent);
+
+  position: absolute;
+  top: calc(100% + 0.65rem);
+  right: 0;
+  z-index: 40;
+  display: grid;
+  visibility: hidden;
+  width: min(18rem, calc(100vw - 2rem));
+  overflow: hidden;
+  padding: 0.65rem;
+  border: 1px solid color-mix(in srgb, var(--color-cocoa-ink) 24%, transparent);
+  border-radius: var(--radius-medium);
+  opacity: 0;
+  color: var(--color-cocoa-ink);
+  background: var(--color-petal-white);
+  box-shadow: 0 1rem 2.5rem color-mix(in srgb, var(--color-cocoa-ink) 22%, transparent);
+  transform: translateY(-0.35rem) scale(0.98);
+  transform-origin: top right;
+  transition: opacity 160ms ease, transform 160ms ease, visibility 160ms;
+}
+
+.compactUtilities[data-open] .compactUtilitiesPanel {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.compactUtilityRow {
+  display: flex;
+  min-height: 3.65rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.55rem 0.65rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--color-cocoa-ink) 13%, transparent);
+}
+
+.compactUtilityRow:last-child {
+  border-bottom: 0;
+}
+
+.compactUtilityRow > span {
+  font-size: 0.7rem;
+  font-weight: 780;
+  letter-spacing: 0.045em;
+  text-transform: uppercase;
+}
+
+.compactHeroToggle,
+.compactVisualToggles {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.compactHeroToggle {
+  padding: 0.2rem;
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--color-cocoa-ink) 8%, transparent);
+}
+
+.compactHeroToggle button {
+  display: grid;
+  width: 2.3rem;
+  height: 2.3rem;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  color: var(--color-cocoa-ink);
+  background: transparent;
+  font: 800 0.67rem/1 var(--font-manrope), sans-serif;
+  cursor: pointer;
+}
+
+.compactHeroToggle button[aria-pressed="true"] {
+  background: var(--color-happy-gold);
+}
+
+.compactUtilitiesTrigger:focus-visible,
+.compactHeroToggle button:focus-visible {
+  outline: 2px solid var(--nav-focus);
+  outline-offset: 2px;
+}
+
 .navCta {
   min-height: 2.8rem;
   padding: 0.75rem 1.15rem;
@@ -517,7 +657,25 @@
   outline-offset: 4px;
 }
 
-@media (max-width: 1080px) {
+@media (min-width: 941px) and (max-width: 1280px) {
+  .desktopUtilities {
+    display: none;
+  }
+
+  .compactUtilities {
+    display: inline-flex;
+  }
+
+  .desktopLinks a {
+    padding-inline: 0.55rem;
+  }
+
+  .nav {
+    gap: clamp(0.65rem, 1.4vw, 1.15rem);
+  }
+}
+
+@media (max-width: 940px) {
   .header {
     --mobile-nav-swipe-duration: 280ms;
     --mobile-menu-drop-duration: 320ms;
@@ -562,7 +720,8 @@
 
   .desktopLinks,
   .navCta,
-  .navLanguage { display: none; }
+  .desktopUtilities,
+  .compactUtilities { display: none; }
 
   .actions {
     gap: 0;
@@ -634,7 +793,7 @@
 }
 
 /* Hero 01 and 02: wide transparent start, compact Mauve Brown pill while scrolling. */
-@media (min-width: 1081px) {
+@media (min-width: 941px) {
   .header[data-collapsing-shell="true"] {
     --nav-bg: var(--color-cocoa-ink);
     --nav-color: var(--color-petal-white);
