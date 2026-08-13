@@ -609,7 +609,7 @@ export function Navbar({ locale, dict, introAnimation = false }: Props) {
         data-collapsing-shell={usesCollapsingStyle ? "true" : undefined}
         data-intro={introAnimation ? "true" : undefined}
       >
-        <nav className={`container-base ${styles.nav}`} aria-label={locale === "de" ? "Hauptnavigation" : "Main navigation"}>
+        <nav className={styles.nav} aria-label={locale === "de" ? "Hauptnavigation" : "Main navigation"}>
           <Link
             href={heroHref}
             className={styles.brand}
