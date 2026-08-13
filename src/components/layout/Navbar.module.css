@@ -128,10 +128,12 @@
 .header[data-intro] .desktopLinks a:nth-child(3) { animation-delay: 740ms; }
 .header[data-intro] .desktopLinks a:nth-child(4) { animation-delay: 780ms; }
 .header[data-intro] .desktopLinks a:nth-child(5) { animation-delay: 820ms; }
+.header[data-intro] .desktopLinks a:nth-child(6) { animation-delay: 860ms; }
 .header[data-intro] .actions > :nth-child(1) { animation-delay: 860ms; }
 .header[data-intro] .actions > :nth-child(2) { animation-delay: 900ms; }
 .header[data-intro] .actions > :nth-child(3) { animation-delay: 940ms; }
-.header[data-intro] .actions > :nth-child(4) { animation-delay: 660ms; }
+.header[data-intro] .actions > :nth-child(4) { animation-delay: 980ms; }
+.header[data-intro] .actions > :nth-child(5) { animation-delay: 660ms; }
 
 @keyframes nav-item-reveal {
   from {
@@ -262,6 +264,130 @@
   .heroToggle button:not([aria-pressed="true"]):hover {
     opacity: 0.85;
   }
+}
+
+.heroDropdown {
+  position: relative;
+  display: inline-flex;
+  flex: none;
+}
+
+.heroDropdownTrigger {
+  display: inline-flex;
+  min-height: 2.4rem;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.45rem 0.55rem 0.45rem 0.75rem;
+  border: 1px solid color-mix(in srgb, currentColor 20%, transparent);
+  border-radius: var(--radius-pill);
+  color: inherit;
+  background: color-mix(in srgb, var(--nav-bg) 86%, transparent);
+  font: 760 0.65rem/1 var(--font-manrope), sans-serif;
+  letter-spacing: 0.055em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 180ms ease, background-color 180ms ease;
+}
+
+.heroDropdownTrigger strong {
+  display: grid;
+  min-width: 1.65rem;
+  height: 1.65rem;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--color-cocoa-ink);
+  background: var(--nav-accent);
+  font-size: 0.61rem;
+}
+
+.heroDropdownTrigger svg {
+  width: 0.9rem;
+  height: 0.9rem;
+  transition: transform 180ms ease;
+}
+
+.heroDropdown[data-open] .heroDropdownTrigger svg {
+  transform: rotate(180deg);
+}
+
+.heroDropdownMenu {
+  position: absolute;
+  top: calc(100% + 0.55rem);
+  right: 0;
+  z-index: 30;
+  display: grid;
+  visibility: hidden;
+  width: 8.7rem;
+  overflow: hidden;
+  padding: 0.35rem;
+  border: 1px solid color-mix(in srgb, var(--color-cocoa-ink) 28%, transparent);
+  border-radius: var(--radius-medium);
+  opacity: 0;
+  color: var(--color-cocoa-ink);
+  background: var(--color-petal-white);
+  box-shadow: 0 1rem 2.5rem color-mix(in srgb, var(--color-cocoa-ink) 18%, transparent);
+  transform: translateY(-0.35rem) scale(0.98);
+  transform-origin: top right;
+  transition:
+    opacity 160ms ease,
+    transform 160ms ease,
+    visibility 160ms;
+}
+
+.heroDropdown[data-open] .heroDropdownMenu {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.heroDropdownMenu button {
+  display: flex;
+  min-height: 2.35rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.55rem 0.65rem;
+  border: 0;
+  border-radius: calc(var(--radius-medium) - 0.3rem);
+  color: inherit;
+  background: transparent;
+  font: 680 0.7rem/1 var(--font-manrope), sans-serif;
+  letter-spacing: 0.035em;
+  cursor: pointer;
+}
+
+.heroDropdownMenu button strong {
+  font-size: 0.65rem;
+}
+
+.heroDropdownMenu button[aria-checked="true"] {
+  color: var(--color-cocoa-ink);
+  background: var(--color-happy-gold);
+}
+
+.heroDropdownMenu button:hover,
+.heroDropdownMenu button:focus-visible {
+  outline: 0;
+  background: color-mix(in srgb, var(--color-happy-gold) 38%, var(--color-petal-white));
+}
+
+.heroDropdownMenu button[aria-checked="true"]:hover,
+.heroDropdownMenu button[aria-checked="true"]:focus-visible {
+  background: var(--color-happy-gold);
+}
+
+.heroDropdownTrigger:focus-visible,
+.heroDropdownMenu button:focus-visible {
+  outline: 2px solid var(--nav-focus);
+  outline-offset: 2px;
+}
+
+.mobileHeroDropdown .heroDropdownMenu {
+  top: auto;
+  right: auto;
+  bottom: calc(100% + 0.55rem);
+  left: 0;
+  transform-origin: bottom left;
 }
 
 .navCta {
@@ -505,6 +631,55 @@
   .nav { padding-inline: 0.9rem; }
   .mobileMenu { right: 0; left: 0; }
   .mobileFooter > * { width: 100%; }
+}
+
+/* Hero 01 and 02: wide transparent start, compact Mauve Brown pill while scrolling. */
+@media (min-width: 1081px) {
+  .header[data-collapsing-shell="true"] {
+    --nav-bg: var(--color-cocoa-ink);
+    --nav-color: var(--color-petal-white);
+    --nav-accent: var(--color-happy-gold);
+    --nav-focus: var(--color-happy-gold);
+    --nav-link-hover-bg: var(--color-happy-gold);
+    --nav-link-hover-color: var(--color-cocoa-ink);
+    --nav-link-hover-shadow: color-mix(in srgb, var(--color-petal-white) 22%, transparent);
+    --language-toggle-bg: var(--color-happy-gold);
+    --language-toggle-border: var(--color-cocoa-ink);
+    --language-toggle-thumb: var(--color-cocoa-ink);
+    --language-toggle-active: var(--color-petal-white);
+    --language-toggle-label: var(--color-cocoa-ink);
+    --language-toggle-shadow: color-mix(in srgb, var(--color-petal-white) 18%, transparent);
+    --language-toggle-hover-shadow: color-mix(in srgb, var(--color-petal-white) 18%, transparent);
+    --nav-cta-color: var(--color-cocoa-ink);
+    --nav-cta-bg: var(--color-happy-gold);
+    --nav-cta-border: var(--color-cocoa-ink);
+    --nav-cta-shadow: color-mix(in srgb, var(--color-petal-white) 18%, transparent);
+    top: var(--nav-collapse-top, 0);
+    width: var(--nav-collapse-width, 90%);
+    height: var(--nav-collapse-height, var(--header-height));
+    border: 0;
+    border-radius: var(--radius-pill);
+    background-color: color-mix(in srgb, var(--nav-bg) var(--nav-shell-alpha), transparent);
+    box-shadow:
+      inset 0 0 0 1px color-mix(
+        in srgb,
+        var(--color-petal-white) var(--nav-collapse-border-alpha, 0%),
+        transparent
+      );
+    backdrop-filter: blur(calc(18px * var(--nav-shell-progress))) saturate(1.08);
+    will-change: width, height, top;
+  }
+
+  .header[data-collapsing-shell="true"] .nav {
+    padding-inline: var(
+      --nav-collapse-padding,
+      clamp(0.75rem, 1.2vw, 1rem)
+    );
+  }
+
+  .header[data-collapsing-shell="true"] .desktopLinks {
+    gap: var(--nav-collapse-link-gap, clamp(0.2rem, 0.9vw, 0.85rem));
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

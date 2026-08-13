@@ -2,6 +2,9 @@
   --mixed-headline-fill: var(--color-happy-gold);
   --mixed-headline-stroke: var(--color-petal-white);
   --collaboration-card-shadow: color-mix(in srgb, var(--color-happy-gold) 84%, transparent);
+  --collaboration-marker-color: var(--brown-plum);
+  --collaboration-highlight-color: var(--color-happy-gold);
+  --hr-section-heading-size: clamp(1.35rem, 6vw, 5.85rem);
 
   overflow: clip;
   padding: clamp(4.5rem, 8vw, 6rem) 0;
@@ -28,7 +31,8 @@
 }
 
 .heading h2 {
-  max-width: 22ch;
+  width: max-content;
+  max-width: none !important;
   margin: 0;
   padding-bottom: 0.08em;
   font-size: var(--hr-section-heading-size);
@@ -37,25 +41,32 @@
   letter-spacing: var(--hr-section-heading-letter-spacing);
 }
 
+.headingLine {
+  display: block;
+  white-space: nowrap;
+}
+
 .section:not([data-variant="projects"]) .heading :global(.hr-italic-marker) {
-  --hr-italic-marker-color: var(--brown-plum);
+  --hr-italic-marker-color: var(--collaboration-marker-color);
   margin-inline: 0;
   border-radius: 0;
   padding: 0;
-  color: var(--color-happy-gold) !important;
+  color: var(--collaboration-highlight-color) !important;
   background-color: transparent;
   background-image:
-    radial-gradient(circle at center, var(--brown-plum) 0 66%, transparent 69%),
-    linear-gradient(var(--brown-plum), var(--brown-plum)),
-    radial-gradient(circle at center, var(--brown-plum) 0 66%, transparent 69%);
-  background-position: left 64%, center 64%, right 64%;
+    linear-gradient(var(--hr-marker-cover-color, transparent), var(--hr-marker-cover-color, transparent)),
+    radial-gradient(circle closest-side at center, var(--hr-marker-paint) 98%, transparent 100%),
+    linear-gradient(var(--hr-marker-paint), var(--hr-marker-paint)),
+    radial-gradient(circle closest-side at center, var(--hr-marker-paint) 98%, transparent 100%);
+  background-position: right 64%, left 64%, center 64%, right 64%;
   background-size:
+    var(--hr-marker-cover-width) 0.72em,
     0.72em 0.72em,
     calc(100% - 0.62em) 0.72em,
     0.72em 0.72em;
   font-size: 1.02em;
   line-height: inherit;
-  -webkit-text-fill-color: var(--color-happy-gold) !important;
+  -webkit-text-fill-color: var(--collaboration-highlight-color) !important;
 }
 
 .grid {

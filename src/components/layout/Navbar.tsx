@@ -1,12 +1,17 @@
 "use client";
 
+import { ChevronDown } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 
 import { BrandMark } from "@/components/brand/BrandMark";
 import { useHeroVariant } from "@/components/hero/HeroVariantContext.client";
-import { HERO_VARIANTS, HERO_VARIANT_NUMBERS } from "@/components/hero/Hero.types";
+import {
+  HERO_VARIANTS,
+  HERO_VARIANT_NUMBERS,
+  type HeroVariant,
+} from "@/components/hero/Hero.types";
 import HappyReelsButton from "@/components/ui/HappyReelsButton";
 import { otherLocale, type Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
@@ -15,6 +20,7 @@ import { getProjectsPath, getServicesPath } from "@/lib/route-config";
 
 import { LanguageToggle } from "./LanguageToggle";
 import { PaletteToggle } from "./PaletteToggle";
+import { TextMarkerToggle } from "./TextMarkerToggle";
 import styles from "./Navbar.module.css";
 
 type Props = Readonly<{
@@ -27,10 +33,126 @@ const MOBILE_MENU_ID = "happyreels-mobile-menu";
 const MOBILE_NAVBAR_MEDIA = "(max-width: 940px)";
 type NavbarTheme = "rose" | "paper" | "blush" | "gold" | "brown";
 
+type HeroVariantDropdownProps = Readonly<{
+  locale: Locale;
+  value: HeroVariant;
+  onChange: (variant: HeroVariant) => void;
+  mobile?: boolean;
+}>;
+
+function HeroVariantDropdown({
+  locale,
+  value,
+  onChange,
+  mobile = false,
+}: HeroVariantDropdownProps) {
+  const [open, setOpen] = useState(false);
+  const rootRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const menuId = `hero-variant-${useId().replaceAll(":", "")}`;
+  const currentNumber = HERO_VARIANT_NUMBERS[value];
+
+  useEffect(() => {
+    if (!open) return;
+
+    const handlePointerDown = (event: PointerEvent) => {
+      if (!rootRef.current?.contains(event.target as Node)) setOpen(false);
+    };
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== "Escape") return;
+      setOpen(false);
+      triggerRef.current?.focus();
+    };
+
+    document.addEventListener("pointerdown", handlePointerDown);
+    document.addEventListener("keydown", handleKeyDown);
+    rootRef.current
+      ?.querySelector<HTMLButtonElement>("[role='menuitemradio'][aria-checked='true']")
+      ?.focus();
+
+    return () => {
+      document.removeEventListener("pointerdown", handlePointerDown);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [open]);
+
+  const handleMenuKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (!["ArrowDown", "ArrowUp", "Home", "End"].includes(event.key)) return;
+
+    const buttons = Array.from(
+      event.currentTarget.querySelectorAll<HTMLButtonElement>("[role='menuitemradio']"),
+    );
+    const activeIndex = buttons.indexOf(document.activeElement as HTMLButtonElement);
+    const nextIndex = event.key === "Home"
+      ? 0
+      : event.key === "End"
+        ? buttons.length - 1
+        : event.key === "ArrowDown"
+          ? (activeIndex + 1 + buttons.length) % buttons.length
+          : (activeIndex - 1 + buttons.length) % buttons.length;
+
+    event.preventDefault();
+    buttons[nextIndex]?.focus();
+  };
+
+  return (
+    <div
+      ref={rootRef}
+      className={`${styles.heroDropdown} ${mobile ? styles.mobileHeroDropdown : ""}`}
+      data-open={open ? "true" : undefined}
+    >
+      <button
+        ref={triggerRef}
+        type="button"
+        className={styles.heroDropdownTrigger}
+        aria-label={locale === "de"
+          ? `Hero-Variante, aktuell ${currentNumber}`
+          : `Hero variant, currently ${currentNumber}`}
+        aria-haspopup="menu"
+        aria-expanded={open}
+        aria-controls={menuId}
+        onClick={() => setOpen((current) => !current)}
+      >
+        <span>Hero</span>
+        <strong>{currentNumber}</strong>
+        <ChevronDown aria-hidden="true" />
+      </button>
+
+      <div
+        id={menuId}
+        className={styles.heroDropdownMenu}
+        role="menu"
+        aria-label={locale === "de" ? "Hero-Variante" : "Hero variant"}
+        aria-hidden={!open}
+        inert={!open}
+        onKeyDown={handleMenuKeyDown}
+      >
+        {HERO_VARIANTS.map((variant) => (
+          <button
+            key={variant}
+            type="button"
+            role="menuitemradio"
+            aria-checked={value === variant}
+            onClick={() => {
+              onChange(variant);
+              setOpen(false);
+              triggerRef.current?.focus();
+            }}
+          >
+            <span>{locale === "de" ? "Hero" : "Hero"}</span>
+            <strong>{HERO_VARIANT_NUMBERS[variant]}</strong>
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export function Navbar({ locale, dict, introAnimation = false }: Props) {
   const [open, setOpen] = useState(false);
   const [theme, setTheme] = useState<NavbarTheme>("brown");
   const heroVariant = useHeroVariant();
+  const usesCollapsingStyle = Boolean(heroVariant);
   const pathname = usePathname();
   const headerRef = useRef<HTMLElement>(null);
   const firstMobileLink = useRef<HTMLAnchorElement>(null);
@@ -40,12 +162,32 @@ export function Navbar({ locale, dict, introAnimation = false }: Props) {
   const switchHref = switchLocalePath(pathname ?? home, switchTo);
 
   const links = [
-    { href: getProjectsPath(locale), label: dict.nav.links.work },
-    { href: getServicesPath(locale), label: dict.nav.links.services },
-    { href: `${home}#process`, label: dict.nav.links.process },
-    { href: `${home}/about`, label: dict.nav.links.about },
-    { href: `${home}#faq`, label: dict.nav.links.faq },
+    { href: heroHref, label: dict.nav.links.home, isHome: true },
+    { href: getProjectsPath(locale), label: dict.nav.links.work, isHome: false },
+    { href: getServicesPath(locale), label: dict.nav.links.services, isHome: false },
+    { href: `${home}#process`, label: dict.nav.links.process, isHome: false },
+    { href: `${home}/about`, label: dict.nav.links.about, isHome: false },
+    { href: `${home}#faq`, label: dict.nav.links.faq, isHome: false },
   ] as const;
+
+  const handleHomeNavigation = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    setOpen(false);
+
+    const isModifiedClick = event.button !== 0
+      || event.metaKey
+      || event.ctrlKey
+      || event.shiftKey
+      || event.altKey;
+
+    if (isModifiedClick || pathname !== home) return;
+
+    event.preventDefault();
+    window.history.replaceState(window.history.state, "", heroHref);
+    window.scrollTo({
+      top: 0,
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+    });
+  };
 
   useEffect(() => {
     if (!open) return;
@@ -82,6 +224,12 @@ export function Navbar({ locale, dict, introAnimation = false }: Props) {
     const observeContactPoint = () => {
       observer?.disconnect();
       themeObserver?.disconnect();
+
+      if (usesCollapsingStyle) {
+        themedSections = [];
+        setTheme((currentTheme) => currentTheme === "brown" ? currentTheme : "brown");
+        return;
+      }
 
       if (window.matchMedia(MOBILE_NAVBAR_MEDIA).matches) {
         themedSections = [];
@@ -159,7 +307,7 @@ export function Navbar({ locale, dict, introAnimation = false }: Props) {
       window.removeEventListener("resize", handleResize);
       if (resizeFrame) window.cancelAnimationFrame(resizeFrame);
     };
-  }, [pathname]);
+  }, [usesCollapsingStyle, pathname]);
 
   useEffect(() => {
     const header = headerRef.current;
@@ -171,12 +319,74 @@ export function Navbar({ locale, dict, introAnimation = false }: Props) {
     let heroStart = 0;
     let heroScrollDistance = 1;
     let hasHero = false;
-    let useDeferredFade = false;
+    let useExtendedFade = false;
+    let heroTransitionMode = "";
+
+    const setCollapsingShellMetrics = (progress: number) => {
+      if (header.dataset.collapsingShell !== "true") return;
+
+      const viewportWidth = document.documentElement.clientWidth;
+      const rootFontSize = Number.parseFloat(
+        window.getComputedStyle(document.documentElement).fontSize,
+      ) || 16;
+      const interpolate = (start: number, end: number) =>
+        start + (end - start) * progress;
+      const clamp = (minimum: number, value: number, maximum: number) =>
+        Math.min(maximum, Math.max(minimum, value));
+
+      const initialWidth = viewportWidth * 0.9;
+      const compactPillWidth = Math.min(
+        92 * rootFontSize,
+        viewportWidth - 1.5 * rootFontSize,
+      );
+      const compactWidth = Math.min(initialWidth, compactPillWidth);
+      const initialPadding = clamp(
+        0.75 * rootFontSize,
+        viewportWidth * 0.012,
+        rootFontSize,
+      );
+      const compactPadding = clamp(
+        rootFontSize,
+        viewportWidth * 0.018,
+        1.5 * rootFontSize,
+      );
+      const initialLinkGap = clamp(
+        0.2 * rootFontSize,
+        viewportWidth * 0.009,
+        0.85 * rootFontSize,
+      );
+
+      header.style.setProperty(
+        "--nav-collapse-width",
+        `${interpolate(initialWidth, compactWidth).toFixed(2)}px`,
+      );
+      header.style.setProperty(
+        "--nav-collapse-height",
+        `${interpolate(5.25 * rootFontSize, 4.5 * rootFontSize).toFixed(2)}px`,
+      );
+      header.style.setProperty(
+        "--nav-collapse-top",
+        `${interpolate(0, 0.75 * rootFontSize).toFixed(2)}px`,
+      );
+      header.style.setProperty(
+        "--nav-collapse-padding",
+        `${interpolate(initialPadding, compactPadding).toFixed(2)}px`,
+      );
+      header.style.setProperty(
+        "--nav-collapse-link-gap",
+        `${interpolate(initialLinkGap, 0.2 * rootFontSize).toFixed(2)}px`,
+      );
+      header.style.setProperty(
+        "--nav-collapse-border-alpha",
+        `${(progress * 26).toFixed(2)}%`,
+      );
+    };
 
     const setShellProgress = (progress: number) => {
       const clamped = Math.min(1, Math.max(0, progress));
       header.style.setProperty("--nav-shell-progress", clamped.toFixed(4));
       header.style.setProperty("--nav-shell-alpha", `${(clamped * 100).toFixed(2)}%`);
+      setCollapsingShellMetrics(clamped);
     };
 
     const updateShell = () => {
@@ -186,7 +396,7 @@ export function Navbar({ locale, dict, introAnimation = false }: Props) {
         return;
       }
 
-      const fadeProgress = useDeferredFade
+      const fadeProgress = useExtendedFade
         ? Math.min(
             1,
             Math.max(0, (window.scrollY - deferredFadeStart) / deferredFadeDistance),
@@ -198,7 +408,8 @@ export function Navbar({ locale, dict, introAnimation = false }: Props) {
               ((window.scrollY - heroStart) / heroScrollDistance - 0.9) / 0.1,
             ),
           );
-      const easedProgress = fadeProgress * fadeProgress * (3 - 2 * fadeProgress);
+      const easedProgress = fadeProgress * fadeProgress * fadeProgress
+        * (fadeProgress * (fadeProgress * 6 - 15) + 10);
       setShellProgress(easedProgress);
     };
 
@@ -220,7 +431,8 @@ export function Navbar({ locale, dict, introAnimation = false }: Props) {
       const stickyScrollDistance = heroHeight - window.innerHeight;
       const standardExitDistance = heroHeight - header.offsetHeight;
       heroStart = window.scrollY + hero.getBoundingClientRect().top;
-      useDeferredFade = hero.dataset.navbarHero === "deferred";
+      heroTransitionMode = hero.dataset.navbarHero ?? "";
+      useExtendedFade = heroTransitionMode === "deferred" || heroTransitionMode === "collapsing";
       heroScrollDistance = Math.max(
         stickyScrollDistance > window.innerHeight * 0.25
           ? stickyScrollDistance
@@ -228,7 +440,7 @@ export function Navbar({ locale, dict, introAnimation = false }: Props) {
         1,
       );
 
-      if (useDeferredFade) {
+      if (heroTransitionMode === "deferred") {
         const themedSections = Array.from(
           document.querySelectorAll<HTMLElement>("[data-navbar-theme]"),
         );
@@ -238,8 +450,18 @@ export function Navbar({ locale, dict, introAnimation = false }: Props) {
           ? window.scrollY + nextSection.getBoundingClientRect().top
           : heroStart + heroHeight;
 
-        deferredFadeStart = nextSectionTop - window.innerHeight;
-        deferredFadeDistance = Math.max(header.offsetHeight * 1.25, 1);
+        const sectionApproach = nextSectionTop - window.innerHeight;
+        deferredFadeDistance = Math.min(
+          1280,
+          Math.max(800, window.innerHeight * 1.25),
+        );
+        deferredFadeStart = sectionApproach - deferredFadeDistance * 0.35;
+      } else if (heroTransitionMode === "collapsing") {
+        deferredFadeStart = heroStart;
+        deferredFadeDistance = Math.max(
+          Math.min(heroHeight - header.offsetHeight, window.innerHeight * 0.9),
+          1,
+        );
       }
 
       updateShell();
@@ -258,7 +480,7 @@ export function Navbar({ locale, dict, introAnimation = false }: Props) {
       window.removeEventListener("resize", measureHero);
       if (animationFrame) window.cancelAnimationFrame(animationFrame);
     };
-  }, [pathname]);
+  }, [heroVariant?.variant, pathname]);
 
   return (
     <>
@@ -269,7 +491,9 @@ export function Navbar({ locale, dict, introAnimation = false }: Props) {
         ref={headerRef}
         className={styles.header}
         data-open={open ? "true" : undefined}
-        data-theme={theme}
+        data-theme={usesCollapsingStyle ? "brown" : theme}
+        data-hero-variant={heroVariant?.variant}
+        data-collapsing-shell={usesCollapsingStyle ? "true" : undefined}
         data-intro={introAnimation ? "true" : undefined}
       >
         <nav className={`container-base ${styles.nav}`} aria-label={locale === "de" ? "Hauptnavigation" : "Main navigation"}>
@@ -277,11 +501,17 @@ export function Navbar({ locale, dict, introAnimation = false }: Props) {
             href={heroHref}
             className={styles.brand}
             aria-label={dict.nav.wordmark}
-            onClick={() => setOpen(false)}
+            onClick={handleHomeNavigation}
           >
             <BrandMark
               size="navigation"
-              accent={theme === "brown" ? "yellow" : theme === "gold" ? "brown" : "light"}
+              accent={
+                usesCollapsingStyle || theme === "brown"
+                    ? "yellow"
+                    : theme === "gold"
+                      ? "brown"
+                      : "light"
+              }
               reveal={introAnimation ? "none" : "immediate"}
               interactive
             />
@@ -289,7 +519,12 @@ export function Navbar({ locale, dict, introAnimation = false }: Props) {
 
         <div className={styles.desktopLinks}>
           {links.map((item) => (
-            <Link key={item.href} href={item.href}>
+            <Link
+              key={item.href}
+              href={item.href}
+              aria-current={item.isHome && pathname === home ? "page" : undefined}
+              onClick={item.isHome ? handleHomeNavigation : undefined}
+            >
               {item.label}
             </Link>
           ))}
@@ -297,28 +532,17 @@ export function Navbar({ locale, dict, introAnimation = false }: Props) {
 
         <div className={styles.actions}>
           {heroVariant ? (
-            <div
-              className={styles.heroToggle}
-              role="group"
-              aria-label={locale === "de" ? "Hero-Variante" : "Hero variant"}
-            >
-              {HERO_VARIANTS.map((variant) => (
-                <button
-                  key={variant}
-                  type="button"
-                  aria-label={`${locale === "de" ? "Hero" : "Hero"} ${HERO_VARIANT_NUMBERS[variant]}`}
-                  aria-pressed={heroVariant.variant === variant}
-                  onClick={() => heroVariant.setVariant(variant)}
-                >
-                  {HERO_VARIANT_NUMBERS[variant]}
-                </button>
-              ))}
-            </div>
+            <HeroVariantDropdown
+              locale={locale}
+              value={heroVariant.variant}
+              onChange={heroVariant.setVariant}
+            />
           ) : null}
           <span className={styles.navLanguage}>
             <LanguageToggle locale={locale} href={switchHref} />
           </span>
           <PaletteToggle locale={locale} />
+          <TextMarkerToggle locale={locale} />
           <HappyReelsButton
             href={`${home}#contact`}
             variant="on-rose"
@@ -357,7 +581,8 @@ export function Navbar({ locale, dict, introAnimation = false }: Props) {
               key={item.href}
               ref={index === 0 ? firstMobileLink : undefined}
               href={item.href}
-              onClick={() => setOpen(false)}
+              aria-current={item.isHome && pathname === home ? "page" : undefined}
+              onClick={item.isHome ? handleHomeNavigation : () => setOpen(false)}
             >
               {item.label}
             </Link>
@@ -366,25 +591,15 @@ export function Navbar({ locale, dict, introAnimation = false }: Props) {
         <div className={styles.mobileFooter}>
           <div className={styles.mobileUtilities}>
             {heroVariant ? (
-              <div
-                className={`${styles.heroToggle} ${styles.mobileHeroToggle}`}
-                role="group"
-                aria-label={locale === "de" ? "Hero-Variante" : "Hero variant"}
-              >
-                {HERO_VARIANTS.map((variant) => (
-                  <button
-                    key={variant}
-                    type="button"
-                    aria-label={`Hero ${HERO_VARIANT_NUMBERS[variant]}`}
-                    aria-pressed={heroVariant.variant === variant}
-                    onClick={() => heroVariant.setVariant(variant)}
-                  >
-                    {HERO_VARIANT_NUMBERS[variant]}
-                  </button>
-                ))}
-              </div>
+              <HeroVariantDropdown
+                locale={locale}
+                value={heroVariant.variant}
+                onChange={heroVariant.setVariant}
+                mobile
+              />
             ) : null}
             <PaletteToggle locale={locale} />
+            <TextMarkerToggle locale={locale} />
           </div>
           <div className={styles.mobileCtaRow}>
             <LanguageToggle locale={locale} href={switchHref} onClick={() => setOpen(false)} />

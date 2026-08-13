@@ -149,6 +149,7 @@ export function ContactForm({ form, locale }: Props) {
       className={styles["contact-section__form"]}
       onSubmit={handleSubmit}
       noValidate
+      data-contact-form
       aria-describedby={statusMessage ? `${formId}-status` : undefined}
     >
       <div className={styles["contact-section__field"]} aria-hidden="true">

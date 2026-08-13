@@ -1,20 +1,25 @@
 "use client";
 
-import { useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type PointerEvent as ReactPointerEvent,
+} from "react";
 
 import styles from "./HeroVideoStack.module.css";
 
 const HERO_VIDEOS = [
   {
-    src: "/assets/videos/preview/random/mealplans leiser-web.mp4",
+    src: "/assets/videos/preview/hero/mealplans-hero.mp4",
     poster: "/assets/videos/posters/random/mealplans leiser-poster.webp",
   },
   {
-    src: "/assets/videos/preview/random/PIZZZZZA-web.mp4",
+    src: "/assets/videos/preview/hero/pizza-hero.mp4",
     poster: "/assets/videos/posters/random/PIZZZZZA-poster.webp",
   },
   {
-    src: "/assets/videos/preview/savas/AYO X KOOLSAVAS-web.mp4",
+    src: "/assets/videos/preview/hero/ayo-koolsavas-hero.mp4",
     poster: "/assets/videos/posters/savas/AYO X KOOLSAVAS-poster.webp",
   },
 ] as const;
@@ -35,7 +40,45 @@ type Props = Readonly<{
 
 export function HeroVideoStack({ variant = "original" }: Props) {
   const [activeCard, setActiveCard] = useState(HERO_VIDEOS.length - 1);
+  const stackRef = useRef<HTMLDivElement | null>(null);
+  const videoRefs = useRef<Array<HTMLVideoElement | null>>([]);
+  const isStackVisibleRef = useRef(false);
   const dragStateRef = useRef<DragState | null>(null);
+
+  useEffect(() => {
+    const stack = stackRef.current;
+    if (!stack) return;
+
+    const updatePlayback = () => {
+      videoRefs.current.forEach((video) => {
+        if (!video) return;
+
+        if (isStackVisibleRef.current && !document.hidden) {
+          void video.play().catch(() => undefined);
+        } else {
+          video.pause();
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isStackVisibleRef.current = Boolean(entry?.isIntersecting);
+        updatePlayback();
+      },
+      { threshold: 0.08 },
+    );
+    const handleVisibilityChange = () => updatePlayback();
+
+    observer.observe(stack);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      observer.disconnect();
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      isStackVisibleRef.current = false;
+    };
+  }, []);
 
   const getClosestCardIndex = (container: HTMLDivElement, clientX: number) => {
     const cards = Array.from(container.querySelectorAll<HTMLElement>("figure[data-card]"));
@@ -107,6 +150,7 @@ export function HeroVideoStack({ variant = "original" }: Props) {
 
   return (
     <div
+      ref={stackRef}
       className={styles.stack}
       data-active-card={activeCard + 1}
       data-variant={variant}
@@ -124,7 +168,9 @@ export function HeroVideoStack({ variant = "original" }: Props) {
           data-card={index + 1}
         >
           <video
-            autoPlay
+            ref={(node) => {
+              videoRefs.current[index] = node;
+            }}
             muted
             loop
             playsInline

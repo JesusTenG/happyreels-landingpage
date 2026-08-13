@@ -114,6 +114,7 @@ export function WaveCtaSection({ locale }: Props) {
       ref={sectionRef}
       className={styles.stage}
       aria-labelledby="wave-cta-title"
+      data-home-section="wave-cta"
     >
       <svg
         className={`${styles.connectorWave} ${styles.upperConnector}`}
@@ -138,7 +139,7 @@ export function WaveCtaSection({ locale }: Props) {
                 </h2>
                 <HappyReelsButton
                   href={`/${locale}#contact`}
-                  variant="on-yellow"
+                  variant="primary"
                   enableMovingBorder={false}
                   className={styles.cta}
                 >

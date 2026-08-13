@@ -665,9 +665,10 @@
 }
 .contact :global(.hr-italic-marker) {
   background-image:
-    radial-gradient(circle at center, var(--color-soft-clay) 0 66%, transparent 69%),
-    linear-gradient(var(--color-soft-clay), var(--color-soft-clay)),
-    radial-gradient(circle at center, var(--color-soft-clay) 0 66%, transparent 69%);
+    linear-gradient(var(--hr-marker-cover-color, transparent), var(--hr-marker-cover-color, transparent)),
+    radial-gradient(circle closest-side at center, var(--hr-marker-paint) 98%, transparent 100%),
+    linear-gradient(var(--hr-marker-paint), var(--hr-marker-paint)),
+    radial-gradient(circle closest-side at center, var(--hr-marker-paint) 98%, transparent 100%);
 }
 
 .contactTitleLine {

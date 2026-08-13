@@ -8,14 +8,12 @@
   --palette-original-strong: #d8b8a8;
   --palette-original-soft: #e7d6d0;
 
-  --brown-burgundy: #402431;
-  --brown-cocoa: #493632;
-  --brown-rosewood: #50383b;
-  --brown-plum: #543543;
+  /* Mauve Brown is the single canonical happyreels brand brown. */
   --brown-mauve: #37252d;
+  --brown-plum: #543543;
 
   --color-happy-gold: var(--palette-original-accent);
-  --color-cocoa-ink: var(--brown-burgundy);
+  --color-cocoa-ink: var(--brown-mauve);
   --color-petal-white: var(--palette-original-paper);
   --color-soft-clay: var(--palette-original-strong);
   --color-dusty-blush: var(--palette-original-soft);
@@ -196,22 +194,6 @@
   --gradient-cta-secondary: var(--color-dusty-blush);
 }
 
-:root[data-brown-tone="cocoa"] {
-  --color-cocoa-ink: var(--brown-cocoa);
-}
-
-:root[data-brown-tone="rosewood"] {
-  --color-cocoa-ink: var(--brown-rosewood);
-}
-
-:root[data-brown-tone="plum"] {
-  --color-cocoa-ink: var(--brown-plum);
-}
-
-:root[data-brown-tone="mauve"] {
-  --color-cocoa-ink: var(--brown-mauve);
-}
-
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -282,34 +264,72 @@ video {
   background: var(--color-happy-gold);
 }
 
+@property --hr-marker-cover-width {
+  syntax: "<percentage>";
+  inherits: true;
+  initial-value: 0%;
+}
+
 .hr-italic-marker {
+  --hr-marker-paint: var(--hr-italic-marker-color, var(--color-happy-gold));
+
   position: relative;
   z-index: 0;
-  color: var(--color-cocoa-ink) !important;
+  color: var(--hr-italic-marker-text, var(--color-cocoa-ink)) !important;
   background-image:
+    linear-gradient(
+      var(--hr-marker-cover-color, transparent),
+      var(--hr-marker-cover-color, transparent)
+    ),
     radial-gradient(
-      circle at center,
-      var(--hr-italic-marker-color, var(--color-happy-gold)) 0 66%,
-      transparent 69%
+      circle closest-side at center,
+      var(--hr-marker-paint) 98%,
+      transparent 100%
     ),
     linear-gradient(
-      var(--hr-italic-marker-color, var(--color-happy-gold)),
-      var(--hr-italic-marker-color, var(--color-happy-gold))
+      var(--hr-marker-paint),
+      var(--hr-marker-paint)
     ),
     radial-gradient(
-      circle at center,
-      var(--hr-italic-marker-color, var(--color-happy-gold)) 0 66%,
-      transparent 69%
+      circle closest-side at center,
+      var(--hr-marker-paint) 98%,
+      transparent 100%
     );
-  background-position: left 58%, center 58%, right 58%;
+  background-position: right 58%, left 58%, center 58%, right 58%;
   background-repeat: no-repeat;
   background-size:
+    var(--hr-marker-cover-width) 0.78em,
     0.78em 0.78em,
     calc(100% - 0.68em) 0.78em,
     0.78em 0.78em;
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
-  -webkit-text-fill-color: var(--color-cocoa-ink) !important;
+  -webkit-text-fill-color: var(--hr-italic-marker-text, var(--color-cocoa-ink)) !important;
+}
+
+.site-variant-root[data-text-markers="hidden"] .hr-italic-marker {
+  background-image: none !important;
+}
+
+/* A section-colored cover sits above the marker paint and peels away on hover. */
+.site-variant-root[data-site-color-mode="dark"] .hr-italic-marker {
+  --hr-marker-cover-width: 100%;
+
+  transition: --hr-marker-cover-width 620ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .site-variant-root[data-site-color-mode="dark"][data-text-markers="visible"]
+    :where(h1, h2, h3, h4):hover
+    .hr-italic-marker {
+    --hr-marker-cover-width: 0%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-variant-root[data-site-color-mode="dark"] .hr-italic-marker {
+    transition-duration: 1ms;
+  }
 }
 
 .container-base {
@@ -396,22 +416,478 @@ video {
   }
 }
 
-@media (max-width: 430px) {
-  :root {
-    --hr-section-heading-size: clamp(2.15rem, 10.5vw, 2.85rem);
+
+/* Hero 02: a calmer, consistently italic editorial type system below the hero. */
+.site-variant-root[data-site-variant="perspective"] {
+  --hr-section-heading-size: clamp(3.15rem, 5.6vw, 5.85rem);
+  --hr-section-heading-weight: 400;
+  --hr-section-heading-line-height: 0.93;
+  --hr-section-heading-letter-spacing: -0.035em;
+}
+
+.site-variant-root[data-site-variant="perspective"] main section:not(#hero) h2 {
+  max-width: 19ch;
+  font-family: var(--font-instrument-serif), Georgia, serif;
+  font-size: var(--hr-section-heading-size);
+  font-style: italic;
+  font-weight: var(--hr-section-heading-weight);
+  line-height: var(--hr-section-heading-line-height);
+  letter-spacing: var(--hr-section-heading-letter-spacing);
+  text-wrap: balance;
+}
+
+.site-variant-root[data-site-variant="perspective"] main section:not(#hero) h2 :where(.hr-italic-marker) {
+  font-family: inherit !important;
+  font-size: inherit !important;
+  font-style: inherit !important;
+  font-weight: inherit !important;
+  letter-spacing: inherit !important;
+}
+
+.site-variant-root[data-site-variant="perspective"] :where(
+  [data-outcome-card],
+  [data-service-card],
+  [data-result-card],
+  [data-process-card],
+  [data-tone],
+  [data-collaboration-card]
+) h3 {
+  font-family: var(--font-instrument-serif), Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  line-height: 0.98;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+.site-variant-root[data-site-variant="perspective"] [data-tone] h3 {
+  font-family: var(--font-manrope), Arial, sans-serif;
+  font-style: normal;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.025em;
+}
+
+/* Hero 02: one yellow, one brown and two diagonally placed neutral cards. */
+.site-variant-root[data-site-variant="perspective"] [data-outcome-card="2"] {
+  --outcome-card-background: var(--color-soft-clay);
+  --outcome-card-shadow: color-mix(in srgb, var(--color-petal-white) 72%, transparent);
+  --outcome-icon-background: var(--color-petal-white);
+
+  color: var(--color-cocoa-ink);
+}
+
+.site-variant-root[data-site-variant="perspective"] [data-outcome-card="3"] {
+  --outcome-icon-background: var(--color-petal-white);
+}
+
+.site-variant-root[data-site-variant="perspective"] [data-outcome-card="4"] {
+  --outcome-card-background: var(--color-cocoa-ink);
+  --outcome-card-shadow: color-mix(in srgb, var(--color-happy-gold) 82%, transparent);
+  --outcome-icon-background: var(--color-happy-gold);
+
+  color: var(--color-petal-white);
+}
+
+.site-variant-root[data-site-variant="perspective"] [data-service-card="2"] {
+  --card-background: var(--color-dusty-blush);
+  --card-shadow: color-mix(in srgb, var(--color-petal-white) 72%, transparent);
+  --icon-background: var(--color-petal-white);
+
+  color: var(--color-cocoa-ink);
+}
+
+.site-variant-root[data-site-variant="perspective"] [data-service-card="3"] {
+  --icon-background: var(--color-petal-white);
+}
+
+.site-variant-root[data-site-variant="perspective"] [data-service-card="4"] {
+  --card-background: var(--color-cocoa-ink);
+  --card-shadow: color-mix(in srgb, var(--color-happy-gold) 82%, transparent);
+  --icon-background: var(--color-happy-gold);
+
+  color: var(--color-petal-white);
+}
+
+@media (max-width: 760px) {
+  .site-variant-root[data-site-variant="perspective"] {
+    --hr-section-heading-size: clamp(2.75rem, 11vw, 3.85rem);
+  }
+
+  .site-variant-root[data-site-variant="perspective"] main section:not(#hero) h2 {
+    max-width: 16ch;
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
+/* Shared warm dark mode for both final site variants. */
+.site-variant-root[data-site-color-mode="dark"] {
+  --hero-two-dark-bg: color-mix(in srgb, var(--brown-mauve) 44%, black);
+  --hero-two-dark-deep: color-mix(in srgb, var(--brown-mauve) 63%, black);
+  --hero-two-dark-surface: color-mix(in srgb, var(--brown-mauve) 78%, black);
+  --hero-two-dark-surface-alt: color-mix(in srgb, var(--brown-mauve) 88%, var(--brown-plum));
+  --hero-two-dark-card-deep: color-mix(in srgb, var(--brown-mauve) 76%, black);
+  --hero-two-dark-card-plum: color-mix(in srgb, var(--brown-plum) 84%, var(--color-soft-clay));
+  --hero-two-dark-card-light: color-mix(in srgb, var(--color-petal-white) 84%, var(--color-soft-clay));
+  --hero-two-dark-marker: color-mix(in srgb, var(--color-soft-clay) 72%, var(--brown-mauve));
+  --hero-two-dark-line: color-mix(in srgb, var(--brown-mauve) 62%, var(--color-soft-clay));
+  --hero-two-dark-text: var(--color-petal-white);
+  --color-text-muted: color-mix(in srgb, var(--color-petal-white) 72%, transparent);
+  --hr-text: var(--color-petal-white);
+  --hr-text-muted: var(--color-text-muted);
+  --hr-italic-marker-color: var(--hero-two-dark-marker);
+  --hr-italic-marker-text: var(--color-petal-white);
+  --hr-marker-cover-color: var(--hero-two-dark-bg);
+  --background: var(--hero-two-dark-bg);
+  --foreground: var(--color-petal-white);
 
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.001ms !important;
-    animation-iteration-count: 1 !important;
-    scroll-behavior: auto !important;
-  }
+  color: var(--color-petal-white);
+  background: var(--hero-two-dark-bg);
+  color-scheme: dark;
+}
+
+.site-variant-root[data-site-color-mode="dark"] #hero {
+  --leo-ink: var(--hero-two-dark-bg);
+  --leo-void: var(--hero-two-dark-bg);
+  --leo-paper: var(--color-petal-white);
+}
+
+.site-variant-root[data-site-variant="current"][data-site-color-mode="dark"] #hero {
+  --hero-background: linear-gradient(
+    180deg,
+    var(--hero-two-dark-surface) 0%,
+    var(--hero-two-dark-bg) 58%,
+    var(--hero-two-dark-deep) 100%
+  );
+  --hero-text: var(--color-petal-white);
+  --hero-accent-fill: var(--color-happy-gold);
+  --hero-accent-stroke: var(--color-petal-white);
+  --scroll-hint-stroke: var(--color-petal-white);
+}
+
+.site-variant-root[data-site-variant="current"][data-site-color-mode="dark"] #hero [data-variant="large"] figure {
+  border-color: color-mix(in srgb, var(--hero-two-dark-bg) 72%, black);
+  box-shadow:
+    0 1.75rem 4.25rem color-mix(in srgb, black 62%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--hero-two-dark-deep) 68%, black);
+}
+
+.site-variant-root[data-site-variant="current"][data-site-color-mode="dark"] [data-outcome-card="4"] {
+  --outcome-card-background: var(--color-cocoa-ink);
+  --outcome-icon-background: var(--color-happy-gold);
+
+  color: var(--color-petal-white);
+}
+
+.site-variant-root[data-site-variant="current"][data-site-color-mode="dark"] [data-service-card="4"] {
+  --card-background: var(--color-cocoa-ink);
+  --icon-background: var(--color-happy-gold);
+
+  color: var(--color-petal-white);
+}
+
+.site-variant-root[data-site-color-mode="dark"] :is(
+  [data-home-section="work"],
+  [data-home-section="outcomes"],
+  [data-home-section="wave-cta"],
+  #services,
+  #results,
+  [data-home-section="audiences"],
+  [data-variant="home"],
+  [data-home-section="process"],
+  [data-home-section="proof"],
+  #faq,
+  [data-home-section="contact"]
+) {
+  color: var(--hero-two-dark-text);
+}
+
+.site-variant-root[data-site-color-mode="dark"] [data-home-section="work"] {
+  background: var(--hero-two-dark-bg);
+}
+
+.site-variant-root[data-site-color-mode="dark"] [data-home-section="outcomes"] {
+  --hr-marker-cover-color: var(--hero-two-dark-surface);
+
+  background: var(--hero-two-dark-surface);
+}
+
+.site-variant-root[data-site-color-mode="dark"] [data-home-section="wave-cta"] {
+  --wave-cta-background: var(--hero-two-dark-surface);
+  --wave-cta-next-background: var(--hero-two-dark-surface-alt);
+  --wave-cta-text: var(--hero-two-dark-text);
+  --wave-cta-marker: var(--hero-two-dark-marker);
+  --hr-marker-cover-color: var(--hero-two-dark-surface);
+}
+
+.site-variant-root[data-site-color-mode="dark"] [data-home-section="wave-cta"] [data-accent="solid-brown"] {
+  --logo-letter-color: var(--color-happy-gold);
+  --logo-smile-color: var(--color-happy-gold);
+}
+
+.site-variant-root[data-site-color-mode="dark"] #services {
+  --hr-marker-cover-color: var(--hero-two-dark-surface-alt);
+
+  background: var(--hero-two-dark-surface-alt);
+}
+
+.site-variant-root[data-site-color-mode="dark"] #results {
+  --hr-marker-cover-color: var(--hero-two-dark-deep);
+
+  background: var(--hero-two-dark-deep);
+}
+
+.site-variant-root[data-site-color-mode="dark"] [data-home-section="audiences"] {
+  background: var(--hero-two-dark-bg);
+}
+
+.site-variant-root[data-site-color-mode="dark"] [data-variant="home"] {
+  --collaboration-card-shadow: color-mix(in srgb, var(--color-happy-gold) 58%, transparent);
+  --collaboration-marker-color: var(--hero-two-dark-marker);
+  --collaboration-highlight-color: var(--color-petal-white);
+  --hr-marker-cover-color: var(--hero-two-dark-surface);
+
+  background: var(--hero-two-dark-surface);
+}
+
+.site-variant-root[data-site-color-mode="dark"] [data-home-section="process"] {
+  --hr-marker-cover-color: var(--hero-two-dark-deep);
+
+  background: var(--hero-two-dark-deep);
+}
+
+.site-variant-root[data-site-color-mode="dark"] [data-home-section="proof"] {
+  --hr-marker-cover-color: var(--hero-two-dark-surface-alt);
+
+  background: var(--hero-two-dark-surface-alt);
+}
+
+.site-variant-root[data-site-color-mode="dark"] #faq {
+  --hr-marker-cover-color: var(--hero-two-dark-deep);
+
+  background: var(--hero-two-dark-deep);
+}
+
+.site-variant-root[data-site-color-mode="dark"] [data-outcome-card="2"] {
+  --outcome-card-background: var(--hero-two-dark-card-light);
+  --outcome-card-shadow: color-mix(in srgb, var(--brown-plum) 72%, transparent);
+  --outcome-icon-background: var(--color-happy-gold);
+
+  color: var(--color-cocoa-ink);
+}
+
+.site-variant-root[data-site-color-mode="dark"] [data-outcome-card="1"] {
+  --outcome-card-shadow: color-mix(in srgb, var(--color-petal-white) 25%, transparent);
+}
+
+.site-variant-root[data-site-color-mode="dark"] [data-outcome-card="3"] {
+  --outcome-card-background: var(--hero-two-dark-card-plum);
+  --outcome-card-shadow: color-mix(in srgb, var(--color-happy-gold) 38%, transparent);
+  --outcome-icon-background: var(--color-happy-gold);
+
+  color: var(--hero-two-dark-text);
+}
+
+.site-variant-root[data-site-color-mode="dark"] [data-outcome-card="4"] {
+  --outcome-card-shadow: color-mix(in srgb, var(--color-happy-gold) 62%, transparent);
+}
+
+.site-variant-root[data-site-color-mode="dark"] [data-service-card="2"] {
+  --card-background: var(--hero-two-dark-card-light);
+  --card-shadow: color-mix(in srgb, var(--brown-plum) 72%, transparent);
+  --icon-background: var(--color-happy-gold);
+
+  color: var(--color-cocoa-ink);
+}
+
+.site-variant-root[data-site-color-mode="dark"] [data-service-card="1"] {
+  --card-shadow: color-mix(in srgb, var(--color-petal-white) 25%, transparent);
+}
+
+.site-variant-root[data-site-color-mode="dark"] [data-service-card="3"] {
+  --card-background: var(--hero-two-dark-card-plum);
+  --card-shadow: color-mix(in srgb, var(--color-happy-gold) 38%, transparent);
+  --icon-background: var(--color-happy-gold);
+
+  color: var(--hero-two-dark-text);
+}
+
+.site-variant-root[data-site-color-mode="dark"] [data-service-card="4"] {
+  --card-shadow: color-mix(in srgb, var(--color-happy-gold) 62%, transparent);
+}
+
+.site-variant-root[data-site-color-mode="dark"] [data-result-card="3"] {
+  --card-background: var(--hero-two-dark-card-light);
+  --card-shadow: color-mix(in srgb, var(--brown-plum) 72%, transparent);
+
+  color: var(--color-cocoa-ink);
+}
+
+.site-variant-root[data-site-color-mode="dark"] [data-result-card="1"] {
+  --card-background: var(--color-happy-gold);
+  --card-shadow: color-mix(in srgb, var(--color-petal-white) 34%, transparent);
+
+  color: var(--color-cocoa-ink);
+}
+
+.site-variant-root[data-site-color-mode="dark"] [data-result-card="2"] {
+  --card-background: var(--hero-two-dark-card-deep);
+  --card-shadow: color-mix(in srgb, var(--color-happy-gold) 58%, transparent);
+
+  color: var(--hero-two-dark-text);
+}
+
+.site-variant-root[data-site-color-mode="dark"] [data-tone="1"] {
+  --audience-card-shadow: color-mix(in srgb, var(--brown-plum) 70%, transparent);
+
+  border-color: var(--hero-two-dark-line);
+  color: var(--color-cocoa-ink);
+  background: var(--hero-two-dark-card-light);
+}
+
+.site-variant-root[data-site-color-mode="dark"] [data-tone="2"] {
+  --audience-card-shadow: color-mix(in srgb, var(--color-petal-white) 25%, transparent);
+}
+
+.site-variant-root[data-site-color-mode="dark"] [data-process-card="1"] {
+  --process-card-shadow: color-mix(in srgb, var(--brown-plum) 70%, transparent);
+
+  border-color: var(--hero-two-dark-line);
+  color: var(--color-cocoa-ink);
+  background: var(--hero-two-dark-card-light);
+}
+
+.site-variant-root[data-site-color-mode="dark"] [data-process-card="2"] {
+  background: var(--hero-two-dark-card-deep);
+  --process-card-shadow: color-mix(in srgb, var(--color-happy-gold) 62%, transparent);
+}
+
+.site-variant-root[data-site-color-mode="dark"] [data-process-card="3"] {
+  --process-card-shadow: color-mix(in srgb, var(--color-petal-white) 34%, transparent);
+
+  color: var(--color-cocoa-ink);
+  background: var(--color-happy-gold);
+}
+
+.site-variant-root[data-site-color-mode="dark"] [data-home-section="proof"] figure[data-card] {
+  --testimonial-card-shadow: color-mix(in srgb, var(--color-happy-gold) 58%, transparent);
+}
+
+.site-variant-root[data-site-color-mode="dark"] [data-home-section="proof"] :is(
+  figure[data-card="2"],
+  figure[data-card="4"],
+  figure[data-card="6"],
+  figure[data-card="8"],
+  figure[data-card="10"]
+) {
+  --testimonial-card-bg: var(--hero-two-dark-card-light);
+  --testimonial-card-color: var(--color-cocoa-ink);
+  --testimonial-card-contrast-bg: var(--brown-mauve);
+  --testimonial-card-contrast-color: var(--color-petal-white);
+  --testimonial-card-shadow: color-mix(in srgb, var(--brown-plum) 70%, transparent);
+}
+
+.site-variant-root[data-site-color-mode="dark"] [data-faq-item] {
+  border-color: var(--hero-two-dark-line);
+  color: var(--hero-two-dark-text);
+  background: var(--hero-two-dark-surface-alt);
+  box-shadow: 6px 6px 0 color-mix(in srgb, var(--color-happy-gold) 36%, transparent);
+}
+
+.site-variant-root[data-site-color-mode="dark"] [data-faq-item] button {
+  color: var(--hero-two-dark-text);
+}
+
+.site-variant-root[data-site-color-mode="dark"] [data-home-section="contact"] {
+  --mixed-headline-fill: var(--color-happy-gold);
+  --hr-italic-marker-color: var(--hero-two-dark-marker);
+
+  background: var(--hero-two-dark-bg);
+}
+
+.site-variant-root[data-site-color-mode="dark"] [data-direct-message-card] {
+  border-color: var(--hero-two-dark-line);
+  background: var(--hero-two-dark-card-deep);
+  box-shadow: 9px 9px 0 color-mix(in srgb, var(--color-happy-gold) 38%, transparent);
+}
+
+.site-variant-root[data-site-color-mode="dark"] [data-direct-message-card] [data-channel="whatsapp"] {
+  border-color: var(--hero-two-dark-line);
+  color: var(--color-cocoa-ink);
+  background: var(--hero-two-dark-card-light);
+  box-shadow: 5px 5px 0 color-mix(in srgb, var(--color-happy-gold) 34%, transparent);
+}
+
+.site-variant-root[data-site-color-mode="dark"] [data-direct-message-card] [data-channel="whatsapp"] small {
+  color: color-mix(in srgb, var(--color-cocoa-ink) 78%, transparent);
+}
+
+.site-variant-root[data-site-color-mode="dark"] [data-contact-form] {
+  border-color: var(--hero-two-dark-line);
+  color: var(--color-cocoa-ink);
+  background: var(--hero-two-dark-card-light);
+  box-shadow: 10px 10px 0 color-mix(in srgb, var(--brown-plum) 76%, transparent);
+}
+
+.site-variant-root[data-site-color-mode="dark"] [data-contact-form] :where(input, textarea) {
+  border-color: var(--hero-two-dark-line);
+  color: var(--color-cocoa-ink);
+  background: var(--color-petal-white);
+}
+
+.site-variant-root[data-site-color-mode="dark"] [data-contact-form] :where(input, textarea)::placeholder {
+  color: color-mix(in srgb, var(--color-cocoa-ink) 52%, transparent);
+}
+
+.site-variant-root[data-site-color-mode="dark"] [data-contact-form] :where(input, textarea):focus {
+  border-color: var(--color-happy-gold);
+  background: var(--color-dusty-blush);
+}
+
+.site-variant-root[data-site-color-mode="dark"] #hero + [data-section-wave] {
+  --wave-from: var(--hero-two-dark-bg) !important;
+  --wave-to: var(--hero-two-dark-bg) !important;
+}
+
+.site-variant-root[data-site-color-mode="dark"] #work + [data-section-wave] {
+  --wave-from: var(--hero-two-dark-bg) !important;
+  --wave-to: var(--hero-two-dark-surface) !important;
+}
+
+.site-variant-root[data-site-color-mode="dark"] #services + [data-section-wave] {
+  --wave-from: var(--hero-two-dark-surface-alt) !important;
+  --wave-to: var(--hero-two-dark-deep) !important;
+}
+
+.site-variant-root[data-site-color-mode="dark"] #results + [data-section-wave] {
+  --wave-from: var(--hero-two-dark-deep) !important;
+  --wave-to: var(--hero-two-dark-bg) !important;
+}
+
+.site-variant-root[data-site-color-mode="dark"] [data-home-section="audiences"] + [data-section-wave] {
+  --wave-from: var(--hero-two-dark-bg) !important;
+  --wave-to: var(--hero-two-dark-surface) !important;
+}
+
+.site-variant-root[data-site-color-mode="dark"] [data-variant="home"] + [data-section-wave] {
+  --wave-from: var(--hero-two-dark-surface) !important;
+  --wave-to: var(--hero-two-dark-deep) !important;
+}
+
+.site-variant-root[data-site-color-mode="dark"] #process + [data-section-wave] {
+  --wave-from: var(--hero-two-dark-deep) !important;
+  --wave-to: var(--hero-two-dark-surface-alt) !important;
+}
+
+.site-variant-root[data-site-color-mode="dark"] [data-home-section="proof"] + [data-section-wave] {
+  --wave-from: var(--hero-two-dark-surface-alt) !important;
+  --wave-to: var(--hero-two-dark-deep) !important;
+}
+
+.site-variant-root[data-site-color-mode="dark"] #faq + [data-section-wave] {
+  --wave-from: var(--hero-two-dark-deep) !important;
+  --wave-to: var(--hero-two-dark-bg) !important;
+}
+
+.site-variant-root[data-site-color-mode="dark"] #contact + [data-section-wave] {
+  --wave-from: var(--hero-two-dark-bg) !important;
 }

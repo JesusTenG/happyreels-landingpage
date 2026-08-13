@@ -1,5 +1,9 @@
 .stage {
-  --hr-italic-marker-color: var(--color-soft-clay);
+  --wave-cta-background: var(--color-dusty-blush);
+  --wave-cta-next-background: var(--color-soft-clay);
+  --wave-cta-text: var(--color-cocoa-ink);
+  --wave-cta-marker: var(--color-petal-white);
+  --hr-italic-marker-color: var(--wave-cta-marker);
   --mixed-headline-fill: var(--color-petal-white);
   --mixed-headline-stroke: var(--color-cocoa-ink);
 
@@ -8,7 +12,7 @@
   overflow: visible;
   overflow-anchor: none;
   margin-top: -1px;
-  background: var(--color-happy-gold);
+  background: var(--wave-cta-background);
 }
 
 .stage :global(.hr-italic-marker) {
@@ -17,11 +21,13 @@
   padding: 0;
   background-color: transparent;
   background-image:
-    radial-gradient(circle at center, var(--color-soft-clay) 0 66%, transparent 69%),
-    linear-gradient(var(--color-soft-clay), var(--color-soft-clay)),
-    radial-gradient(circle at center, var(--color-soft-clay) 0 66%, transparent 69%);
-  background-position: left 58%, center 58%, right 58%;
+    linear-gradient(var(--hr-marker-cover-color, transparent), var(--hr-marker-cover-color, transparent)),
+    radial-gradient(circle closest-side at center, var(--hr-marker-paint) 98%, transparent 100%),
+    linear-gradient(var(--hr-marker-paint), var(--hr-marker-paint)),
+    radial-gradient(circle closest-side at center, var(--hr-marker-paint) 98%, transparent 100%);
+  background-position: right 58%, left 58%, center 58%, right 58%;
   background-size:
+    var(--hr-marker-cover-width) 0.78em,
     0.78em 0.78em,
     calc(100% - 0.68em) 0.78em,
     0.78em 0.78em;
@@ -47,15 +53,15 @@
 .upperConnector {
   bottom: 100%;
   z-index: 2;
-  color: var(--color-happy-gold);
-  background: var(--color-dusty-blush);
+  color: var(--wave-cta-background);
+  background: var(--wave-cta-background);
 }
 
 .lowerConnector {
   bottom: 0;
   z-index: 3;
   overflow: visible;
-  color: var(--color-soft-clay);
+  color: var(--wave-cta-next-background);
 }
 
 .lowerConnector path {
@@ -72,15 +78,15 @@
 }
 
 .surface {
-  background: var(--color-happy-gold);
+  background: var(--wave-cta-background);
 }
 
 .panel {
   display: flex;
   min-height: clamp(20rem, 30vw, 25rem);
   align-items: center;
-  color: var(--color-cocoa-ink);
-  background: var(--color-happy-gold);
+  color: var(--wave-cta-text);
+  background: var(--wave-cta-background);
 }
 
 .inner {
@@ -138,8 +144,8 @@
 }
 
 .headlineAccent {
-  color: var(--color-cocoa-ink) !important;
-  -webkit-text-fill-color: var(--color-cocoa-ink) !important;
+  color: var(--wave-cta-text) !important;
+  -webkit-text-fill-color: var(--wave-cta-text) !important;
   font-family: var(--font-instrument-serif), Georgia, serif;
   font-size: 1.04em;
   font-style: italic;

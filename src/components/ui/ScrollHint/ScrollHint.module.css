@@ -39,7 +39,7 @@
 }
 
 .icon circle {
-  stroke: var(--color-cocoa-ink);
+  stroke: var(--scroll-hint-stroke, var(--color-cocoa-ink));
   stroke-width: 2.2;
   paint-order: stroke fill;
 }

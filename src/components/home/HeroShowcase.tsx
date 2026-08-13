@@ -22,21 +22,23 @@ export function HeroShowcase({ locale, ctaLabel, projectsHref }: Props) {
         id="hero"
         className={`${styles.hero} ${styles.heroRose} ${styles.heroLarge}`}
         aria-labelledby="hero-title"
+        data-depth-pointer-area
         data-navbar-theme="brown"
-        data-navbar-hero
+        data-navbar-hero="collapsing"
       >
         <div className={`container-base ${styles.heroInner}`}>
           <div className={styles.heroCopy}>
             <h1 id="hero-title" className={styles.heroTitle} aria-label="From Footage to Feeling">
               <DepthText
                 className={styles.heroTitleDepth}
-                layers={34}
-                depth={2.4}
+                layers={14}
+                depth={4.8}
                 faceColor="var(--hero-text)"
                 depthColor="var(--color-cocoa-ink)"
-                tilt={7.5}
+                tilt={5}
                 pointerTracking
-                smoothing={0.14}
+                smoothing={0.26}
+                maxFps={40}
                 perspective={900}
                 fontSize="inherit"
                 fontWeight="inherit"
@@ -71,7 +73,10 @@ export function HeroShowcase({ locale, ctaLabel, projectsHref }: Props) {
         />
       </section>
 
-      <SectionWave from="var(--color-dusty-blush)" to="var(--color-dusty-blush)" />
+      <SectionWave
+        from="var(--color-dusty-blush)"
+        to="var(--color-dusty-blush)"
+      />
     </>
   );
 }

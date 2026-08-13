@@ -32,6 +32,7 @@ export type Dictionary = {
   nav: {
     wordmark: string;
     links: {
+      home: string;
       work: string;
       services: string;
       process: string;
@@ -113,6 +114,7 @@ const dictionaries: Record<Locale, Dictionary> = {
     nav: {
       wordmark: "happyreels home",
       links: {
+        home: "Home",
         work: "Work",
         services: "Services",
         process: "Process",
@@ -225,6 +227,7 @@ const dictionaries: Record<Locale, Dictionary> = {
     nav: {
       wordmark: "happyreels Startseite",
       links: {
+        home: "Home",
         work: "Projekte",
         services: "Leistungen",
         process: "Ablauf",

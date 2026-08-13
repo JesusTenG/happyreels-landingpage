@@ -12,8 +12,10 @@
   transform: rotateX(-2.4deg) rotateY(3.15deg);
   transform-origin: 50% 50%;
   transform-style: preserve-3d;
-  will-change: transform;
+  will-change: auto;
 }
+
+.stage[data-moving] { will-change: transform; }
 
 .layer,
 .face {
@@ -32,7 +34,6 @@
   inset: 0;
   z-index: 0;
   color: var(--depth-text-layer-color);
-  filter: saturate(0.95) brightness(0.92);
   pointer-events: none;
 }
 

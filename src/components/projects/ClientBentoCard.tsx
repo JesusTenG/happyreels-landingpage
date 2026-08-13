@@ -22,6 +22,7 @@ export function ClientBentoCard({ locale, story }: Props) {
       href={getClientProjectPath(locale, story.slug)}
       className={styles.card}
       aria-label={`${linkLabel}: ${story.name}`}
+      data-collaboration-card
     >
       <span className={styles.media}>
         {imageSrc ? (

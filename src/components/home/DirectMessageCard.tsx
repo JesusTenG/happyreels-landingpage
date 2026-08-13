@@ -26,7 +26,11 @@ export function DirectMessageCard({ locale }: Props) {
       };
 
   return (
-    <aside className={styles.card} aria-labelledby="direct-message-title">
+    <aside
+      className={styles.card}
+      aria-labelledby="direct-message-title"
+      data-direct-message-card
+    >
       <h3 id="direct-message-title">
         <span>{copy.titleLineOne}</span>
         <span>{copy.titleLineTwo}</span>

@@ -21,10 +21,16 @@ type Props = Readonly<{
 const COPY = {
   de: {
     title: "Partnerschaften, in denen aus starken Ideen wiedererkennbare Formate entstehen.",
+    titleLineOne: "Partnerschaften, in denen",
+    titleLineTwo: "aus starken Ideen",
+    titleLineThree: "wiedererkennbare Formate entstehen.",
     highlight: "wiedererkennbare Formate",
   },
   en: {
     title: "Partnerships where strong ideas grow into recognisable formats over time.",
+    titleLineOne: "Partnerships where strong",
+    titleLineTwo: "ideas grow into",
+    titleLineThree: "recognisable formats over time.",
     highlight: "recognisable formats",
   },
 } as const;
@@ -52,8 +58,12 @@ export function ClientCollaborationsSection({ locale, variant = "home" }: Props)
     >
       <div className="container-base">
         <Reveal className={styles.heading}>
-          <h2 id={`${variant}-collaborations-title`}>
-            <MixedHeadline text={copy.title} highlight={copy.highlight} />
+          <h2 id={`${variant}-collaborations-title`} aria-label={copy.title}>
+            <span className={styles.headingLine}>{copy.titleLineOne}</span>
+            <span className={styles.headingLine}>{copy.titleLineTwo}</span>
+            <span className={styles.headingLine}>
+              <MixedHeadline text={copy.titleLineThree} highlight={copy.highlight} />
+            </span>
           </h2>
         </Reveal>
 

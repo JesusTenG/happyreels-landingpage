@@ -20,6 +20,7 @@ export interface DepthTextProps {
   tilt?: number;
   pointerTracking?: boolean;
   smoothing?: number;
+  maxFps?: number;
   perspective?: number;
   fontSize?: string;
   fontWeight?: number | string;
@@ -53,6 +54,7 @@ export default function DepthText({
   tilt = 7.5,
   pointerTracking = true,
   smoothing = 0.14,
+  maxFps = 60,
   perspective = 900,
   fontSize = "clamp(3rem, 12vw, 7rem)",
   fontWeight = 900,
@@ -67,6 +69,7 @@ export default function DepthText({
   const safeDepth = clamp(Number(depth) || 0, 0, 12);
   const safeTilt = clamp(Number(tilt) || 0, 0, 12);
   const safeSmoothing = clamp(Number(smoothing) || 0.14, 0.02, 0.35);
+  const safeMaxFps = clamp(Math.round(Number(maxFps) || 60), 20, 60);
   const safePerspective = clamp(Number(perspective) || 900, 300, 2000);
   const content = children ?? text;
 
@@ -102,7 +105,10 @@ export default function DepthText({
     const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
     const canTrackPointer = pointerTracking && finePointer && !reducedMotion;
     const viewportTarget = interactiveRoot.closest("h1") ?? interactiveRoot;
-    const minimumFrameInterval = 1000 / 60;
+    const pointerArea =
+      interactiveRoot.closest<HTMLElement>("[data-depth-pointer-area]") ??
+      interactiveRoot;
+    const minimumFrameInterval = 1000 / safeMaxFps;
     const rotationEpsilon = 0.01;
     let frameId = 0;
     let lastFrameTime = 0;
@@ -124,11 +130,13 @@ export default function DepthText({
       current.y = baseRotation.y;
       target.x = baseRotation.x;
       target.y = baseRotation.y;
+      stageRef.current?.removeAttribute("data-moving");
       applyTransform();
     };
 
     function scheduleFrame() {
       if (frameId || !isInViewport || document.hidden) return;
+      stageRef.current?.setAttribute("data-moving", "true");
       frameId = window.requestAnimationFrame(tick);
     }
 
@@ -172,6 +180,7 @@ export default function DepthText({
         current.x = target.x;
         current.y = target.y;
         applyTransform();
+        stageRef.current?.removeAttribute("data-moving");
         lastFrameTime = 0;
         return;
       }
@@ -214,15 +223,15 @@ export default function DepthText({
 
     applyTransform();
     viewportObserver.observe(viewportTarget);
-    window.addEventListener("pointermove", handlePointerMove, { passive: true });
-    window.addEventListener("pointerleave", resetPointer);
+    pointerArea.addEventListener("pointermove", handlePointerMove, { passive: true });
+    pointerArea.addEventListener("pointerleave", resetPointer);
     window.addEventListener("blur", resetPointer);
     document.addEventListener("visibilitychange", handleVisibilityChange);
 
     return () => {
       viewportObserver.disconnect();
-      window.removeEventListener("pointermove", handlePointerMove);
-      window.removeEventListener("pointerleave", resetPointer);
+      pointerArea.removeEventListener("pointermove", handlePointerMove);
+      pointerArea.removeEventListener("pointerleave", resetPointer);
       window.removeEventListener("blur", resetPointer);
       document.removeEventListener("visibilitychange", handleVisibilityChange);
       if (frameId) window.cancelAnimationFrame(frameId);
@@ -230,6 +239,7 @@ export default function DepthText({
   }, [
     baseRotation,
     pointerTracking,
+    safeMaxFps,
     safeSmoothing,
     safeTilt,
   ]);
