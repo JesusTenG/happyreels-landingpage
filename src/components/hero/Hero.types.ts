@@ -1,6 +1,9 @@
 import type { Locale } from "@/i18n/config";
 
-export const HERO_VARIANTS = ["current", "perspective"] as const;
+export const HERO_VARIANTS = [
+  "current",
+  "perspective",
+] as const;
 
 export type HeroVariant = (typeof HERO_VARIANTS)[number];
 

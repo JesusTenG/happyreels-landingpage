@@ -9,5 +9,6 @@ export function Hero(props: HeroVariantProps) {
   const heroVariant = useHeroVariant();
   const variant = heroVariant?.variant ?? "current";
 
-  return variant === "current" ? <HeroCurrent {...props} /> : <HeroLeonardo {...props} />;
+  if (variant === "current") return <HeroCurrent {...props} />;
+  return <HeroLeonardo {...props} />;
 }

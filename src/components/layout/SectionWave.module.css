@@ -15,6 +15,13 @@
   fill: currentColor;
 }
 
+.wave .accent {
+  fill: none;
+  stroke: var(--wave-accent);
+  stroke-width: clamp(4px, 0.55vw, 8px);
+  vector-effect: non-scaling-stroke;
+}
+
 .flipped {
   transform: scaleX(-1);
 }

@@ -69,6 +69,7 @@ export default function HappyReelsButton(props: Props) {
       return (
         <StarBorderButton
           href={href}
+          data-hr-button
           variant={starVariant}
           color="var(--color-happy-gold)"
           speed="5.5s"
@@ -86,6 +87,7 @@ export default function HappyReelsButton(props: Props) {
     void _href;
     return (
       <StarBorderButton
+        data-hr-button
         variant={starVariant}
         color="var(--color-happy-gold)"
         speed="5.5s"
@@ -102,7 +104,13 @@ export default function HappyReelsButton(props: Props) {
   if (isLinkProps(props)) {
     const { href, ...anchorProps } = domProps as Omit<LinkProps, keyof CommonProps>;
     return (
-      <a href={href} {...anchorProps} className={buttonClass} aria-label={computedAriaLabel}>
+      <a
+        href={href}
+        {...anchorProps}
+        className={buttonClass}
+        aria-label={computedAriaLabel}
+        data-hr-button
+      >
         {innerContent}
       </a>
     );
@@ -115,6 +123,7 @@ export default function HappyReelsButton(props: Props) {
       {...buttonProps}
       className={buttonClass}
       aria-label={computedAriaLabel}
+      data-hr-button
       type={buttonProps.type ?? "button"}
     >
       {innerContent}

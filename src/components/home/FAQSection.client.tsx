@@ -45,6 +45,7 @@ export function FAQSection({ locale }: Props) {
               key={item.question}
               value={`faq-${index + 1}`}
               className={styles.item}
+              data-faq-item
             >
               <Accordion.Header className={styles.header}>
                 <Accordion.Trigger className={styles.trigger}>

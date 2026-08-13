@@ -3,6 +3,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import type { CSSProperties } from "react";
 
+import { HeroVideoStack } from "@/components/home/HeroVideoStack";
 import { SectionWave } from "@/components/layout/SectionWave";
 import HappyReelsButton from "@/components/ui/HappyReelsButton";
 
@@ -259,11 +260,14 @@ export function HeroLeonardo({ locale, ctaLabel, projectsHref }: HeroVariantProp
     const resizeObserver = new ResizeObserver(scheduleRender);
     resizeObserver.observe(scene);
     resizeObserver.observe(backWallMeasure);
-    const paletteObserver = new MutationObserver(scheduleRender);
-    paletteObserver.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ["data-brown-tone"],
-    });
+    const siteVariantRoot = root.closest<HTMLElement>(".site-variant-root");
+    const themeObserver = siteVariantRoot ? new MutationObserver(scheduleRender) : null;
+    if (siteVariantRoot) {
+      themeObserver?.observe(siteVariantRoot, {
+        attributes: true,
+        attributeFilter: ["data-site-color-mode"],
+      });
+    }
     const introObserver = new MutationObserver(revealWhenReady);
     introObserver.observe(document.documentElement, {
       attributes: true,
@@ -279,7 +283,7 @@ export function HeroLeonardo({ locale, ctaLabel, projectsHref }: HeroVariantProp
     return () => {
       isActive = false;
       resizeObserver.disconnect();
-      paletteObserver.disconnect();
+      themeObserver?.disconnect();
       introObserver.disconnect();
       if (renderFrame) window.cancelAnimationFrame(renderFrame);
     };
@@ -304,18 +308,15 @@ export function HeroLeonardo({ locale, ctaLabel, projectsHref }: HeroVariantProp
         Math.max(0, (window.scrollY - sectionStart) / scrollDistance),
       );
       let scale = 1;
-      let cueOpacity = 1;
 
       if (!reducedMotion.matches) {
         const zoomProgress = Math.min(1, rawProgress / 0.82);
         const easedProgress = zoomProgress * zoomProgress * (3 - 2 * zoomProgress);
 
         scale = 1 + easedProgress * (viewportFillScale - 1);
-        cueOpacity = Math.max(0, 1 - rawProgress * 3);
       }
 
       zoomLayer.style.transform = `translate3d(0, 0, 0) scale(${scale})`;
-      root.style.setProperty("--leo-cue-opacity", cueOpacity.toFixed(3));
     };
 
     const requestZoomUpdate = () => {
@@ -379,23 +380,8 @@ export function HeroLeonardo({ locale, ctaLabel, projectsHref }: HeroVariantProp
               <div className={styles.backWallSurface} aria-hidden="true" />
             </div>
 
-            <div className={styles.mobileTunnel} aria-hidden="true">
-              <div className={`${styles.mobilePlane} ${styles.mobileCeiling}`}>
-                <span className={`${styles.mobileWord} ${styles.mobileHappy}`}>HAPPYREELS</span>
-              </div>
-              <div className={`${styles.mobilePlane} ${styles.mobileLeft}`}>
-                <span className={`${styles.mobileWord} ${styles.mobileFilming}`}>FILMING</span>
-                <span className={`${styles.mobileWord} ${styles.mobileReels}`}>REELS</span>
-              </div>
-              <div className={`${styles.mobilePlane} ${styles.mobileRight}`}>
-                <span className={`${styles.mobileWord} ${styles.mobileEdits}`}>EDITS</span>
-                <span className={`${styles.mobileWord} ${styles.mobileCutting}`}>CUTTING</span>
-              </div>
-              <div className={`${styles.mobilePlane} ${styles.mobileFloor}`}>
-                <span className={`${styles.mobileWord} ${styles.mobileContent}`}>CONTENT</span>
-                <span className={`${styles.mobileWord} ${styles.mobileProduction}`}>PRODUCTION</span>
-              </div>
-              <div className={styles.mobileBackWall} />
+            <div className={styles.mobileVideoStage}>
+              <HeroVideoStack variant="large" />
             </div>
           </div>
 
@@ -450,6 +436,7 @@ export function HeroLeonardo({ locale, ctaLabel, projectsHref }: HeroVariantProp
                 <HappyReelsButton
                   className={styles.primaryAction}
                   href={projectsHref}
+                  showIcon={false}
                   variant="on-brown"
                 >
                   {ctaLabel}
@@ -457,6 +444,7 @@ export function HeroLeonardo({ locale, ctaLabel, projectsHref }: HeroVariantProp
                 <HappyReelsButton
                   className={styles.secondaryAction}
                   href={`/${locale}#contact`}
+                  showIcon={false}
                   variant="on-light"
                 >
                   {isGerman ? "Projekt starten" : "Start a project"}
@@ -465,10 +453,6 @@ export function HeroLeonardo({ locale, ctaLabel, projectsHref }: HeroVariantProp
             </div>
           </div>
 
-          <div className={styles.scrollCue} aria-hidden="true">
-            <span />
-            {isGerman ? "In die Idee eintauchen" : "Enter the idea"}
-          </div>
         </div>
       </section>
       <SectionWave from="var(--color-cocoa-ink)" to="var(--color-dusty-blush)" />

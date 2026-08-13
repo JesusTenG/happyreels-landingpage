@@ -68,7 +68,13 @@ export function HappyReelsHome({ locale, dict }: Props) {
         projectsHref={projectsHref}
       />
 
-      <section id="work" className={styles.work} aria-labelledby="work-title" data-navbar-theme="brown">
+      <section
+        id="work"
+        className={styles.work}
+        aria-labelledby="work-title"
+        data-navbar-theme="brown"
+        data-home-section="work"
+      >
         <Reveal className={`container-base ${styles.workHeading}`}>
           <h2 id="work-title">
             <span className={styles.workTitleLine}>{copy.work.titleLineOne}</span>
@@ -91,7 +97,12 @@ export function HappyReelsHome({ locale, dict }: Props) {
 
       <SectionWave from="var(--color-dusty-blush)" to="var(--color-dusty-blush)" flip />
 
-      <section className={styles.outcomes} aria-labelledby="outcomes-title" data-navbar-theme="brown">
+      <section
+        className={styles.outcomes}
+        aria-labelledby="outcomes-title"
+        data-navbar-theme="brown"
+        data-home-section="outcomes"
+      >
         <div className={`container-base ${styles.outcomesInner}`}>
           <Reveal className={styles.outcomesHeader}>
             <h2
@@ -150,7 +161,12 @@ export function HappyReelsHome({ locale, dict }: Props) {
 
       <SectionWave from="var(--color-soft-clay)" to="var(--color-cocoa-ink)" />
 
-      <section className={styles.audiences} aria-labelledby="audiences-title" data-navbar-theme="rose">
+      <section
+        className={styles.audiences}
+        aria-labelledby="audiences-title"
+        data-navbar-theme="rose"
+        data-home-section="audiences"
+      >
         <h2 id="audiences-title" className="sr-only">
           {locale === "de" ? "Für Creator und Marken" : "For creators and brands"}
         </h2>
@@ -189,7 +205,13 @@ export function HappyReelsHome({ locale, dict }: Props) {
 
       <SectionWave from="var(--color-cocoa-ink)" to="var(--color-soft-clay)" />
 
-      <section id="process" className={styles.process} aria-labelledby="process-title" data-navbar-theme="brown">
+      <section
+        id="process"
+        className={styles.process}
+        aria-labelledby="process-title"
+        data-navbar-theme="brown"
+        data-home-section="process"
+      >
         <div className={`container-base ${styles.processInner}`}>
           <div className={styles.processHeader}>
             <Reveal><h2 id="process-title"><MixedHeadline text={copy.process.title} highlight={copy.process.highlight} /></h2></Reveal>
@@ -222,7 +244,12 @@ export function HappyReelsHome({ locale, dict }: Props) {
       </section>
 
       <SectionWave from="var(--color-soft-clay)" to="var(--color-soft-clay)" flip />
-      <section className={styles.proof} aria-labelledby="proof-title" data-navbar-theme="brown">
+      <section
+        className={styles.proof}
+        aria-labelledby="proof-title"
+        data-navbar-theme="brown"
+        data-home-section="proof"
+      >
         <div className="container-base">
           <Reveal className={styles.proofHeading}>
             <h2 id="proof-title"><MixedHeadline text={copy.proof.title} highlight={copy.proof.highlight} /></h2>
@@ -236,7 +263,13 @@ export function HappyReelsHome({ locale, dict }: Props) {
 
       <SectionWave from="var(--color-dusty-blush)" to="var(--color-happy-gold)" />
 
-      <section id="contact" className={styles.contact} aria-labelledby="contact-title" data-navbar-theme="brown">
+      <section
+        id="contact"
+        className={styles.contact}
+        aria-labelledby="contact-title"
+        data-navbar-theme="brown"
+        data-home-section="contact"
+      >
         <div className={`container-base ${styles.contactGrid}`}>
           <div className={styles.contactCopy}>
             <Reveal>

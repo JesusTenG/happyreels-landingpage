@@ -134,7 +134,7 @@ export const homeContent: Record<Locale, HomeContent> = {
       },
       {
         title: "For brands",
-        statement: "Professional social content that still feels human.",
+        statement: "Professional social content that brings in customers.",
         linkLabel: "Start a project",
       },
     ],
@@ -236,7 +236,7 @@ export const homeContent: Record<Locale, HomeContent> = {
       },
       {
         title: "Für Marken",
-        statement: "Professioneller Social Content, der menschlich bleibt.",
+        statement: "Professioneller Social Content, der Kunden bringt.",
         linkLabel: "Projekt starten",
       },
     ],

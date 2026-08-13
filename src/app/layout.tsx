@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { headers } from "next/headers";
+import Script from "next/script";
 
 import { ConsentBanner } from "@/components/layout/ConsentBanner.client";
 import { InitialLoader } from "@/components/layout/InitialLoader.client";
@@ -8,6 +9,43 @@ import { readLocaleFromHeaders } from "@/lib/locale-header";
 import { siteUrl } from "@/lib/seo";
 
 import "./globals.css";
+
+const colorModeInitScript = `
+  (() => {
+    const storageKey = "happyreels-color-mode";
+    const colorSchemeQuery = "(prefers-color-scheme: dark)";
+    let storedMode = null;
+
+    try {
+      const value = window.localStorage.getItem(storageKey);
+      storedMode = value === "light" || value === "dark" ? value : null;
+    } catch {
+      storedMode = null;
+    }
+
+    const mode = storedMode ?? (window.matchMedia(colorSchemeQuery).matches ? "dark" : "light");
+
+    document.documentElement.dataset.siteColorMode = mode;
+    document.documentElement.style.colorScheme = mode;
+
+    const applyModeToSite = () => {
+      const siteRoot = document.querySelector(".site-variant-root");
+
+      if (!siteRoot) return false;
+
+      siteRoot.dataset.siteColorMode = mode;
+      return true;
+    };
+
+    if (!applyModeToSite()) {
+      const observer = new MutationObserver(() => {
+        if (applyModeToSite()) observer.disconnect();
+      });
+
+      observer.observe(document.documentElement, { childList: true, subtree: true });
+    }
+  })();
+`;
 
 const manrope = localFont({
   src: "./fonts/Manrope-Variable.ttf",
@@ -66,8 +104,14 @@ export default async function RootLayout({
       lang={lang}
       className={`${manrope.variable} ${instrumentSerif.variable}`}
       data-site-intro=""
+      suppressHydrationWarning
     >
       <body>
+        <Script
+          id="happyreels-color-mode"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{ __html: colorModeInitScript }}
+        />
         <InitialLoader locale={lang} />
         <div id="site-content">{children}</div>
         <ConsentBanner locale={lang} />
