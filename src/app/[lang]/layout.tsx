@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
+import { HeroVariantProvider } from "@/components/hero/HeroVariantContext.client";
 import { isLocale, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { buildPageMetadata } from "@/lib/seo";
@@ -33,7 +34,7 @@ export default async function LangLayout({ children, params }: Props) {
 
   return (
     <div lang={lang} data-locale={lang} className="min-h-full flex flex-col">
-      {children}
+      <HeroVariantProvider>{children}</HeroVariantProvider>
     </div>
   );
 }

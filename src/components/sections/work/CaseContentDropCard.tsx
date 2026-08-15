@@ -1,8 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { MixedHeadline } from "@/components/ui/MixedHeadline";
+import { VideoLoader } from "@/components/ui/VideoLoader";
 
 import styles from "./CaseContentDropCard.module.css";
 
@@ -22,26 +23,67 @@ export function CaseContentDropCard({
   alt,
 }: CaseContentDropCardProps) {
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isVideoReady, setIsVideoReady] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const canPlay = Boolean(previewSrc);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!isPlaying || !video) return;
+
+    const visibilityObserver = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry?.isIntersecting) setIsPlaying(false);
+      },
+      { threshold: 0.08 },
+    );
+    const handleVisibilityChange = () => {
+      if (document.hidden) setIsPlaying(false);
+    };
+
+    visibilityObserver.observe(video);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      visibilityObserver.disconnect();
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      video.pause();
+    };
+  }, [isPlaying]);
 
   return (
     <article className={styles["case-drop-card"]}>
       <div className={styles["case-drop-card__media"]}>
         {isPlaying && previewSrc ? (
-          <video
-            className={styles["case-drop-card__video"]}
-            src={previewSrc}
-            poster={posterSrc}
-            controls
-            playsInline
-            preload="metadata"
-          />
+          <>
+            <video
+              ref={videoRef}
+              className={styles["case-drop-card__video"]}
+              src={previewSrc}
+              poster={posterSrc}
+              controls
+              playsInline
+              preload="metadata"
+              onLoadStart={() => setIsVideoReady(false)}
+              onLoadedData={() => setIsVideoReady(true)}
+              onCanPlay={() => setIsVideoReady(true)}
+              onPlaying={() => setIsVideoReady(true)}
+              onWaiting={() => setIsVideoReady(false)}
+              onStalled={() => setIsVideoReady(false)}
+              onError={() => setIsVideoReady(true)}
+            />
+            <VideoLoader active={!isVideoReady} />
+          </>
         ) : (
           <button
             className={styles["case-drop-card__poster-button"]}
             type="button"
             disabled={!canPlay}
-            onClick={() => canPlay && setIsPlaying(true)}
+            onClick={() => {
+              if (!canPlay) return;
+              setIsVideoReady(false);
+              setIsPlaying(true);
+            }}
             aria-label={canPlay ? `Play video: ${title}` : `Preview: ${title}`}
           >
             <Image

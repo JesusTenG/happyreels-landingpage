@@ -438,9 +438,23 @@
   .overviewGrid > div,
   .approachCard,
   .listCard { padding: 1.35rem; }
+  .overviewGrid > div:nth-child(odd),
+  .listsGrid > div:nth-child(odd),
+  .detailsGrid > div:nth-child(odd) article,
+  .faqList > div:nth-child(odd) .faqItem,
+  .relatedGrid > div:nth-child(odd) a { rotate: -0.65deg; }
+  .overviewGrid > div:nth-child(even),
+  .listsGrid > div:nth-child(even),
+  .detailsGrid > div:nth-child(even) article,
+  .faqList > div:nth-child(even) .faqItem,
+  .relatedGrid > div:nth-child(even) a { rotate: 0.65deg; }
   .detailsGrid { grid-template-columns: 1fr; }
   .detailsGrid article { min-height: 13rem; }
-  .expertise { align-items: flex-start; flex-direction: column; }
+  .expertise {
+    align-items: flex-start;
+    flex-direction: column;
+    rotate: -0.65deg;
+  }
   .faqItem summary { grid-template-columns: 1.65rem minmax(0, 1fr) 2rem; gap: 0.65rem; padding: 1rem; }
   .faqItem > p { padding: 0 1rem 1.2rem calc(1rem + 1.65rem + 0.65rem); }
   .relatedGrid { grid-template-columns: 1fr; }

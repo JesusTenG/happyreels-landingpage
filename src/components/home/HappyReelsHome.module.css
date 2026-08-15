@@ -245,7 +245,7 @@
   animation: none;
 }
 
-.work { --mixed-headline-fill: var(--color-happy-gold); --mixed-headline-stroke: var(--color-cocoa-ink); padding: clamp(4rem, 7vw, 5.75rem) 0 clamp(5rem, 8vw, 6.5rem); background: var(--color-dusty-blush); }
+.work { --mixed-headline-fill: var(--color-happy-gold); --mixed-headline-stroke: var(--color-cocoa-ink); --marquee-edge-color: var(--color-dusty-blush); padding: clamp(4rem, 7vw, 5.75rem) 0 clamp(5rem, 8vw, 6.5rem); background: var(--color-dusty-blush); }
 .workHeading { display: flex; justify-content: center; margin-bottom: clamp(1rem, 2vw, 2rem); text-align: center; }
 .work h2 {
   max-width: none;
@@ -788,6 +788,7 @@
     line-height: var(--hr-section-heading-line-height);
   }
   .workTitleLine:last-child { white-space: normal; }
+  .marqueeReveal { width: 100%; }
   .audienceGrid {
     max-width: 38rem;
     grid-template-columns: 1fr;
@@ -795,6 +796,8 @@
   }
   .audienceMotion:last-child { margin-top: 0; }
   .audienceCard { min-height: 23rem; }
+  .audienceMotion:nth-child(odd) .audienceCard { rotate: -0.65deg; }
+  .audienceMotion:nth-child(even) .audienceCard { rotate: 0.65deg; }
   .audienceCard p { font-size: clamp(2.2rem, 10vw, 3.5rem); }
   .contactGrid { gap: 2.75rem; }
   .contactCopy { gap: 1.75rem; }
@@ -828,6 +831,11 @@
     line-height: var(--hr-section-heading-line-height);
   }
 
+  .outcomesHeader h2 > span,
+  .outcomesTitleAccentLine {
+    white-space: normal;
+  }
+
   .outcomesGrid {
     margin-top: 3rem;
     gap: 2rem;
@@ -837,8 +845,6 @@
     min-height: 14rem;
     gap: 2rem;
   }
-
-  .outcomeCard[data-outcome-card] { --outcome-card-tilt: 0deg; }
 }
 
 @media (max-width: 900px) {

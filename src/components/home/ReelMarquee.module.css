@@ -1,46 +1,49 @@
 .viewport {
   --marquee-gap: clamp(0.65rem, 1vw, 1.1rem);
   --marquee-duration: 72s;
+  position: relative;
   width: 100%;
   overflow: hidden;
   padding-block: clamp(1.75rem, 3.5vw, 2.75rem) clamp(4.25rem, 6vw, 5rem);
   container-type: inline-size;
   pointer-events: none;
-  -webkit-mask-image: linear-gradient(
-    to right,
-    transparent 0%,
-    rgb(0 0 0 / 12%) 3.5%,
-    rgb(0 0 0 / 68%) 8%,
-    #000 13%,
-    #000 87%,
-    rgb(0 0 0 / 68%) 92%,
-    rgb(0 0 0 / 12%) 96.5%,
-    transparent 100%
-  );
-  mask-image: linear-gradient(
-    to right,
-    transparent 0%,
-    rgb(0 0 0 / 12%) 3.5%,
-    rgb(0 0 0 / 68%) 8%,
-    #000 13%,
-    #000 87%,
-    rgb(0 0 0 / 68%) 92%,
-    rgb(0 0 0 / 12%) 96.5%,
-    transparent 100%
-  );
+}
+
+.viewport::before,
+.viewport::after {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  bottom: 0;
+  width: 13%;
+  content: "";
+  pointer-events: none;
+}
+
+.viewport::before {
+  left: 0;
+  background: linear-gradient(to right, var(--marquee-edge-color), transparent);
+}
+
+.viewport::after {
+  right: 0;
+  background: linear-gradient(to left, var(--marquee-edge-color), transparent);
 }
 
 .track {
+  position: relative;
+  z-index: 1;
   display: flex;
   width: max-content;
   gap: var(--marquee-gap);
-  will-change: transform;
+  will-change: auto;
   animation: marquee var(--marquee-duration) linear infinite;
   animation-play-state: paused;
 }
 
 .viewport[data-active="true"] .track {
   animation-play-state: running;
+  will-change: transform;
 }
 
 .group {
@@ -50,6 +53,8 @@
 }
 
 .card {
+  --video-loader-size: clamp(3.5rem, 34%, 5rem);
+
   position: relative;
   width: clamp(10.5rem, 17.5cqw, 15.75rem);
   aspect-ratio: 9 / 16;
@@ -93,11 +98,41 @@
 
 @media (max-width: 760px) {
   .viewport {
+    overflow-x: auto;
+    overflow-y: hidden;
     padding-block: 1.75rem 4rem;
+    padding-inline: var(--marquee-gap);
+    overscroll-behavior-x: contain;
+    pointer-events: auto;
+    scroll-padding-inline: var(--marquee-gap);
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+    touch-action: pan-x pan-y;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .viewport::-webkit-scrollbar {
+    display: none;
+  }
+
+  .viewport::before,
+  .viewport::after {
+    display: none;
+  }
+
+  .track,
+  .viewport[data-active="true"] .track {
+    animation: none;
+    will-change: auto;
+  }
+
+  .group:last-child {
+    display: none;
   }
 
   .card {
     width: clamp(10.5rem, 44vw, 14rem);
+    scroll-snap-align: center;
   }
 }
 

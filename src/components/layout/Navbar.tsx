@@ -499,6 +499,12 @@ export function Navbar({ locale, dict, introAnimation = false }: Props) {
       const clamped = Math.min(1, Math.max(0, progress));
       header.style.setProperty("--nav-shell-progress", clamped.toFixed(4));
       header.style.setProperty("--nav-shell-alpha", `${(clamped * 100).toFixed(2)}%`);
+      header.style.setProperty(
+        "--nav-backdrop-filter",
+        clamped > 0 && clamped < 0.98
+          ? `blur(${(18 * clamped).toFixed(2)}px) saturate(1.08)`
+          : "none",
+      );
       setCollapsingShellMetrics(clamped);
     };
 

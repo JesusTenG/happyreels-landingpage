@@ -11,6 +11,7 @@ import type { Dictionary } from "@/i18n/dictionaries";
 import { TestimonialCard } from "@/components/testimonials/TestimonialCard";
 import HappyReelsButton from "@/components/ui/HappyReelsButton";
 import { MixedHeadline } from "@/components/ui/MixedHeadline";
+import { stripTrailingHeadingPeriod } from "@/lib/heading-text";
 import { getProjectsPath } from "@/lib/route-config";
 import { getServiceContent } from "@/data/service-content";
 import { getServicePath, type ServiceKey } from "@/lib/route-config";
@@ -112,7 +113,11 @@ export function ClientStoryDetailView({ locale, dict, story }: Props) {
                 {locale === "de" ? "Eingesetzte Leistungen" : "Services involved"}
               </p>
               <h2 id="client-project-services-title">
-                {locale === "de" ? "Von diesem Projekt zu den passenden Leistungen." : "From this project to the relevant services."}
+                {stripTrailingHeadingPeriod(
+                  locale === "de"
+                    ? "Von diesem Projekt zu den passenden Leistungen."
+                    : "From this project to the relevant services.",
+                )}
               </h2>
             </div>
             <nav aria-label={locale === "de" ? "Leistungen dieses Projekts" : "Services used in this project"}>

@@ -545,6 +545,11 @@ video {
 }
 
 @media (max-width: 760px) {
+  html[lang="en"] main :where(h1, h2, h3, h4, h5, h6, p, li, summary) {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
   .site-variant-root[data-site-variant="perspective"] {
     --hr-section-heading-size: clamp(2.75rem, 11vw, 3.85rem);
   }
@@ -651,7 +656,7 @@ video {
   --hero-text: var(--color-petal-white);
   --hero-accent-fill: var(--color-happy-gold);
   --hero-accent-stroke: var(--color-petal-white);
-  --scroll-hint-stroke: var(--color-petal-white);
+  --scroll-hint-stroke: var(--color-cocoa-ink);
 }
 
 .site-variant-root[data-site-variant="current"][data-site-color-mode="dark"] #hero [data-variant="large"] figure {
@@ -692,6 +697,8 @@ video {
 }
 
 .site-variant-root[data-site-color-mode="dark"] [data-home-section="work"] {
+  --marquee-edge-color: var(--hero-two-dark-bg);
+
   background: var(--hero-two-dark-bg);
 }
 

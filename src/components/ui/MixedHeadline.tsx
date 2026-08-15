@@ -1,3 +1,5 @@
+import { stripTrailingHeadingPeriod } from "@/lib/heading-text";
+
 import styles from "./MixedHeadline.module.css";
 
 type Props = Readonly<{
@@ -12,10 +14,11 @@ function findAutomaticHighlight(text: string): string {
 }
 
 export function MixedHeadline({ text, highlight, tone = "warm" }: Props) {
-  const accentText = highlight?.trim() || findAutomaticHighlight(text);
-  const start = text.toLocaleLowerCase().lastIndexOf(accentText.toLocaleLowerCase());
+  const headingText = stripTrailingHeadingPeriod(text);
+  const accentText = highlight?.trim() || findAutomaticHighlight(headingText);
+  const start = headingText.toLocaleLowerCase().lastIndexOf(accentText.toLocaleLowerCase());
 
-  if (start < 0 || accentText.length === 0) return <>{text}</>;
+  if (start < 0 || accentText.length === 0) return <>{headingText}</>;
 
   const accentClass = [
     styles.accent,
@@ -28,9 +31,11 @@ export function MixedHeadline({ text, highlight, tone = "warm" }: Props) {
 
   return (
     <>
-      {text.slice(0, start)}
-      <em className={accentClass}>{text.slice(start, start + accentText.length)}</em>
-      {text.slice(start + accentText.length)}
+      {headingText.slice(0, start)}
+      <em className={accentClass}>
+        {headingText.slice(start, start + accentText.length)}
+      </em>
+      {headingText.slice(start + accentText.length)}
     </>
   );
 }

@@ -34,7 +34,7 @@
   color: var(--nav-color);
   background-color: color-mix(in srgb, var(--nav-bg) var(--nav-shell-alpha), transparent);
   box-shadow: 0 0.8rem 1.8rem rgb(58 36 28 / calc(var(--nav-shadow-strength) * var(--nav-shell-progress)));
-  backdrop-filter: blur(calc(18px * var(--nav-shell-progress))) saturate(1.08);
+  backdrop-filter: var(--nav-backdrop-filter, none);
   transition:
     background-color 320ms ease,
     color 320ms ease,
@@ -716,7 +716,7 @@
     padding-inline: max(1rem, var(--page-gutter));
   }
 
-  .brand > span { width: 3.5rem; }
+  .brand > span { width: 3rem; }
 
   .desktopLinks,
   .navCta,
@@ -825,8 +825,7 @@
         var(--color-petal-white) var(--nav-collapse-border-alpha, 0%),
         transparent
       );
-    backdrop-filter: blur(calc(18px * var(--nav-shell-progress))) saturate(1.08);
-    will-change: width, height, top;
+    backdrop-filter: var(--nav-backdrop-filter, none);
   }
 
   .header[data-collapsing-shell="true"] .nav {

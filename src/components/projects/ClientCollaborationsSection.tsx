@@ -9,6 +9,7 @@ import {
   type ClientStory,
 } from "@/data/client-stories";
 import type { Locale } from "@/i18n/config";
+import { stripTrailingHeadingPeriod } from "@/lib/heading-text";
 
 import { ClientBentoCard } from "./ClientBentoCard";
 import styles from "./ClientCollaborationsSection.module.css";
@@ -58,7 +59,10 @@ export function ClientCollaborationsSection({ locale, variant = "home" }: Props)
     >
       <div className="container-base">
         <Reveal className={styles.heading}>
-          <h2 id={`${variant}-collaborations-title`} aria-label={copy.title}>
+          <h2
+            id={`${variant}-collaborations-title`}
+            aria-label={stripTrailingHeadingPeriod(copy.title)}
+          >
             <span className={styles.headingLine}>{copy.titleLineOne}</span>
             <span className={styles.headingLine}>{copy.titleLineTwo}</span>
             <span className={styles.headingLine}>

@@ -13,6 +13,7 @@ import {
 } from "@/data/service-content";
 import { getServiceSeoContent } from "@/data/service-seo-content";
 import type { Locale } from "@/i18n/config";
+import { stripTrailingHeadingPeriod } from "@/lib/heading-text";
 import {
   getServicePath,
   getServicesPath,
@@ -131,7 +132,7 @@ export function ServiceLandingPage({ locale, serviceKey, content }: Props) {
           <WorkVideoGallery items={proofVideos} gridClassName={styles.proofGrid} />
           <Reveal className={styles.expertise}>
             <div>
-              <h3>{seoContent.expertiseTitle}</h3>
+              <h3>{stripTrailingHeadingPeriod(seoContent.expertiseTitle)}</h3>
               <p>{seoContent.expertiseBody}</p>
             </div>
             <Link href={`${home}/about`}>{seoContent.expertiseLinkLabel}<span aria-hidden="true"> ↗</span></Link>
