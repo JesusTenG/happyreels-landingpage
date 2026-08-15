@@ -21,6 +21,7 @@ import { homeContent } from "@/data/home-content";
 import { getFeaturedReelVideos } from "@/data/reel-videos";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
+import { stripTrailingHeadingPeriod } from "@/lib/heading-text";
 import { getProjectsPath } from "@/lib/route-config";
 
 import { DirectMessageCard } from "./DirectMessageCard";
@@ -81,7 +82,7 @@ export function HappyReelsHome({ locale, dict }: Props) {
             <span className={styles.workTitleLine}>
               <span>{copy.work.titleLineTwoLead}</span>{" "}
               <em className="hr-italic-marker">{copy.work.titleAccent}</em>
-              <span>{copy.work.titleLineTwoEnd}</span>
+              <span>{stripTrailingHeadingPeriod(copy.work.titleLineTwoEnd)}</span>
             </span>
           </h2>
         </Reveal>
@@ -107,12 +108,12 @@ export function HappyReelsHome({ locale, dict }: Props) {
           <Reveal className={styles.outcomesHeader}>
             <h2
               id="outcomes-title"
-              aria-label={`${copy.outcomes.title} ${copy.outcomes.titleAccent}${copy.outcomes.titleEnd}`}
+              aria-label={`${copy.outcomes.title} ${copy.outcomes.titleAccent}${stripTrailingHeadingPeriod(copy.outcomes.titleEnd)}`}
             >
               <span>{copy.outcomes.title}</span>
               <span className={styles.outcomesTitleAccentLine}>
                 <em className="hr-italic-marker">{copy.outcomes.titleAccent}</em>
-                <span>{copy.outcomes.titleEnd}</span>
+                <span>{stripTrailingHeadingPeriod(copy.outcomes.titleEnd)}</span>
               </span>
             </h2>
           </Reveal>
@@ -136,7 +137,7 @@ export function HappyReelsHome({ locale, dict }: Props) {
                   <Reveal className={styles.outcomeReveal} delay={90 + index * 80}>
                     <article className={styles.outcomeCard} data-outcome-card={index + 1}>
                       <div className={styles.outcomeCardHeader}>
-                        <h3>{outcome.title}</h3>
+                        <h3>{stripTrailingHeadingPeriod(outcome.title)}</h3>
                         <span className={styles.outcomeIcon} aria-hidden="true">
                           <Icon />
                         </span>
@@ -275,7 +276,7 @@ export function HappyReelsHome({ locale, dict }: Props) {
             <Reveal>
               <h2
                 id="contact-title"
-                aria-label={`${copy.contact.titleLineOne} ${copy.contact.titleLineTwo} ${copy.contact.titleAccent}`}
+                aria-label={`${copy.contact.titleLineOne} ${copy.contact.titleLineTwo} ${stripTrailingHeadingPeriod(copy.contact.titleAccent)}`}
               >
                 <span className={styles.contactTitleLine}>{copy.contact.titleLineOne}</span>
                 <span className={styles.contactTitleLine}>{contactLineLead}</span>

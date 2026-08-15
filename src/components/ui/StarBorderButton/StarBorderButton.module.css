@@ -49,12 +49,21 @@
   bottom: -32%;
   right: -250%;
   animation: star-border-move-bottom var(--star-border-speed) linear infinite;
+  animation-play-state: paused;
 }
 
 .star-border-button__glow-top {
   top: -32%;
   left: -250%;
   animation: star-border-move-top var(--star-border-speed) linear infinite;
+  animation-play-state: paused;
+}
+
+.star-border-button:has(:hover) .star-border-button__glow-bottom,
+.star-border-button:has(:hover) .star-border-button__glow-top,
+.star-border-button:has(:focus-visible) .star-border-button__glow-bottom,
+.star-border-button:has(:focus-visible) .star-border-button__glow-top {
+  animation-play-state: running;
 }
 
 .star-border-button__inner {
@@ -95,7 +104,6 @@
   border-radius: calc(var(--hr-radius-card) - var(--star-border-thickness));
 }
 
-/* Endlos-Loop ohne Pause: kein alternate (kein Rücklauf / Wartezeit am Ende) */
 @keyframes star-border-move-bottom {
   0% {
     transform: translate3d(0, 0, 0);

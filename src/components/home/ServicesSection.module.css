@@ -177,8 +177,6 @@
     min-height: 14rem;
     gap: 2rem;
   }
-
-  .card[data-service-card] { --card-rotation: 0deg; }
 }
 
 @media (prefers-reduced-motion: reduce) {

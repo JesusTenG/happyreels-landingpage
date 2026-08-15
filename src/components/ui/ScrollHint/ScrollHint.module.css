@@ -23,7 +23,7 @@
 }
 
 .float {
-  animation: scroll-hint-float 2.9s ease-in-out 1.15s infinite;
+  animation: scroll-hint-float 2.9s ease-in-out 1.15s 3;
 }
 
 .surface {

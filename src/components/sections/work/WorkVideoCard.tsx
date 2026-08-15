@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { Play } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { VideoLoader } from "@/components/ui/VideoLoader";
 
 import styles from "./WorkVideoCard.module.css";
 
@@ -131,8 +132,12 @@ export function WorkVideoCard({
               onLoadedData={markPreviewReady}
               onCanPlay={markPreviewReady}
               onPlaying={markPreviewReady}
+              onWaiting={() => setIsPreviewReady(false)}
+              onStalled={() => setIsPreviewReady(false)}
+              onError={deactivatePreview}
             />
           ) : null}
+          <VideoLoader active={shouldLoadPreview && !isPreviewReady} />
           <span className={styles["work-video-card__play-badge"]} aria-hidden="true">
             <Play className={styles["work-video-card__play-icon"]} fill="currentColor" />
           </span>

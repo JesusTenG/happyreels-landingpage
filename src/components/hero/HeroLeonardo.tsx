@@ -121,6 +121,7 @@ export function HeroLeonardo({ locale, ctaLabel, projectsHref }: HeroVariantProp
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
     const mobileViewport = window.matchMedia("(max-width: 820px)");
     let interval = 0;
+    let completedTransitions = 0;
     let isHeadlineVisible = false;
     let isHeroReady = root.dataset.heroReady === "true";
 
@@ -136,7 +137,8 @@ export function HeroLeonardo({ locale, ctaLabel, projectsHref }: HeroVariantProp
         isHeroReady &&
         document.visibilityState === "visible" &&
         !mobileViewport.matches &&
-        !reducedMotion.matches;
+        !reducedMotion.matches &&
+        completedTransitions < HERO_HEADLINES.length - 1;
 
       if (!shouldCycle) {
         stopHeadlineCycle();
@@ -145,7 +147,9 @@ export function HeroLeonardo({ locale, ctaLabel, projectsHref }: HeroVariantProp
 
       if (interval) return;
       interval = window.setInterval(() => {
+        completedTransitions += 1;
         setHeadlineStep((step) => step + 1);
+        if (completedTransitions >= HERO_HEADLINES.length - 1) stopHeadlineCycle();
       }, HERO_HEADLINE_INTERVAL_MS);
     };
 
@@ -169,6 +173,7 @@ export function HeroLeonardo({ locale, ctaLabel, projectsHref }: HeroVariantProp
 
     const handleActivityChange = () => {
       if (mobileViewport.matches) {
+        completedTransitions = 0;
         setHeadlineStep(0);
       }
       syncHeadlineCycle();
@@ -297,6 +302,7 @@ export function HeroLeonardo({ locale, ctaLabel, projectsHref }: HeroVariantProp
 
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
     let animationFrame = 0;
+    let isZoomActive = false;
     let sectionStart = 0;
     let scrollDistance = 1;
     let viewportFillScale = 1;
@@ -316,11 +322,11 @@ export function HeroLeonardo({ locale, ctaLabel, projectsHref }: HeroVariantProp
         scale = 1 + easedProgress * (viewportFillScale - 1);
       }
 
-      zoomLayer.style.transform = `translate3d(0, 0, 0) scale(${scale})`;
+      zoomLayer.style.transform = `scale(${scale})`;
     };
 
     const requestZoomUpdate = () => {
-      if (animationFrame) return;
+      if (!isZoomActive || animationFrame) return;
       animationFrame = window.requestAnimationFrame(renderZoom);
     };
 
@@ -336,6 +342,20 @@ export function HeroLeonardo({ locale, ctaLabel, projectsHref }: HeroVariantProp
 
     measureZoom();
 
+    const visibilityObserver = new IntersectionObserver(
+      ([entry]) => {
+        isZoomActive = Boolean(entry?.isIntersecting);
+        root.toggleAttribute("data-zoom-active", isZoomActive);
+        if (!isZoomActive && animationFrame) {
+          window.cancelAnimationFrame(animationFrame);
+          animationFrame = 0;
+        }
+        renderZoom();
+      },
+      { rootMargin: "25% 0px" },
+    );
+    visibilityObserver.observe(root);
+
     const handleReducedMotionChange = () => renderZoom();
     window.addEventListener("scroll", requestZoomUpdate, { passive: true });
     window.addEventListener("resize", measureZoom);
@@ -345,6 +365,8 @@ export function HeroLeonardo({ locale, ctaLabel, projectsHref }: HeroVariantProp
       window.removeEventListener("scroll", requestZoomUpdate);
       window.removeEventListener("resize", measureZoom);
       reducedMotion.removeEventListener("change", handleReducedMotionChange);
+      visibilityObserver.disconnect();
+      root.removeAttribute("data-zoom-active");
       if (animationFrame) window.cancelAnimationFrame(animationFrame);
     };
   }, []);

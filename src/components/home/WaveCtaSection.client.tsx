@@ -5,6 +5,7 @@ import { useLayoutEffect, useRef } from "react";
 import { BrandMark } from "@/components/brand/BrandMark";
 import HappyReelsButton from "@/components/ui/HappyReelsButton";
 import type { Locale } from "@/i18n/config";
+import { stripTrailingHeadingPeriod } from "@/lib/heading-text";
 
 import styles from "./WaveCtaSection.module.css";
 
@@ -59,6 +60,7 @@ export function WaveCtaSection({ locale }: Props) {
     }
 
     let animationFrame = 0;
+    let isMotionActive = false;
 
     const clamp = (value: number, min: number, max: number) =>
       Math.min(Math.max(value, min), max);
@@ -93,18 +95,39 @@ export function WaveCtaSection({ locale }: Props) {
     };
 
     const scheduleUpdate = () => {
-      if (animationFrame) return;
+      if (!isMotionActive || animationFrame) return;
       animationFrame = window.requestAnimationFrame(update);
     };
 
     update();
+    const visibilityObserver = new IntersectionObserver(
+      ([entry]) => {
+        isMotionActive = Boolean(entry?.isIntersecting);
+        section.toggleAttribute("data-motion-active", isMotionActive);
+
+        if (!isMotionActive && animationFrame) {
+          window.cancelAnimationFrame(animationFrame);
+          animationFrame = 0;
+        }
+        update();
+      },
+      { rootMargin: "100% 0px" },
+    );
+    visibilityObserver.observe(section);
+
+    const handleResize = () => {
+      if (isMotionActive) scheduleUpdate();
+      else update();
+    };
     window.addEventListener("scroll", scheduleUpdate, { passive: true });
-    window.addEventListener("resize", scheduleUpdate);
+    window.addEventListener("resize", handleResize);
 
     return () => {
+      visibilityObserver.disconnect();
       window.removeEventListener("scroll", scheduleUpdate);
-      window.removeEventListener("resize", scheduleUpdate);
+      window.removeEventListener("resize", handleResize);
       if (animationFrame) window.cancelAnimationFrame(animationFrame);
+      section.removeAttribute("data-motion-active");
       section.inert = false;
     };
   }, []);
@@ -135,7 +158,7 @@ export function WaveCtaSection({ locale }: Props) {
                   <em className={`${styles.headlineAccent} hr-italic-marker`}>{copy.title.footage}</em>{" "}
                   {copy.title.middle}{" "}
                   <em className={`${styles.headlineAccent} hr-italic-marker`}>{copy.title.feeling}</em>
-                  {copy.title.end}
+                  {stripTrailingHeadingPeriod(copy.title.end)}
                 </h2>
                 <HappyReelsButton
                   href={`/${locale}#contact`}

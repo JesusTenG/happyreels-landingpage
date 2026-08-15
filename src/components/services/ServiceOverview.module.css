@@ -113,6 +113,10 @@
     line-height: 0.95;
   }
   .serviceCard { min-height: 21rem; }
+  .serviceCard[data-card="1"],
+  .serviceCard[data-card="3"] { rotate: -0.65deg; }
+  .serviceCard[data-card="2"],
+  .serviceCard[data-card="4"] { rotate: 0.65deg; }
   .choiceList a { grid-template-columns: 2rem minmax(0, 1fr); }
   .choiceList strong { grid-column: 2; }
 }
