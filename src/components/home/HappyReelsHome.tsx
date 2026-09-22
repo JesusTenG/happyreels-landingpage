@@ -27,6 +27,7 @@ import { getProjectsPath } from "@/lib/route-config";
 import { DirectMessageCard } from "./DirectMessageCard";
 import { FAQSection } from "./FAQSection.client";
 import { HomeTestimonials } from "./HomeTestimonials";
+import { PackagesSection } from "./PackagesSection";
 import { ReelMarquee } from "./ReelMarquee.client";
 import { ResultsSection } from "./ResultsSection";
 import { ServicesSection } from "./ServicesSection";
@@ -156,16 +157,12 @@ export function HappyReelsHome({ locale, dict }: Props) {
 
       <ServicesSection locale={locale} />
 
-      <SectionWave from="var(--color-soft-clay)" to="var(--color-soft-clay)" flip />
-
       <ResultsSection locale={locale} />
-
-      <SectionWave from="var(--color-soft-clay)" to="var(--color-cocoa-ink)" />
 
       <section
         className={styles.audiences}
         aria-labelledby="audiences-title"
-        data-navbar-theme="rose"
+        data-navbar-theme="brown"
         data-home-section="audiences"
       >
         <h2 id="audiences-title" className="sr-only">
@@ -200,11 +197,9 @@ export function HappyReelsHome({ locale, dict }: Props) {
         </ScrollMotionGroup>
       </section>
 
-      <SectionWave from="var(--color-cocoa-ink)" to="var(--color-cocoa-ink)" />
-
       <ClientCollaborationsSection locale={locale} />
 
-      <SectionWave from="var(--color-cocoa-ink)" to="var(--color-soft-clay)" />
+      <PackagesSection locale={locale} />
 
       <section
         id="process"
@@ -244,7 +239,6 @@ export function HappyReelsHome({ locale, dict }: Props) {
         </div>
       </section>
 
-      <SectionWave from="var(--color-soft-clay)" to="var(--color-soft-clay)" flip />
       <section
         className={styles.proof}
         aria-labelledby="proof-title"
@@ -258,7 +252,6 @@ export function HappyReelsHome({ locale, dict }: Props) {
           <HomeTestimonials locale={locale} testimonials={testimonials} />
         </div>
       </section>
-      <SectionWave from="var(--color-soft-clay)" to="var(--color-dusty-blush)" />
 
       <FAQSection locale={locale} />
 

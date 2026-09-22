@@ -9,8 +9,8 @@ import { getTestimonialForClientStory } from "@/content/testimonials";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { TestimonialCard } from "@/components/testimonials/TestimonialCard";
+import { SectionWave } from "@/components/layout/SectionWave";
 import HappyReelsButton from "@/components/ui/HappyReelsButton";
-import { MixedHeadline } from "@/components/ui/MixedHeadline";
 import { stripTrailingHeadingPeriod } from "@/lib/heading-text";
 import { getProjectsPath } from "@/lib/route-config";
 import { getServiceContent } from "@/data/service-content";
@@ -18,7 +18,7 @@ import { getServicePath, type ServiceKey } from "@/lib/route-config";
 
 import type { ClientStory } from "@/data/client-stories";
 import { ClientStoryDetailReels } from "./ClientStoryDetailReels.client";
-import styles from "./ClientStoryDetailView.module.css";
+import styles from "./ClientStoryDetailViewV2.module.css";
 
 type Props = Readonly<{
   locale: Locale;
@@ -45,73 +45,77 @@ export function ClientStoryDetailView({ locale, dict, story }: Props) {
   const relatedServices = STORY_SERVICES[story.slug] ?? [];
 
   return (
-    <article className={styles["collaboration-detail"]} data-navbar-theme="brown">
-      <div className={styles["collaboration-detail__shell"]}>
-        <div className={styles["collaboration-detail-back"]}>
-          <HappyReelsButton
-            href={backHref}
-            variant="secondary"
-            showIcon={false}
-            enableMovingBorder={false}
-          >
-            {clientStoryDetail.back}
-          </HappyReelsButton>
-        </div>
-
-        <section className={styles["collaboration-detail-intro"]} aria-labelledby="client-project-title">
-          <div className={styles["collaboration-detail-copy"]}>
-            <p className={styles["collaboration-detail-eyebrow"]}>
-              {locale === "de" ? "Langfristiges Projekt" : "Long-term project"}
-            </p>
-            <h1 id="client-project-title" className={styles["collaboration-detail-headline"]}>
-              <MixedHeadline text={pageTitle} />
-            </h1>
-            <p className={styles["collaboration-detail-lead"]}>{content.intro}</p>
-            <p className={styles["collaboration-detail-description"]}>
-              {content.collaborationText}
-            </p>
+    <main id="main-content" className={styles["collaboration-detail"]}>
+      <section
+        className={styles["collaboration-detail-hero"]}
+        aria-labelledby="client-project-title"
+        data-navbar-theme="brown"
+        data-navbar-hero="collapsing"
+      >
+        <div className={`container-base ${styles["collaboration-detail-hero-shell"]}`}>
+          <div className={styles["collaboration-detail-back"]}>
+            <HappyReelsButton
+              href={backHref}
+              variant="secondary"
+              showIcon={false}
+              enableMovingBorder={false}
+            >
+              {clientStoryDetail.back}
+            </HappyReelsButton>
           </div>
-          {story.heroImageSrc ? (
-            <div className={styles["collaboration-detail-hero-media"]}>
-              <Image
-                src={story.heroImageSrc}
-                alt={content.imageAlt}
-                fill
-                priority
-                sizes="(max-width: 768px) 92vw, (max-width: 1100px) 44vw, 34rem"
-              />
-            </div>
-          ) : null}
-        </section>
 
-        <section
-          className={styles["collaboration-detail-direction"]}
-          aria-labelledby="client-project-direction-title"
-        >
-          <div>
-            <p className={styles["collaboration-detail-section-label"]}>
-              {locale === "de" ? "Visuelle Ausrichtung" : "Visual direction"}
-            </p>
-            <h2 id="client-project-direction-title"><MixedHeadline text={content.directionTitle} /></h2>
+          <div className={styles["collaboration-detail-intro"]}>
+            <div className={styles["collaboration-detail-copy"]}>
+              <h1 id="client-project-title" className={styles["collaboration-detail-headline"]}>{pageTitle}</h1>
+              <p className={styles["collaboration-detail-lead"]}>{content.intro}</p>
+            </div>
+            {story.heroImageSrc ? (
+              <div className={styles["collaboration-detail-hero-media"]}>
+                <Image
+                  src={story.heroImageSrc}
+                  alt={content.imageAlt}
+                  fill
+                  priority
+                  sizes="(max-width: 768px) 92vw, (max-width: 1100px) 44vw, 34rem"
+                />
+              </div>
+            ) : null}
+          </div>
+        </div>
+      </section>
+
+      <SectionWave from="var(--subpage-bg-soft)" to="var(--subpage-bg-strong)" />
+
+      <section
+        className={styles["collaboration-detail-direction"]}
+        aria-labelledby="client-project-direction-title"
+        data-navbar-theme="brown"
+      >
+        <div className={`container-base ${styles["collaboration-detail-direction-grid"]}`}>
+          <div className={styles["collaboration-detail-direction-copy"]}>
+            <h2 id="client-project-direction-title">{content.directionTitle}</h2>
+            <p>{content.collaborationText}</p>
             <p>{content.directionText}</p>
           </div>
           <div className={styles["collaboration-detail-formats"]}>
-            <h3><MixedHeadline text={locale === "de" ? "Produzierte Formate" : "Produced formats"} tone="gold" /></h3>
+            <h3>{locale === "de" ? "Produzierte Formate" : "Produced formats"}</h3>
             <ul>
               {content.formats.map((format) => <li key={format}>{format}</li>)}
             </ul>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {relatedServices.length > 0 ? (
-          <section
-            className={styles["collaboration-detail-services"]}
-            aria-labelledby="client-project-services-title"
-          >
+      <SectionWave from="var(--subpage-bg-strong)" to="var(--subpage-bg-base)" />
+
+      {relatedServices.length > 0 ? (
+        <section
+          className={styles["collaboration-detail-services"]}
+          aria-labelledby="client-project-services-title"
+          data-navbar-theme="brown"
+        >
+          <div className={`container-base ${styles["collaboration-detail-services-grid"]}`}>
             <div>
-              <p className={styles["collaboration-detail-section-label"]}>
-                {locale === "de" ? "Eingesetzte Leistungen" : "Services involved"}
-              </p>
               <h2 id="client-project-services-title">
                 {stripTrailingHeadingPeriod(
                   locale === "de"
@@ -127,20 +131,23 @@ export function ClientStoryDetailView({ locale, dict, story }: Props) {
                 </Link>
               ))}
             </nav>
-          </section>
-        ) : null}
+          </div>
+        </section>
+      ) : null}
 
-        {workItems.length > 0 || hasTestimonial ? (
-          <section
-            className={styles["collaboration-detail-content"]}
-            aria-labelledby={workItems.length > 0 ? "client-story-edits-heading" : undefined}
-          >
+      {workItems.length > 0 || hasTestimonial ? (
+        <section
+          className={styles["collaboration-detail-content"]}
+          aria-labelledby={workItems.length > 0 ? "client-story-edits-heading" : undefined}
+          data-navbar-theme="brown"
+        >
+          <div className="container-base">
             {workItems.length > 0 ? (
               <h2
                 id="client-story-edits-heading"
-                className={`${styles["collaboration-detail-headline"]} ${styles["collaboration-detail-reels-heading"]}`}
+                className={styles["collaboration-detail-reels-heading"]}
               >
-                <MixedHeadline text={clientStoryDetail.publishedEditsHeading} />
+                {clientStoryDetail.publishedEditsHeading}
               </h2>
             ) : null}
 
@@ -169,22 +176,26 @@ export function ClientStoryDetailView({ locale, dict, story }: Props) {
                 </aside>
               ) : null}
             </div>
-          </section>
-        ) : null}
+          </div>
+        </section>
+      ) : null}
 
-        <section
-          className={styles["collaboration-detail-cta"]}
-          aria-labelledby="client-story-cta-heading"
-        >
-          <h2 id="client-story-cta-heading" className={styles["collaboration-detail-cta-title"]}>
-            <MixedHeadline text={clientStoryDetail.ctaHeadline} />
-          </h2>
-          <p className={styles["collaboration-detail-cta-text"]}>{clientStoryDetail.ctaBody}</p>
+      <SectionWave from="var(--subpage-bg-base)" to="var(--subpage-bg-cta)" flip />
+
+      <section
+        className={styles["collaboration-detail-cta"]}
+        aria-labelledby="client-story-cta-heading"
+        data-navbar-theme="brown"
+      >
+        <div className={`container-base ${styles["collaboration-detail-cta-grid"]}`}>
+          <div>
+            <h2 id="client-story-cta-heading" className={styles["collaboration-detail-cta-title"]}>
+              {clientStoryDetail.ctaHeadline}
+            </h2>
+            <p className={styles["collaboration-detail-cta-text"]}>{clientStoryDetail.ctaBody}</p>
+          </div>
           <div className={styles["collaboration-detail-cta-actions"]}>
-            <HappyReelsButton
-              href={contactHref}
-              showIcon={false}
-            >
+            <HappyReelsButton href={contactHref} showIcon={false}>
               {clientStoryDetail.ctaPrimary}
             </HappyReelsButton>
             <HappyReelsButton
@@ -196,8 +207,10 @@ export function ClientStoryDetailView({ locale, dict, story }: Props) {
               {clientStoryDetail.ctaSecondary}
             </HappyReelsButton>
           </div>
-        </section>
-      </div>
-    </article>
+        </div>
+      </section>
+
+      <SectionWave from="var(--subpage-bg-cta)" to="var(--subpage-bg-footer)" />
+    </main>
   );
 }

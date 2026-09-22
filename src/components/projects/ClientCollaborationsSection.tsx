@@ -55,7 +55,7 @@ export function ClientCollaborationsSection({ locale, variant = "home" }: Props)
       className={styles.section}
       data-variant={variant}
       aria-labelledby={`${variant}-collaborations-title`}
-      data-navbar-theme={variant === "home" ? "rose" : "brown"}
+      data-navbar-theme="brown"
     >
       <div className="container-base">
         <Reveal className={styles.heading}>
@@ -66,7 +66,9 @@ export function ClientCollaborationsSection({ locale, variant = "home" }: Props)
             <span className={styles.headingLine}>{copy.titleLineOne}</span>
             <span className={styles.headingLine}>{copy.titleLineTwo}</span>
             <span className={styles.headingLine}>
-              <MixedHeadline text={copy.titleLineThree} highlight={copy.highlight} />
+              {variant === "home" ? (
+                <MixedHeadline text={copy.titleLineThree} highlight={copy.highlight} />
+              ) : copy.titleLineThree}
             </span>
           </h2>
         </Reveal>
@@ -87,7 +89,7 @@ export function ClientCollaborationsSection({ locale, variant = "home" }: Props)
                 end={motion.end}
               >
                 <Reveal className={styles.cardReveal} delay={90 + index * 85}>
-                  <ClientBentoCard locale={locale} story={story} />
+                  <ClientBentoCard locale={locale} story={story} showAction={variant === "projects"} />
                 </Reveal>
               </ScrollMotionItem>
             );

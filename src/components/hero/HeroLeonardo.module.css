@@ -3,6 +3,25 @@
   --leo-gold: var(--color-happy-gold);
   --leo-paper: var(--color-petal-white);
   --leo-void: var(--color-cocoa-ink);
+  --leo-headline: var(--leo-paper);
+  --leo-action-shadow: var(--color-gray-500);
+  --leo-primary-color: var(--color-cocoa-ink);
+  --leo-primary-background: var(--color-happy-gold);
+  --leo-primary-border: var(--color-cocoa-ink);
+  --leo-secondary-color: var(--color-cocoa-ink);
+  --leo-secondary-background: var(--color-petal-white);
+  --leo-secondary-border: var(--color-cocoa-ink);
+  --leo-mobile-card-border: color-mix(
+    in srgb,
+    var(--color-petal-white) 78%,
+    var(--color-happy-gold)
+  );
+  --leo-mobile-card-shadow: color-mix(in srgb, #0f0a0d 62%, transparent);
+  --leo-mobile-card-outline: color-mix(
+    in srgb,
+    var(--color-happy-gold) 34%,
+    transparent
+  );
   --leo-back-wall-width: clamp(48rem, 58vw, 88rem);
   --leo-back-wall-min-height: clamp(28rem, 50vh, 46rem);
   --leo-back-wall-padding: clamp(1.5rem, 3vh, 2.5rem);
@@ -139,8 +158,8 @@
   place-items: center;
   justify-items: center;
   margin: 0;
-  color: var(--leo-paper);
-  -webkit-text-fill-color: var(--leo-paper);
+  color: var(--leo-headline);
+  -webkit-text-fill-color: var(--leo-headline);
   font-family: var(--font-instrument-serif), Georgia, serif;
   font-size: clamp(3rem, 3.8vw, 4.8rem);
   font-style: italic;
@@ -246,13 +265,25 @@
 
 .actions .primaryAction,
 .actions .secondaryAction {
-  box-shadow: 7px 6px 0 var(--color-gray-500);
+  box-shadow: 7px 6px 0 var(--leo-action-shadow);
+}
+
+.actions .primaryAction {
+  border-color: var(--leo-primary-border);
+  color: var(--leo-primary-color);
+  background: var(--leo-primary-background);
+}
+
+.actions .secondaryAction {
+  border-color: var(--leo-secondary-border);
+  color: var(--leo-secondary-color);
+  background: var(--leo-secondary-background);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .actions .primaryAction:hover,
   .actions .secondaryAction:hover {
-    box-shadow: 4px 3px 0 var(--color-gray-500);
+    box-shadow: 4px 3px 0 var(--leo-action-shadow);
   }
 }
 
@@ -335,10 +366,10 @@
   }
 
   .mobileVideoStage :global([data-variant="large"]) figure {
-    border-color: color-mix(in srgb, var(--color-petal-white) 78%, var(--color-happy-gold));
+    border-color: var(--leo-mobile-card-border);
     box-shadow:
-      0 1.55rem 3.8rem color-mix(in srgb, #0f0a0d 62%, transparent),
-      0 0 0 1px color-mix(in srgb, var(--color-happy-gold) 34%, transparent);
+      0 1.55rem 3.8rem var(--leo-mobile-card-shadow),
+      0 0 0 1px var(--leo-mobile-card-outline);
   }
 
   .focusOverlay {

@@ -8,7 +8,7 @@
   border-radius: var(--radius-card);
   color: var(--color-petal-white);
   background: var(--color-cocoa-ink);
-  box-shadow: 9px 9px 0 var(--color-dusty-blush);
+  box-shadow: 9px 9px 0 var(--hr-shadow-solid-blush);
 }
 
 .card h3 {
@@ -50,7 +50,7 @@
   border-radius: var(--radius-pill);
   color: var(--color-cocoa-ink);
   background: var(--color-happy-gold);
-  box-shadow: 5px 5px 0 var(--color-dusty-blush);
+  box-shadow: 5px 5px 0 var(--hr-shadow-solid-blush);
   text-decoration: none;
   transition:
     transform var(--hr-transition-card-hover),
@@ -59,16 +59,16 @@
 
 .links a[data-channel="whatsapp"] {
   background: var(--color-petal-white);
-  box-shadow: 5px 5px 0 color-mix(in srgb, var(--color-happy-gold) 72%, transparent);
+  box-shadow: 5px 5px 0 var(--hr-shadow-solid-gold);
 }
 
 .links a:hover {
-  box-shadow: 3px 3px 0 var(--color-dusty-blush);
+  box-shadow: 3px 3px 0 var(--hr-shadow-solid-blush);
   transform: translate(2px, 2px);
 }
 
 .links a[data-channel="whatsapp"]:hover {
-  box-shadow: 3px 3px 0 color-mix(in srgb, var(--color-happy-gold) 72%, transparent);
+  box-shadow: 3px 3px 0 var(--hr-shadow-solid-gold);
 }
 
 .icon {

@@ -6,12 +6,6 @@ import { usePathname } from "next/navigation";
 import { useEffect, useId, useRef, useState } from "react";
 
 import { BrandMark } from "@/components/brand/BrandMark";
-import { useHeroVariant } from "@/components/hero/HeroVariantContext.client";
-import {
-  HERO_VARIANTS,
-  HERO_VARIANT_NUMBERS,
-  type HeroVariant,
-} from "@/components/hero/Hero.types";
 import HappyReelsButton from "@/components/ui/HappyReelsButton";
 import { otherLocale, type Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
@@ -20,7 +14,6 @@ import { getProjectsPath, getServicesPath } from "@/lib/route-config";
 
 import { LanguageToggle } from "./LanguageToggle";
 import { PaletteToggle } from "./PaletteToggle";
-import { TextMarkerToggle } from "./TextMarkerToggle";
 import styles from "./Navbar.module.css";
 
 type Props = Readonly<{
@@ -33,132 +26,13 @@ const MOBILE_MENU_ID = "happyreels-mobile-menu";
 const MOBILE_NAVBAR_MEDIA = "(max-width: 940px)";
 type NavbarTheme = "rose" | "paper" | "blush" | "gold" | "brown";
 
-type HeroVariantDropdownProps = Readonly<{
-  locale: Locale;
-  value: HeroVariant;
-  onChange: (variant: HeroVariant) => void;
-  mobile?: boolean;
-}>;
-
-function HeroVariantDropdown({
-  locale,
-  value,
-  onChange,
-  mobile = false,
-}: HeroVariantDropdownProps) {
-  const [open, setOpen] = useState(false);
-  const rootRef = useRef<HTMLDivElement>(null);
-  const triggerRef = useRef<HTMLButtonElement>(null);
-  const menuId = `hero-variant-${useId().replaceAll(":", "")}`;
-  const currentNumber = HERO_VARIANT_NUMBERS[value];
-
-  useEffect(() => {
-    if (!open) return;
-
-    const handlePointerDown = (event: PointerEvent) => {
-      if (!rootRef.current?.contains(event.target as Node)) setOpen(false);
-    };
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key !== "Escape") return;
-      setOpen(false);
-      triggerRef.current?.focus();
-    };
-
-    document.addEventListener("pointerdown", handlePointerDown);
-    document.addEventListener("keydown", handleKeyDown);
-    rootRef.current
-      ?.querySelector<HTMLButtonElement>("[role='menuitemradio'][aria-checked='true']")
-      ?.focus();
-
-    return () => {
-      document.removeEventListener("pointerdown", handlePointerDown);
-      document.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [open]);
-
-  const handleMenuKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    if (!["ArrowDown", "ArrowUp", "Home", "End"].includes(event.key)) return;
-
-    const buttons = Array.from(
-      event.currentTarget.querySelectorAll<HTMLButtonElement>("[role='menuitemradio']"),
-    );
-    const activeIndex = buttons.indexOf(document.activeElement as HTMLButtonElement);
-    const nextIndex = event.key === "Home"
-      ? 0
-      : event.key === "End"
-        ? buttons.length - 1
-        : event.key === "ArrowDown"
-          ? (activeIndex + 1 + buttons.length) % buttons.length
-          : (activeIndex - 1 + buttons.length) % buttons.length;
-
-    event.preventDefault();
-    buttons[nextIndex]?.focus();
-  };
-
-  return (
-    <div
-      ref={rootRef}
-      className={`${styles.heroDropdown} ${mobile ? styles.mobileHeroDropdown : ""}`}
-      data-open={open ? "true" : undefined}
-    >
-      <button
-        ref={triggerRef}
-        type="button"
-        className={styles.heroDropdownTrigger}
-        aria-label={locale === "de"
-          ? `Hero-Variante, aktuell ${currentNumber}`
-          : `Hero variant, currently ${currentNumber}`}
-        aria-haspopup="menu"
-        aria-expanded={open}
-        aria-controls={menuId}
-        onClick={() => setOpen((current) => !current)}
-      >
-        <span>Hero</span>
-        <strong>{currentNumber}</strong>
-        <ChevronDown aria-hidden="true" />
-      </button>
-
-      <div
-        id={menuId}
-        className={styles.heroDropdownMenu}
-        role="menu"
-        aria-label={locale === "de" ? "Hero-Variante" : "Hero variant"}
-        aria-hidden={!open}
-        inert={!open}
-        onKeyDown={handleMenuKeyDown}
-      >
-        {HERO_VARIANTS.map((variant) => (
-          <button
-            key={variant}
-            type="button"
-            role="menuitemradio"
-            aria-checked={value === variant}
-            onClick={() => {
-              onChange(variant);
-              setOpen(false);
-              triggerRef.current?.focus();
-            }}
-          >
-            <span>{locale === "de" ? "Hero" : "Hero"}</span>
-            <strong>{HERO_VARIANT_NUMBERS[variant]}</strong>
-          </button>
-        ))}
-      </div>
-    </div>
-  );
-}
-
 type NavbarUtilitiesDropdownProps = Readonly<{
   locale: Locale;
-  heroValue?: HeroVariant;
-  onHeroChange?: (variant: HeroVariant) => void;
   switchHref: string;
 }>;
 
 function NavbarUtilitiesDropdown({
   locale,
-  heroValue,
-  onHeroChange,
   switchHref,
 }: NavbarUtilitiesDropdownProps) {
   const [open, setOpen] = useState(false);
@@ -220,23 +94,6 @@ function NavbarUtilitiesDropdown({
         inert={!open}
         data-utilities-panel
       >
-        {heroValue && onHeroChange ? (
-          <div className={styles.compactUtilityRow}>
-            <span>{locale === "de" ? "Hero-Variante" : "Hero variant"}</span>
-            <div className={styles.compactHeroToggle} role="group" aria-label={locale === "de" ? "Hero-Variante" : "Hero variant"}>
-              {HERO_VARIANTS.map((variant) => (
-                <button
-                  key={variant}
-                  type="button"
-                  aria-pressed={heroValue === variant}
-                  onClick={() => onHeroChange(variant)}
-                >
-                  {HERO_VARIANT_NUMBERS[variant]}
-                </button>
-              ))}
-            </div>
-          </div>
-        ) : null}
 
         <div className={styles.compactUtilityRow}>
           <span>{locale === "de" ? "Sprache" : "Language"}</span>
@@ -247,15 +104,12 @@ function NavbarUtilitiesDropdown({
           />
         </div>
 
-        {heroValue ? (
-          <div className={styles.compactUtilityRow}>
-            <span>{locale === "de" ? "Darstellung" : "Appearance"}</span>
-            <div className={styles.compactVisualToggles}>
-              <PaletteToggle locale={locale} />
-              <TextMarkerToggle locale={locale} />
-            </div>
+        <div className={styles.compactUtilityRow}>
+          <span>{locale === "de" ? "Darstellung" : "Appearance"}</span>
+          <div className={styles.compactVisualToggles}>
+            <PaletteToggle locale={locale} />
           </div>
-        ) : null}
+        </div>
       </div>
     </div>
   );
@@ -264,8 +118,7 @@ function NavbarUtilitiesDropdown({
 export function Navbar({ locale, dict, introAnimation = false }: Props) {
   const [open, setOpen] = useState(false);
   const [theme, setTheme] = useState<NavbarTheme>("brown");
-  const heroVariant = useHeroVariant();
-  const usesCollapsingStyle = Boolean(heroVariant);
+  const usesCollapsingStyle = true;
   const pathname = usePathname();
   const headerRef = useRef<HTMLElement>(null);
   const firstMobileLink = useRef<HTMLAnchorElement>(null);
@@ -599,7 +452,7 @@ export function Navbar({ locale, dict, introAnimation = false }: Props) {
       window.removeEventListener("resize", measureHero);
       if (animationFrame) window.cancelAnimationFrame(animationFrame);
     };
-  }, [heroVariant?.variant, pathname]);
+  }, [pathname]);
 
   return (
     <>
@@ -611,7 +464,6 @@ export function Navbar({ locale, dict, introAnimation = false }: Props) {
         className={styles.header}
         data-open={open ? "true" : undefined}
         data-theme={usesCollapsingStyle ? "brown" : theme}
-        data-hero-variant={heroVariant?.variant}
         data-collapsing-shell={usesCollapsingStyle ? "true" : undefined}
         data-intro={introAnimation ? "true" : undefined}
       >
@@ -650,26 +502,6 @@ export function Navbar({ locale, dict, introAnimation = false }: Props) {
         </div>
 
         <div className={styles.actions}>
-          <div className={styles.desktopUtilities}>
-            {heroVariant ? (
-              <HeroVariantDropdown
-                locale={locale}
-                value={heroVariant.variant}
-                onChange={heroVariant.setVariant}
-              />
-            ) : null}
-            <span className={styles.navLanguage}>
-              <LanguageToggle locale={locale} href={switchHref} />
-            </span>
-            <PaletteToggle locale={locale} />
-            <TextMarkerToggle locale={locale} />
-          </div>
-          <NavbarUtilitiesDropdown
-            locale={locale}
-            heroValue={heroVariant?.variant}
-            onHeroChange={heroVariant?.setVariant}
-            switchHref={switchHref}
-          />
           <HappyReelsButton
             href={`${home}#contact`}
             variant="on-rose"
@@ -679,6 +511,16 @@ export function Navbar({ locale, dict, introAnimation = false }: Props) {
           >
             {dict.nav.cta}
           </HappyReelsButton>
+          <div className={styles.desktopUtilities}>
+            <PaletteToggle locale={locale} />
+            <span className={styles.navLanguage}>
+              <LanguageToggle locale={locale} href={switchHref} />
+            </span>
+          </div>
+          <NavbarUtilitiesDropdown
+            locale={locale}
+            switchHref={switchHref}
+          />
           <button
             type="button"
             className={styles.menuButton}
@@ -717,16 +559,7 @@ export function Navbar({ locale, dict, introAnimation = false }: Props) {
         </nav>
         <div className={styles.mobileFooter}>
           <div className={styles.mobileUtilities}>
-            {heroVariant ? (
-              <HeroVariantDropdown
-                locale={locale}
-                value={heroVariant.variant}
-                onChange={heroVariant.setVariant}
-                mobile
-              />
-            ) : null}
             <PaletteToggle locale={locale} />
-            <TextMarkerToggle locale={locale} />
           </div>
           <div className={styles.mobileCtaRow}>
             <LanguageToggle locale={locale} href={switchHref} onClick={() => setOpen(false)} />

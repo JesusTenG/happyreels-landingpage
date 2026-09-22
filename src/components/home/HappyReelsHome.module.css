@@ -1,4 +1,33 @@
-.main { overflow-x: clip; }
+.main {
+  --home-heading-accent: inherit;
+  --home-heading-accent-shadow: none;
+
+  overflow-x: clip;
+}
+
+:global(.site-variant-root[data-site-color-mode="dark"]) .main {
+  --home-heading-accent: var(--color-happy-gold);
+  --home-heading-accent-shadow: none;
+}
+
+/* Highlighted words borrow the site's solid-shadow language without marker strokes. */
+:global(.site-variant-root[data-site-color-mode]) .main.main :global(.hr-italic-marker) {
+  margin-inline: 0 !important;
+  padding: 0 !important;
+  color: var(--home-heading-accent) !important;
+  background: none !important;
+  font-family: var(--font-manrope), Arial, sans-serif !important;
+  font-size: inherit !important;
+  font-style: normal !important;
+  font-weight: inherit !important;
+  letter-spacing: inherit !important;
+  line-height: inherit !important;
+  text-decoration: none !important;
+  text-shadow: var(--home-heading-accent-shadow) !important;
+  -webkit-text-fill-color: var(--home-heading-accent) !important;
+  paint-order: normal !important;
+}
+
 
 .hero {
   --hero-background: var(--color-dusty-blush);
@@ -263,12 +292,8 @@
 }
 .work h2 em {
   color: var(--color-happy-gold);
+  font: inherit;
   -webkit-text-fill-color: var(--color-happy-gold);
-  font-family: var(--font-instrument-serif), Georgia, serif;
-  font-style: italic;
-  font-weight: var(--hr-italic-heading-weight);
-  letter-spacing: var(--hr-italic-letter-spacing);
-  paint-order: stroke fill;
 }
 .marqueeReveal { width: min(88%, 86rem); margin-inline: auto; }
 .workAction { display: flex; justify-content: center; margin-top: clamp(0.25rem, 1vw, 0.75rem); }
@@ -320,12 +345,8 @@
 
 .outcomesHeader h2 em {
   color: var(--color-happy-gold);
+  font: inherit;
   -webkit-text-fill-color: var(--color-happy-gold);
-  font-family: var(--font-instrument-serif), Georgia, serif;
-  font-style: italic;
-  font-weight: var(--hr-italic-heading-weight);
-  letter-spacing: var(--hr-italic-letter-spacing);
-  paint-order: stroke fill;
 }
 
 .outcomesGrid {
@@ -345,7 +366,7 @@
 
 .outcomeCard {
   --outcome-card-background: var(--color-happy-gold);
-  --outcome-card-shadow: color-mix(in srgb, var(--color-cocoa-ink) 18%, transparent);
+  --outcome-card-shadow: var(--hr-shadow-solid-brown);
   --outcome-card-tilt: -1.1deg;
   --outcome-card-padding: clamp(1.6rem, 3.5vw, 2.4rem);
   --outcome-icon-background: var(--color-petal-white);
@@ -373,7 +394,7 @@
 
 .outcomeCard[data-outcome-card="2"] {
   --outcome-card-background: var(--color-cocoa-ink);
-  --outcome-card-shadow: color-mix(in srgb, var(--color-happy-gold) 82%, transparent);
+  --outcome-card-shadow: var(--hr-shadow-solid-gold);
   --outcome-card-tilt: 1deg;
   --outcome-icon-background: var(--color-happy-gold);
 
@@ -382,7 +403,7 @@
 
 .outcomeCard[data-outcome-card="3"] {
   --outcome-card-background: var(--color-soft-clay);
-  --outcome-card-shadow: color-mix(in srgb, var(--color-petal-white) 72%, transparent);
+  --outcome-card-shadow: var(--hr-shadow-solid-brown);
   --outcome-card-tilt: -0.8deg;
   --outcome-icon-background: var(--color-happy-gold);
 }
@@ -408,7 +429,7 @@
   border-radius: 50%;
   color: var(--color-cocoa-ink);
   background: var(--outcome-icon-background);
-  box-shadow: 4px 4px 0 color-mix(in srgb, var(--color-cocoa-ink) 12%, transparent);
+  box-shadow: 4px 4px 0 var(--hr-shadow-solid-brown);
   transition: transform var(--hr-transition-card-hover);
 }
 
@@ -446,11 +467,11 @@
   }
 }
 
-.audiences { overflow: clip; padding: var(--section-space) 0; background: var(--color-cocoa-ink); }
+.audiences { overflow: clip; padding: var(--section-space) 0; background: var(--color-soft-clay); }
 .audienceGrid { display: grid; grid-template-columns: 1.08fr 0.92fr; gap: clamp(1rem, 2.5vw, 2.5rem); align-items: start; }
 .audienceMotion:last-child { margin-top: clamp(2rem, 7vw, 5rem); }
 .audienceCard {
-  --audience-card-shadow: color-mix(in srgb, var(--color-cocoa-ink) 18%, transparent);
+  --audience-card-shadow: var(--hr-shadow-solid-brown);
 
   display: flex;
   min-height: clamp(26rem, 42vw, 35rem);
@@ -466,7 +487,7 @@
     box-shadow var(--hr-transition-card-hover);
 }
 .audienceCard[data-tone="2"] {
-  --audience-card-shadow: color-mix(in srgb, var(--color-petal-white) 30%, transparent);
+  --audience-card-shadow: var(--hr-shadow-solid-brown);
 
   color: var(--color-cocoa-ink);
   background: var(--color-happy-gold);
@@ -496,7 +517,7 @@
   --mixed-headline-stroke: var(--color-cocoa-ink);
 
   padding: clamp(3rem, 3.5vw, 3.5rem) 0 clamp(3rem, 3.75vw, 3.75rem);
-  background: var(--color-soft-clay);
+  background: var(--color-dusty-blush);
 }
 
 .processInner {
@@ -507,9 +528,9 @@
 
 .processHeader {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   margin-bottom: clamp(2rem, 3.5vw, 3rem);
-  text-align: center;
+  text-align: left;
 }
 
 .processHeader h2 {
@@ -543,7 +564,7 @@
 
 .processCard {
   --process-card-tilt: -1.1deg;
-  --process-card-shadow: color-mix(in srgb, var(--color-cocoa-ink) 18%, transparent);
+  --process-card-shadow: var(--hr-shadow-solid-brown);
   --process-number-bg: var(--color-cocoa-ink);
   --process-number-color: var(--color-happy-gold);
 
@@ -557,7 +578,7 @@
   border: 1px solid color-mix(in srgb, currentColor 20%, transparent);
   border-radius: var(--radius-card);
   color: var(--color-cocoa-ink);
-  background: var(--color-petal-white);
+  background: var(--hr-card-beige);
   box-shadow: 9px 9px 0 var(--process-card-shadow);
   transform: rotate(var(--process-card-tilt));
   transform-origin: center;
@@ -566,7 +587,7 @@
 
 .processCard[data-process-card="2"] {
   --process-card-tilt: 1.2deg;
-  --process-card-shadow: color-mix(in srgb, var(--color-happy-gold) 82%, transparent);
+  --process-card-shadow: var(--hr-shadow-solid-gold);
   --process-number-bg: var(--color-happy-gold);
   --process-number-color: var(--color-cocoa-ink);
 
@@ -576,7 +597,7 @@
 
 .processCard[data-process-card="3"] {
   --process-card-tilt: -0.75deg;
-  --process-card-shadow: color-mix(in srgb, var(--color-cocoa-ink) 24%, transparent);
+  --process-card-shadow: var(--hr-shadow-solid-brown);
   --process-number-color: var(--color-petal-white);
 
   background: var(--color-happy-gold);
@@ -600,7 +621,7 @@
   border-radius: 50%;
   color: var(--process-number-color);
   background: var(--process-number-bg);
-  box-shadow: 4px 4px 0 color-mix(in srgb, var(--color-cocoa-ink) 16%, transparent);
+  box-shadow: 4px 4px 0 var(--hr-shadow-solid-brown);
   font-size: clamp(0.9rem, 1.25vw, 1.05rem);
   font-weight: 900;
   letter-spacing: 0.04em;
@@ -637,13 +658,13 @@
   --mixed-headline-stroke: var(--color-cocoa-ink);
 
   padding: var(--section-space) 0;
-  background: var(--color-soft-clay);
+  background: var(--color-dusty-blush);
 }
 .proofHeading {
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   margin-bottom: clamp(2.5rem, 5vw, 3.75rem);
-  text-align: center;
+  text-align: right;
 }
 .proof h2 {
   max-width: 12ch;
@@ -657,9 +678,16 @@
   --hr-italic-marker-color: var(--color-soft-clay);
   --mixed-headline-fill: var(--color-petal-white);
   --mixed-headline-stroke: var(--color-cocoa-ink);
+  --home-heading-accent: inherit;
+  --home-heading-accent-shadow: none;
 
   padding: var(--section-space) 0;
   background: var(--color-happy-gold);
+}
+
+:global(.site-variant-root[data-site-color-mode="dark"]) .contact {
+  --home-heading-accent: var(--color-happy-gold);
+  --home-heading-accent-shadow: none;
 }
 .contactGrid {
   display: grid;
@@ -674,14 +702,6 @@
   line-height: var(--hr-section-heading-line-height);
   letter-spacing: var(--hr-section-heading-letter-spacing);
 }
-.contact :global(.hr-italic-marker) {
-  background-image:
-    linear-gradient(var(--hr-marker-cover-color, transparent), var(--hr-marker-cover-color, transparent)),
-    radial-gradient(circle closest-side at center, var(--hr-marker-paint) 98%, transparent 100%),
-    linear-gradient(var(--hr-marker-paint), var(--hr-marker-paint)),
-    radial-gradient(circle closest-side at center, var(--hr-marker-paint) 98%, transparent 100%);
-}
-
 .contactTitleLine {
   display: block;
 }

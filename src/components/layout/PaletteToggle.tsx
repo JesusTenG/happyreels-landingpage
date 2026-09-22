@@ -34,7 +34,7 @@ export function PaletteToggle({ locale }: Props) {
       onClick={() => heroVariant.setColorMode(isDark ? "light" : "dark")}
     >
       <span className={styles.themeIcon} aria-hidden="true">
-        {isDark ? <Sun /> : <Moon />}
+        {isDark ? <Moon /> : <Sun />}
       </span>
       <span className="sr-only">{themeLabel}</span>
     </button>

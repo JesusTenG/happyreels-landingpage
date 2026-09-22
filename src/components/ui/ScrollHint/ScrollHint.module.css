@@ -4,13 +4,17 @@
   left: 50%;
   z-index: 5;
   display: block;
-  width: 7.25rem;
-  height: 7.25rem;
+  width: 7.75rem;
+  height: 7.75rem;
   border-radius: var(--radius-pill);
-  color: var(--color-happy-gold);
+  color: var(--color-cocoa-ink);
   text-decoration: none;
   transform: translateX(-50%);
   animation: scroll-hint-reveal 680ms cubic-bezier(0.16, 1, 0.3, 1) 500ms both;
+}
+
+:global(.site-variant-root[data-site-color-mode="dark"]) .root {
+  color: var(--color-happy-gold);
 }
 
 .float,
@@ -23,7 +27,7 @@
 }
 
 .float {
-  animation: scroll-hint-float 2.9s ease-in-out 1.15s 3;
+  animation: scroll-hint-float 6.4s ease-in-out 1.15s infinite;
 }
 
 .surface {
@@ -32,16 +36,14 @@
 
 .icon {
   display: block;
-  width: 5.125rem;
-  height: 5.4rem;
+  width: 5.5rem;
+  height: 5.8rem;
   overflow: visible;
   fill: currentColor;
 }
 
 .icon circle {
-  stroke: var(--scroll-hint-stroke, var(--color-cocoa-ink));
-  stroke-width: 2.2;
-  paint-order: stroke fill;
+  stroke: none;
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -58,11 +60,11 @@
 @keyframes scroll-hint-float {
   0%,
   100% {
-    transform: translateY(0);
+    transform: translateY(-0.2rem);
   }
 
   50% {
-    transform: translateY(0.375rem);
+    transform: translateY(0.25rem);
   }
 }
 
@@ -89,19 +91,6 @@
 @media (min-width: 981px) and (max-width: 1920px) and (max-height: 1100px) {
   .root {
     bottom: max(1.25rem, env(safe-area-inset-bottom));
-    width: 6rem;
-    height: 6rem;
-  }
-
-  .icon {
-    width: 4.25rem;
-    height: 4.5rem;
-  }
-}
-
-@media (max-width: 760px) {
-  .root {
-    bottom: max(clamp(1.125rem, 4vw, 1.5rem), env(safe-area-inset-bottom));
     width: 6.5rem;
     height: 6.5rem;
   }
@@ -109,6 +98,19 @@
   .icon {
     width: 4.6rem;
     height: 4.85rem;
+  }
+}
+
+@media (max-width: 760px) {
+  .root {
+    bottom: max(clamp(1.125rem, 4vw, 1.5rem), env(safe-area-inset-bottom));
+    width: 7rem;
+    height: 7rem;
+  }
+
+  .icon {
+    width: 4.95rem;
+    height: 5.2rem;
   }
 }
 

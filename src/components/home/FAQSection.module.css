@@ -41,8 +41,8 @@
   overflow: hidden;
   border: 1px solid color-mix(in srgb, var(--color-cocoa-ink) 22%, transparent);
   border-radius: var(--radius-medium);
-  background: var(--color-petal-white);
-  box-shadow: 5px 5px 0 color-mix(in srgb, var(--color-cocoa-ink) 12%, transparent);
+  background: var(--hr-card-beige);
+  box-shadow: 5px 5px 0 var(--hr-shadow-solid-brown);
 }
 
 .header { margin: 0; }

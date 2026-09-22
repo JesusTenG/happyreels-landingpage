@@ -8,6 +8,27 @@
   background: var(--wave-from);
 }
 
+.wave::before,
+.wave::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  left: 0;
+  z-index: 1;
+  height: 2px;
+  pointer-events: none;
+}
+
+.wave::before {
+  top: 0;
+  background: var(--wave-from);
+}
+
+.wave::after {
+  bottom: 0;
+  background: var(--wave-to);
+}
+
 .wave svg {
   display: block;
   width: 100%;

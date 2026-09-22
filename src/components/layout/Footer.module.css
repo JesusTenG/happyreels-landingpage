@@ -1,24 +1,34 @@
 .footer {
-  --mixed-headline-fill: var(--color-happy-gold);
-  --mixed-headline-stroke: var(--color-cocoa-ink);
-  padding: clamp(4rem, 7vw, 6rem) 0 1.5rem;
+  --footer-background: var(--color-cocoa-ink);
+  --footer-line: color-mix(in srgb, var(--color-petal-white) 16%, transparent);
+  --footer-muted: color-mix(in srgb, var(--color-petal-white) 72%, transparent);
+  --footer-hover-background: color-mix(in srgb, var(--color-happy-gold) 13%, transparent);
+
+  padding: clamp(4rem, 8vw, 7rem) 0 1.5rem;
   color: var(--color-petal-white);
-  background: var(--color-cocoa-ink);
+  background: var(--footer-background);
+}
+
+:global(.site-variant-root[data-site-color-mode="dark"]) .footer {
+  --footer-background: var(--hero-two-dark-bg);
+  --footer-line: var(--hero-two-dark-line);
+  --footer-muted: color-mix(in srgb, var(--color-petal-white) 68%, transparent);
+  --footer-hover-background: color-mix(in srgb, var(--color-happy-gold) 12%, transparent);
 }
 
 .inner {
   display: flex;
   flex-direction: column;
-  gap: clamp(2.75rem, 5vw, 4.5rem);
+  gap: clamp(2.5rem, 4.5vw, 4rem);
 }
 
 .top {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: space-between;
-  gap: 2rem;
-  padding-bottom: clamp(2rem, 4vw, 3.5rem);
-  border-bottom: 1px solid color-mix(in srgb, var(--color-petal-white) 22%, transparent);
+  gap: clamp(2rem, 5vw, 5rem);
+  padding-bottom: clamp(2rem, 4vw, 3.25rem);
+  border-bottom: 1px solid var(--footer-line);
 }
 
 .brand {
@@ -27,29 +37,18 @@
   text-decoration: none;
 }
 
-.top > p {
-  max-width: none;
+.tagline {
+  max-width: 15ch;
   margin: 0;
-  font-size: clamp(1.3rem, 2.4vw, 2.1rem);
-  font-weight: 750;
-  line-height: 0.98;
+  color: var(--color-petal-white);
+  font: 760 clamp(1.8rem, 3.6vw, 3.35rem) / 0.98 var(--font-manrope), Arial, sans-serif;
+  letter-spacing: -0.055em;
   text-align: right;
-  white-space: nowrap;
+  text-wrap: balance;
 }
 
-.top em {
-  color: inherit;
-  -webkit-text-fill-color: currentColor;
-  font-family: var(--font-instrument-serif), Georgia, serif;
-  font-style: italic;
-  font-weight: 400;
-  letter-spacing: var(--hr-italic-letter-spacing);
-  paint-order: stroke fill;
-}
-
-.top em span {
+.tagline span {
   color: var(--color-happy-gold);
-  -webkit-text-fill-color: var(--color-happy-gold);
 }
 
 .grid {
@@ -57,57 +56,63 @@
   grid-template-columns: 0.85fr 1.15fr 1fr 1.25fr;
   align-items: start;
   gap: clamp(2rem, 4.5vw, 5rem);
-  padding-block: 0.25rem;
 }
 
 .linkCard {
   display: flex;
+  min-width: 0;
   flex-direction: column;
-  gap: 1.1rem;
+  gap: 0.85rem;
+  padding-top: 1.05rem;
+  border-top: 1px solid var(--footer-line);
   color: var(--color-petal-white);
 }
 
 .linkCard h2 {
   margin: 0;
-  font-size: clamp(1rem, 1.25vw, 1.15rem);
-  font-weight: 750;
+  color: var(--color-happy-gold);
+  font-size: 0.73rem;
+  font-weight: 820;
   line-height: 1;
-  letter-spacing: -0.025em;
+  letter-spacing: 0.075em;
+  text-transform: uppercase;
 }
 
 .linkList {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 0.72rem;
+  gap: 0.18rem;
 }
 
 .linkList a,
 .consentSettings {
-  color: color-mix(in srgb, var(--color-petal-white) 72%, transparent);
-  font-size: 0.88rem;
-  font-weight: 560;
+  display: inline-flex;
+  min-height: 2rem;
+  align-items: center;
+  margin-inline: -0.55rem;
+  padding: 0.32rem 0.55rem;
+  border-radius: 0.7rem;
+  color: var(--footer-muted);
+  font-size: 0.86rem;
+  font-weight: 580;
   line-height: 1.25;
+  text-align: left;
   text-decoration: none;
   transition:
     color 160ms ease,
-    transform 160ms ease;
+    background-color 160ms ease;
 }
 
 .linkList a:hover,
 .consentSettings:hover {
-  color: var(--color-happy-gold);
-  transform: translateX(0.18rem);
+  color: var(--color-petal-white);
+  background: var(--footer-hover-background);
 }
 
 .consentSettings {
-  padding: 0;
   border: 0;
   font-family: inherit;
-  font-size: 0.88rem;
-  font-weight: 560;
-  text-decoration: none;
-  background: transparent;
   cursor: pointer;
 }
 
@@ -117,10 +122,10 @@
   justify-content: space-between;
   gap: 1.25rem;
   padding-top: 1.25rem;
-  border-top: 1px solid color-mix(in srgb, var(--color-petal-white) 22%, transparent);
-  color: color-mix(in srgb, var(--color-petal-white) 70%, transparent);
-  font-size: 0.72rem;
-  letter-spacing: 0.05em;
+  border-top: 1px solid var(--footer-line);
+  color: color-mix(in srgb, var(--color-petal-white) 58%, transparent);
+  font-size: 0.68rem;
+  letter-spacing: 0.055em;
   text-transform: uppercase;
 }
 
@@ -131,14 +136,20 @@
 .wyreCredit {
   display: inline-flex;
   align-items: center;
-  gap: 0.65rem;
+  gap: 0.55rem;
+  margin: -0.35rem -0.45rem;
+  padding: 0.35rem 0.45rem;
+  border-radius: var(--radius-pill);
   color: inherit;
   text-decoration: none;
-  transition: color 160ms ease;
+  transition:
+    color 160ms ease,
+    background-color 160ms ease;
 }
 
 .wyreCredit:hover {
   color: var(--color-petal-white);
+  background: var(--footer-hover-background);
 }
 
 .wyreCredit strong {
@@ -147,7 +158,7 @@
 }
 
 .wyreLogo {
-  width: 1.65rem;
+  width: 1.55rem;
   height: auto;
   flex: none;
 }
@@ -157,45 +168,61 @@
 .consentSettings:focus-visible,
 .wyreCredit:focus-visible {
   outline: 3px solid var(--color-happy-gold);
-  outline-offset: 5px;
+  outline-offset: 4px;
 }
 
 @media (max-width: 1050px) {
   .grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 3rem clamp(2rem, 8vw, 5rem);
+    gap: 2.5rem clamp(2rem, 8vw, 5rem);
   }
 }
 
 @media (max-width: 620px) {
-  .footer { padding-top: var(--section-space); }
+  .footer {
+    padding: 3.5rem 0 1rem;
+  }
+
+  .inner {
+    gap: 2.25rem;
+  }
 
   .top {
     align-items: flex-start;
     flex-direction: column;
+    gap: 1.75rem;
   }
 
-  .top > p {
+  .tagline {
+    max-width: 12ch;
     text-align: left;
   }
 
   .grid {
     grid-template-columns: 1fr;
-    gap: 2.25rem;
+    gap: 1.75rem;
   }
 
-  .linkCard { gap: 0.65rem; }
-  .linkList { gap: 0.15rem; }
+  .linkCard {
+    gap: 0.55rem;
+  }
+
   .linkList a,
   .consentSettings {
-    display: inline-flex;
-    min-height: 2.75rem;
-    align-items: center;
-    padding-block: 0.45rem;
+    min-height: 2.65rem;
+    padding-block: 0.5rem;
   }
 
   .bottom {
     align-items: flex-start;
     flex-direction: column;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .linkList a,
+  .consentSettings,
+  .wyreCredit {
+    transition: none;
   }
 }

@@ -41,14 +41,8 @@ export default async function ImpressumPage({ params }: Props) {
   return (
     <>
       <Navbar locale={locale} dict={dict} />
-      <div className="page-spectrum page-spectrum--subtle flex flex-1 flex-col">
-        <main id="main-content" className="flex flex-1 flex-col section-flow">
-          <div className="container-base">
-            <LegalPageView locale={locale} dict={dict} page="impressum" />
-          </div>
-        </main>
-        <Footer locale={locale} dict={dict} />
-      </div>
+      <LegalPageView locale={locale} dict={dict} page="impressum" />
+      <Footer locale={locale} dict={dict} />
     </>
   );
 }

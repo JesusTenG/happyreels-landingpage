@@ -73,10 +73,8 @@ export function Footer({ locale, dict }: Props) {
           <Link href={home} className={styles.brand} aria-label={dict.nav.wordmark}>
             <BrandMark size="footer" reveal="viewport" interactive />
           </Link>
-          <p>
-            <em>
-              From footage to <span>feeling.</span>
-            </em>
+          <p className={styles.tagline}>
+            From footage to <span>feeling.</span>
           </p>
         </div>
 

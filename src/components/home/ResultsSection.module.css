@@ -33,7 +33,7 @@
 
 .card {
   --card-background: var(--color-happy-gold);
-  --card-shadow: color-mix(in srgb, var(--color-cocoa-ink) 18%, transparent);
+  --card-shadow: var(--hr-shadow-solid-brown);
   --card-offset: 0rem;
   --card-rotation: -1.1deg;
   --card-padding: clamp(1.6rem, 2.8vw, 2.25rem);
@@ -65,7 +65,7 @@
 
 .card[data-result-card="2"] {
   --card-background: var(--color-cocoa-ink);
-  --card-shadow: color-mix(in srgb, var(--color-happy-gold) 82%, transparent);
+  --card-shadow: var(--hr-shadow-solid-gold);
   --card-offset: -0.8rem;
   --card-rotation: 1deg;
 
@@ -74,7 +74,7 @@
 
 .card[data-result-card="3"] {
   --card-background: var(--color-dusty-blush);
-  --card-shadow: color-mix(in srgb, var(--color-petal-white) 72%, transparent);
+  --card-shadow: var(--hr-shadow-solid-brown);
   --card-offset: 0.65rem;
   --card-rotation: -0.8deg;
 }

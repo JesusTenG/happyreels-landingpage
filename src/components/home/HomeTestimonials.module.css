@@ -23,7 +23,7 @@
   --testimonial-card-color: var(--color-petal-white);
   --testimonial-card-contrast-bg: var(--color-petal-white);
   --testimonial-card-contrast-color: var(--color-cocoa-ink);
-  --testimonial-card-shadow: color-mix(in srgb, var(--color-happy-gold) 84%, transparent);
+  --testimonial-card-shadow: var(--hr-shadow-solid-gold);
 
   display: flex;
   width: 100%;
@@ -48,11 +48,11 @@
 .motionItem:nth-child(odd) .card { --card-rotation: -1.35deg; }
 .motionItem:nth-child(even) .card {
   --card-rotation: 1.35deg;
-  --testimonial-card-bg: var(--color-petal-white);
+  --testimonial-card-bg: var(--hr-card-beige);
   --testimonial-card-color: var(--color-cocoa-ink);
   --testimonial-card-contrast-bg: var(--color-cocoa-ink);
   --testimonial-card-contrast-color: var(--color-petal-white);
-  --testimonial-card-shadow: color-mix(in srgb, var(--color-cocoa-ink) 27%, transparent);
+  --testimonial-card-shadow: var(--hr-shadow-solid-brown);
 }
 
 .card blockquote {

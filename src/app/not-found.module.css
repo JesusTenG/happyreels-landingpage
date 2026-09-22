@@ -1,7 +1,4 @@
 .notFound {
-  --mixed-headline-fill: var(--color-petal-white);
-  --mixed-headline-stroke: var(--color-happy-gold);
-
   position: relative;
   display: grid;
   min-height: 100svh;
@@ -14,10 +11,11 @@
 }
 
 .code {
-  margin: 0 0 1rem;
-  font-size: 0.8rem;
-  font-weight: 780;
-  letter-spacing: 0.12em;
+  margin: 0 0 1.25rem;
+  font-size: clamp(3rem, 8vw, 6rem);
+  font-weight: 800;
+  line-height: 0.9;
+  letter-spacing: -0.07em;
 }
 
 .notFound h1 {

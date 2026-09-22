@@ -5,18 +5,23 @@
   height: 2.8rem;
   place-items: center;
   padding: 0;
-  border: 1px solid var(--color-cocoa-ink);
+  border: 1px solid var(--palette-toggle-border, var(--color-cocoa-ink));
   border-radius: 50%;
-  color: var(--color-cocoa-ink);
-  background: var(--color-happy-gold);
-  box-shadow: 4px 3px 0 color-mix(in srgb, var(--color-cocoa-ink) 72%, transparent);
+  color: var(--palette-toggle-color, var(--color-cocoa-ink));
+  background: var(--palette-toggle-bg, var(--color-happy-gold));
+  box-shadow: 5px 4px 0 var(--palette-toggle-shadow, var(--hr-shadow-solid-brown));
   cursor: pointer;
-  transition: transform 220ms ease, box-shadow 220ms ease;
+  transition:
+    transform 120ms steps(2, end),
+    color 220ms ease,
+    background-color 220ms ease,
+    border-color 220ms ease,
+    box-shadow 220ms ease;
 }
 
 .toggle:hover {
-  box-shadow: 2px 2px 0 color-mix(in srgb, var(--color-cocoa-ink) 72%, transparent);
-  transform: translate3d(2px, 1px, 0);
+  box-shadow: 3px 2px 0 var(--palette-toggle-hover-shadow, var(--palette-toggle-shadow, var(--hr-shadow-solid-brown)));
+  transform: translate3d(2px, 2px, 0);
 }
 
 .toggle:focus-visible {
@@ -38,19 +43,28 @@
 }
 
 .toggle[data-color-mode="dark"] {
-  border-color: color-mix(in srgb, var(--color-petal-white) 72%, var(--color-happy-gold));
-  color: var(--color-petal-white);
-  background: var(--brown-mauve);
-  box-shadow: 4px 3px 0 color-mix(in srgb, var(--color-happy-gold) 58%, transparent);
+  border-color: var(
+    --palette-toggle-dark-border,
+    color-mix(in srgb, var(--color-petal-white) 72%, var(--color-happy-gold))
+  );
+  color: var(--palette-toggle-dark-color, var(--color-petal-white));
+  background: var(--palette-toggle-dark-bg, var(--brown-mauve));
+  box-shadow: 5px 4px 0 var(--palette-toggle-dark-shadow, var(--hr-shadow-solid-gold));
 }
 
 .toggle[data-color-mode="dark"]:hover {
-  box-shadow: 2px 2px 0 color-mix(in srgb, var(--color-happy-gold) 58%, transparent);
+  box-shadow: 3px 2px 0 var(
+    --palette-toggle-dark-hover-shadow,
+    var(--palette-toggle-dark-shadow, var(--hr-shadow-solid-gold))
+  );
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .toggle,
-  .themeIcon {
+  .toggle {
     transition: none;
+  }
+
+  .toggle:hover {
+    transform: none;
   }
 }
