@@ -55,14 +55,8 @@ export async function ClientProjectRoute({
     <>
       <JsonLd data={jsonLd} />
       <Navbar locale={locale} dict={dict} />
-      <div className="page-spectrum page-spectrum--subtle flex flex-1 flex-col">
-        <main id="main-content" className="flex flex-1 flex-col section-flow">
-          <div className="container-base">
-            <ClientStoryDetailView locale={locale} dict={dict} story={story} />
-          </div>
-        </main>
-        <Footer locale={locale} dict={dict} />
-      </div>
+      <ClientStoryDetailView locale={locale} dict={dict} story={story} />
+      <Footer locale={locale} dict={dict} />
     </>
   );
 }

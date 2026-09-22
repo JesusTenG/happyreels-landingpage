@@ -14,7 +14,7 @@
   text-decoration: none;
   cursor: pointer;
   transition:
-    transform 240ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    transform 120ms steps(2, end),
     background-color 240ms ease,
     color 240ms ease,
     box-shadow 240ms ease;
@@ -46,7 +46,7 @@
 .primary {
   color: var(--color-petal-white);
   background: var(--color-cocoa-ink);
-  box-shadow: 7px 6px 0 color-mix(in srgb, var(--color-cocoa-ink) 20%, transparent);
+  box-shadow: 7px 6px 0 var(--hr-shadow-solid-gold);
 }
 
 .secondary {
@@ -58,31 +58,31 @@
 .accent {
   color: var(--color-cocoa-ink);
   background: var(--color-happy-gold);
-  box-shadow: 7px 6px 0 color-mix(in srgb, var(--color-cocoa-ink) 24%, transparent);
+  box-shadow: 7px 6px 0 var(--hr-shadow-solid-brown);
 }
 
 .on-yellow {
   color: var(--color-petal-white);
   background: var(--color-cocoa-ink);
-  box-shadow: 7px 6px 0 var(--on-yellow-shadow, color-mix(in srgb, var(--color-cocoa-ink) 22%, transparent));
+  box-shadow: 7px 6px 0 var(--on-yellow-shadow, var(--hr-shadow-solid-gold));
 }
 
 .on-brown {
   color: var(--color-cocoa-ink);
   background: var(--color-happy-gold);
-  box-shadow: 7px 6px 0 color-mix(in srgb, var(--color-cocoa-ink) 30%, transparent);
+  box-shadow: 7px 6px 0 var(--hr-shadow-solid-brown);
 }
 
 .on-light {
   color: var(--color-cocoa-ink);
   background: var(--color-petal-white);
-  box-shadow: 7px 6px 0 color-mix(in srgb, var(--color-cocoa-ink) 16%, transparent);
+  box-shadow: 7px 6px 0 var(--hr-shadow-solid-brown);
 }
 
 .on-rose {
   color: var(--color-petal-white);
   background: var(--color-cocoa-ink);
-  box-shadow: 7px 6px 0 color-mix(in srgb, var(--color-happy-gold) 72%, transparent);
+  box-shadow: 7px 6px 0 var(--hr-shadow-solid-gold);
 }
 
 .withMovingBorder {
@@ -106,7 +106,6 @@
   color: var(--color-cocoa-ink);
   background: var(--color-happy-gold);
   z-index: 1;
-  transition: transform 240ms cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .icon::before {
@@ -126,12 +125,12 @@
   transform: translateX(-1px);
 }
 
-.button:hover {
-  transform: translate(2px, 2px);
+.button:not(:disabled):hover {
+  transform: translate3d(2px, 2px, 0);
 }
 
 .primary:hover {
-  box-shadow: 4px 3px 0 color-mix(in srgb, var(--color-cocoa-ink) 20%, transparent);
+  box-shadow: 4px 3px 0 var(--hr-shadow-solid-gold);
 }
 
 .secondary:hover {
@@ -139,21 +138,45 @@
 }
 
 .accent:hover {
-  box-shadow: 4px 3px 0 color-mix(in srgb, var(--color-cocoa-ink) 24%, transparent);
+  box-shadow: 4px 3px 0 var(--hr-shadow-solid-brown);
 }
 
 .on-yellow:hover {
-  box-shadow: 4px 3px 0 var(--on-yellow-shadow, color-mix(in srgb, var(--color-cocoa-ink) 22%, transparent));
+  box-shadow: 4px 3px 0 var(--on-yellow-shadow, var(--hr-shadow-solid-gold));
 }
 
 .on-brown:hover,
-.on-light:hover,
-.on-rose:hover {
-  box-shadow: 4px 3px 0 color-mix(in srgb, var(--color-cocoa-ink) 22%, transparent);
+.on-light:hover {
+  box-shadow: 4px 3px 0 var(--hr-shadow-solid-brown);
 }
 
-.button:hover .icon {
-  transform: translateX(3px);
+.on-rose:hover {
+  box-shadow: 4px 3px 0 var(--hr-shadow-solid-gold);
+}
+
+:global(.site-variant-root[data-site-color-mode="dark"]) :is(.accent, .on-brown) {
+  box-shadow: 7px 6px 0 var(--hr-shadow-solid-clay);
+}
+
+:global(.site-variant-root[data-site-color-mode="dark"]) .secondary {
+  border-color: color-mix(in srgb, var(--color-petal-white) 72%, transparent);
+  color: var(--color-petal-white);
+}
+
+:global(.site-variant-root[data-site-color-mode="dark"]) .secondary:hover {
+  background: color-mix(in srgb, var(--color-petal-white) 10%, transparent);
+}
+
+:global(.site-variant-root[data-site-color-mode="dark"]) :is(.accent, .on-brown):hover {
+  box-shadow: 4px 3px 0 var(--hr-shadow-solid-clay);
+}
+
+:global(.site-variant-root[data-site-color-mode="dark"]) .on-light {
+  box-shadow: 7px 6px 0 var(--hr-shadow-solid-plum);
+}
+
+:global(.site-variant-root[data-site-color-mode="dark"]) .on-light:hover {
+  box-shadow: 4px 3px 0 var(--hr-shadow-solid-plum);
 }
 
 .button:focus-visible {
@@ -179,13 +202,11 @@
     display: none;
   }
 
-  .button,
-  .icon {
+  .button {
     transition: none;
   }
 
-  .button:hover,
-  .button:hover .icon {
+  .button:not(:disabled):hover {
     transform: none;
   }
 }

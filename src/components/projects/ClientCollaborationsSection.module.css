@@ -1,24 +1,24 @@
 .section {
   --mixed-headline-fill: var(--color-happy-gold);
-  --mixed-headline-stroke: var(--color-petal-white);
-  --collaboration-card-shadow: color-mix(in srgb, var(--color-happy-gold) 84%, transparent);
-  --collaboration-marker-color: var(--brown-plum);
+  --mixed-headline-stroke: var(--color-cocoa-ink);
+  --collaboration-card-shadow: var(--hr-shadow-solid-brown);
+  --collaboration-marker-color: var(--color-happy-gold);
   --collaboration-highlight-color: var(--color-happy-gold);
-  --collaboration-heading-size: clamp(1.35rem, 6vw, 5.85rem);
+  --collaboration-heading-size: var(--hr-section-heading-size);
 
   overflow: clip;
   padding: clamp(4.5rem, 8vw, 6rem) 0;
-  color: var(--color-petal-white);
-  background: var(--color-cocoa-ink);
+  color: var(--color-cocoa-ink);
+  background: var(--color-soft-clay);
 }
 
 .section[data-variant="projects"] {
-  --mixed-headline-fill: var(--color-petal-white);
-  --mixed-headline-stroke: var(--color-soft-clay);
-  --collaboration-card-shadow: color-mix(in srgb, var(--color-happy-gold) 84%, transparent);
+  --mixed-headline-fill: var(--color-happy-gold);
+  --mixed-headline-stroke: var(--subpage-bg-strong);
+  --collaboration-card-shadow: var(--subpage-shadow);
   padding-block: clamp(4rem, 7vw, 6.5rem);
-  color: var(--color-cocoa-ink);
-  background: var(--color-soft-clay);
+  color: var(--subpage-text);
+  background: var(--subpage-bg-strong);
 }
 
 .heading {
@@ -47,26 +47,11 @@
 }
 
 .section:not([data-variant="projects"]) .heading :global(.hr-italic-marker) {
-  --hr-italic-marker-color: var(--collaboration-marker-color);
   margin-inline: 0;
-  border-radius: 0;
   padding: 0;
   color: var(--collaboration-highlight-color) !important;
-  background-color: transparent;
-  background-image:
-    linear-gradient(var(--hr-marker-cover-color, transparent), var(--hr-marker-cover-color, transparent)),
-    radial-gradient(circle closest-side at center, var(--hr-marker-paint) 98%, transparent 100%),
-    linear-gradient(var(--hr-marker-paint), var(--hr-marker-paint)),
-    radial-gradient(circle closest-side at center, var(--hr-marker-paint) 98%, transparent 100%);
-  background-position: right 64%, left 64%, center 64%, right 64%;
-  background-size:
-    calc(var(--hr-marker-cover-width) + var(--hr-marker-cover-overscan))
-      calc(0.72em + 4px),
-    0.72em 0.72em,
-    calc(100% - 0.62em) 0.72em,
-    0.72em 0.72em;
-  font-size: 1.02em;
-  line-height: inherit;
+  background: none !important;
+  font: inherit;
   -webkit-text-fill-color: var(--collaboration-highlight-color) !important;
 }
 
@@ -126,6 +111,19 @@
   inset: 0;
 }
 
+.section:not([data-variant="projects"]) .card {
+  border-color: color-mix(in srgb, var(--color-petal-white) 36%, transparent);
+  color: var(--color-petal-white);
+  background: var(--color-cocoa-ink);
+  transition:
+    transform var(--hr-transition-card-hover),
+    box-shadow var(--hr-transition-card-hover);
+}
+
+.section:not([data-variant="projects"]) .media {
+  overflow: hidden;
+}
+
 .media img {
   object-fit: cover;
   transition: transform 460ms cubic-bezier(0.16, 1, 0.3, 1);
@@ -134,6 +132,9 @@
 .featureSlot .media img { object-position: center 42%; }
 .stackSlot:nth-child(2) .media img { object-position: center 28%; }
 .stackSlot:nth-child(3) .media img { object-position: center 34%; }
+.section:not([data-variant="projects"]) .stackSlot:nth-child(2) .media img {
+  object-position: center 10%;
+}
 
 .overlay {
   z-index: 1;
@@ -153,6 +154,12 @@
   padding: clamp(1.25rem, 3vw, 2.2rem);
 }
 
+.section:not([data-variant="projects"]) .cardCopy {
+  min-height: 0;
+  grid-template-columns: 1fr;
+  align-items: end;
+}
+
 .cardName {
   font-size: clamp(1.45rem, 2.9vw, 3.1rem);
   font-weight: 780;
@@ -161,6 +168,12 @@
 }
 
 .stackSlot .cardName { font-size: clamp(1.35rem, 2.2vw, 2.25rem); }
+
+.section:not([data-variant="projects"]) .cardName {
+  width: fit-content;
+  color: var(--color-petal-white);
+  text-shadow: 0 0.08em 0.25em color-mix(in srgb, var(--color-cocoa-ink) 45%, transparent);
+}
 
 .cardLink {
   grid-column: 2;
@@ -177,7 +190,7 @@
   padding: 0.55rem 0.68rem 0.55rem 0.9rem;
   color: var(--color-cocoa-ink);
   background: var(--color-happy-gold);
-  box-shadow: 4px 4px 0 color-mix(in srgb, var(--color-cocoa-ink) 30%, transparent);
+  box-shadow: 4px 4px 0 var(--hr-shadow-solid-brown);
   font: 750 0.68rem/1 var(--font-manrope), sans-serif;
   letter-spacing: 0.025em;
   white-space: nowrap;
@@ -229,8 +242,12 @@
 
 @media (hover: hover) and (pointer: fine) {
   .card:hover .media img { transform: scale(1.045); }
+  .section:not([data-variant="projects"]) .card:hover {
+    box-shadow: 5px 5px 0 var(--collaboration-card-shadow);
+    transform: translate3d(2px, 2px, 0);
+  }
   .card:hover .cardLink {
-    box-shadow: 2px 2px 0 color-mix(in srgb, var(--color-cocoa-ink) 30%, transparent);
+    box-shadow: 2px 2px 0 var(--hr-shadow-solid-brown);
     transform: translate(1px, 1px);
   }
   .card:hover .cardLinkIcon { transform: translateX(3px); }

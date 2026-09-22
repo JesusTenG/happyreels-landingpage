@@ -2,10 +2,9 @@ import Link from "next/link";
 
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
-import { SectionHeader } from "@/components/sections/SectionHeader";
-import { MixedHeadline } from "@/components/ui/MixedHeadline";
+import { SectionWave } from "@/components/layout/SectionWave";
 
-import styles from "./LegalPageView.module.css";
+import styles from "./LegalPageViewV2.module.css";
 
 type Props = Readonly<{
   locale: Locale;
@@ -19,26 +18,33 @@ export function LegalPageView({ locale, dict, page }: Props) {
   const backLabel = locale === "de" ? "Zur Startseite" : "Back to home";
 
   return (
-    <article className={styles.legal} data-navbar-theme="brown">
-      <p className={styles.back}>
-        <Link href={home}>← {backLabel}</Link>
-      </p>
+    <main id="main-content" className={styles.legal}>
+      <section
+        className={styles.hero}
+        aria-labelledby="legal-title"
+        data-navbar-theme="brown"
+        data-navbar-hero="collapsing"
+      >
+        <div className={`container-base ${styles.heroInner}`}>
+          <Link className={styles.back} href={home}>← {backLabel}</Link>
+          <h1 id="legal-title">{content.title}</h1>
+        </div>
+      </section>
 
-      <div className={styles.panel}>
-        <SectionHeader
-          title={content.title}
-          align="start"
-          headingLevel="h1"
-          className={styles.header}
-        />
+      <SectionWave from="var(--subpage-bg-soft)" to="var(--subpage-bg-base)" />
 
-        {content.sections.map((section) => (
-          <section key={section.heading} className={styles.block}>
-            <h2 className={styles.heading}><MixedHeadline text={section.heading} /></h2>
-            <p className={styles.body}>{section.body}</p>
-          </section>
-        ))}
-      </div>
-    </article>
+      <article className={styles.content} data-navbar-theme="brown">
+        <div className={`container-base ${styles.contentInner}`}>
+          {content.sections.map((section) => (
+            <section key={section.heading} className={styles.block}>
+              <h2 className={styles.heading}>{section.heading}</h2>
+              <p className={styles.body}>{section.body}</p>
+            </section>
+          ))}
+        </div>
+      </article>
+
+      <SectionWave from="var(--subpage-bg-base)" to="var(--subpage-bg-footer)" />
+    </main>
   );
 }

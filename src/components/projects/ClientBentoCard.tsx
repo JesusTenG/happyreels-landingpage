@@ -10,18 +10,24 @@ import styles from "./ClientCollaborationsSection.module.css";
 type Props = Readonly<{
   locale: Locale;
   story: ClientStory;
+  showAction?: boolean;
 }>;
 
-export function ClientBentoCard({ locale, story }: Props) {
+export function ClientBentoCard({ locale, story, showAction = true }: Props) {
   const content = story.localized[locale];
   const imageSrc = story.cardImageSrc ?? story.heroImageSrc;
   const linkLabel = locale === "de" ? "Mehr erfahren" : "Learn more";
+  const accessibleLabel = showAction
+    ? `${linkLabel}: ${story.name}`
+    : locale === "de"
+      ? `Projekt mit ${story.name} ansehen`
+      : `View project with ${story.name}`;
 
   return (
     <Link
       href={getClientProjectPath(locale, story.slug)}
       className={styles.card}
-      aria-label={`${linkLabel}: ${story.name}`}
+      aria-label={accessibleLabel}
       data-collaboration-card
     >
       <span className={styles.media}>
@@ -41,12 +47,14 @@ export function ClientBentoCard({ locale, story }: Props) {
       <span className={styles.overlay} aria-hidden="true" />
       <span className={styles.cardCopy}>
         <span className={styles.cardName}>{story.name}</span>
-        <span className={styles.cardLink}>
-          <span className={styles.cardLinkLabel}>{linkLabel}</span>
-          <span className={styles.cardLinkIcon} aria-hidden="true">
-            <span />
+        {showAction ? (
+          <span className={styles.cardLink}>
+            <span className={styles.cardLinkLabel}>{linkLabel}</span>
+            <span className={styles.cardLinkIcon} aria-hidden="true">
+              <span />
+            </span>
           </span>
-        </span>
+        ) : null}
       </span>
     </Link>
   );

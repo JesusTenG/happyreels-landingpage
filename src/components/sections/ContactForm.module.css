@@ -6,7 +6,7 @@
   border: 1px solid color-mix(in srgb, var(--color-cocoa-ink) 22%, transparent);
   border-radius: var(--radius-media);
   background: var(--color-petal-white);
-  box-shadow: 9px 9px 0 color-mix(in srgb, var(--color-cocoa-ink) 84%, transparent);
+  box-shadow: 9px 9px 0 var(--hr-shadow-solid-brown);
 }
 
 .contact-section__field {
@@ -68,7 +68,7 @@
 }
 
 .contact-section__submit {
-  --on-yellow-shadow: color-mix(in srgb, var(--color-happy-gold) 88%, transparent);
+  --on-yellow-shadow: var(--hr-shadow-solid-gold);
 }
 
 .contact-section__error,

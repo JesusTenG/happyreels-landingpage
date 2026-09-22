@@ -1,22 +1,21 @@
-.main { overflow: clip; }
-.hero { --mixed-headline-fill: var(--color-happy-gold); --mixed-headline-stroke: var(--color-dusty-blush); padding: calc(var(--header-height) + clamp(5rem, 10vw, 9rem)) 0 clamp(4rem, 8vw, 7rem); background: var(--color-dusty-blush); }
+.main { overflow: clip; color: var(--subpage-text); background: var(--subpage-bg-base); }
+.hero { display: flex; min-height: min(46rem, 78svh); align-items: flex-end; padding: calc(var(--header-height) + clamp(5rem, 10vw, 9rem)) 0 clamp(4rem, 8vw, 7rem); background: var(--subpage-bg-soft); }
 .heroInner { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(16rem, 0.8fr); gap: 2rem; align-items: end; }
 .hero h1, .story h2, .philosophy h2, .cta h2 { margin: 0; padding-bottom: 0.1em; font-size: clamp(3.2rem, 7.5vw, 8rem); font-weight: 780; line-height: 0.92; letter-spacing: -0.07em; }
-.hero p, .storyCopy p { max-width: 31rem; margin: 0; font-size: clamp(1.05rem, 1.8vw, 1.4rem); font-weight: 620; line-height: 1.55; }
-.story { --mixed-headline-fill: var(--color-happy-gold); --mixed-headline-stroke: var(--color-cocoa-ink); padding: var(--section-space) 0; color: var(--color-petal-white); background: var(--color-cocoa-ink); }
+.hero p, .storyCopy p { max-width: 31rem; margin: 0; color: var(--subpage-text-muted); font-size: clamp(1.05rem, 1.8vw, 1.4rem); font-weight: 620; line-height: 1.55; }
+.story { padding: var(--section-space) 0; color: var(--subpage-on-deep); background: var(--subpage-bg-deep); }
+.story .storyCopy p { color: color-mix(in srgb, var(--subpage-on-deep) 76%, transparent); }
 .storyGrid, .philosophyGrid { display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(22rem, 1.15fr); gap: clamp(3rem, 8vw, 8rem); align-items: center; }
 .storyCopy { display: grid; gap: 1.6rem; }
 .story h2, .philosophy h2 { max-width: 9ch; font-size: clamp(3rem, 6vw, 6.5rem); }
-.mediaWrap figure { position: relative; aspect-ratio: 4 / 3; overflow: hidden; margin: 0; border-radius: var(--radius-card); background: var(--color-dusty-blush); }
+.mediaWrap figure { position: relative; aspect-ratio: 4 / 3; overflow: hidden; margin: 0; border: 1px solid var(--subpage-line); border-radius: var(--radius-card); background: var(--subpage-card-muted); box-shadow: 9px 9px 0 var(--subpage-shadow-alt); }
 .mediaWrap img { object-fit: cover; }
-.philosophy { --mixed-headline-fill: var(--color-petal-white); --mixed-headline-stroke: var(--color-soft-clay); padding: var(--section-space) 0; background: var(--color-soft-clay); }
+.philosophy { padding: var(--section-space) 0; background: var(--subpage-bg-strong); }
 .philosophyGrid { grid-template-columns: minmax(22rem, 1.1fr) minmax(0, 0.9fr); }
 .cta {
-  --mixed-headline-fill: var(--color-petal-white);
-  --mixed-headline-stroke: var(--color-cocoa-ink);
-
   padding: var(--section-space) 0;
-  background: var(--color-happy-gold);
+  color: var(--subpage-text);
+  background: var(--subpage-bg-cta);
 }
 .ctaInner { display: flex; align-items: flex-end; justify-content: space-between; gap: 2rem; }
 .cta h2 { max-width: 10ch; font-size: clamp(3rem, 6.4vw, 6.8rem); }
@@ -28,6 +27,7 @@
 }
 
 @media (max-width: 760px) {
+  .hero { min-height: auto; }
   .hero h1, .story h2, .philosophy h2, .cta h2 {
     max-width: 100%;
     font-size: clamp(2.45rem, 11.5vw, 3.3rem);

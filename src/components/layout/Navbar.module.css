@@ -5,18 +5,28 @@
   --nav-focus: var(--color-cocoa-ink);
   --nav-link-hover-bg: var(--color-cocoa-ink);
   --nav-link-hover-color: var(--color-petal-white);
-  --nav-link-hover-shadow: var(--color-happy-gold);
+  --nav-link-hover-shadow: var(--hr-shadow-solid-clay);
+  --palette-toggle-bg: var(--color-cocoa-ink);
+  --palette-toggle-color: var(--color-petal-white);
+  --palette-toggle-border: var(--color-cocoa-ink);
+  --palette-toggle-shadow: var(--hr-shadow-solid-clay);
+  --palette-toggle-hover-shadow: var(--hr-shadow-solid-clay);
+  --palette-toggle-dark-bg: var(--color-cocoa-ink);
+  --palette-toggle-dark-color: var(--color-petal-white);
+  --palette-toggle-dark-border: var(--color-cocoa-ink);
+  --palette-toggle-dark-shadow: var(--hr-shadow-solid-clay);
+  --palette-toggle-dark-hover-shadow: var(--hr-shadow-solid-clay);
   --language-toggle-bg: var(--color-cocoa-ink);
   --language-toggle-border: var(--color-cocoa-ink);
   --language-toggle-thumb: var(--color-happy-gold);
   --language-toggle-active: var(--color-cocoa-ink);
   --language-toggle-label: var(--color-petal-white);
-  --language-toggle-shadow: color-mix(in srgb, var(--color-happy-gold) 72%, transparent);
-  --language-toggle-hover-shadow: color-mix(in srgb, var(--color-happy-gold) 72%, transparent);
+  --language-toggle-shadow: var(--hr-shadow-solid-clay);
+  --language-toggle-hover-shadow: var(--hr-shadow-solid-clay);
   --nav-cta-color: var(--color-petal-white);
   --nav-cta-bg: var(--color-cocoa-ink);
   --nav-cta-border: var(--color-cocoa-ink);
-  --nav-cta-shadow: color-mix(in srgb, var(--color-happy-gold) 72%, transparent);
+  --nav-cta-shadow: var(--hr-shadow-solid-clay);
   --nav-shadow-strength: 0;
   --nav-shell-alpha: 100%;
   --nav-shell-progress: 1;
@@ -57,18 +67,28 @@
   --nav-focus: var(--color-happy-gold);
   --nav-link-hover-bg: var(--color-happy-gold);
   --nav-link-hover-color: var(--color-cocoa-ink);
-  --nav-link-hover-shadow: color-mix(in srgb, var(--color-petal-white) 22%, transparent);
+  --nav-link-hover-shadow: var(--hr-shadow-solid-clay);
+  --palette-toggle-bg: var(--color-happy-gold);
+  --palette-toggle-color: var(--color-cocoa-ink);
+  --palette-toggle-border: var(--color-cocoa-ink);
+  --palette-toggle-shadow: var(--hr-shadow-solid-clay);
+  --palette-toggle-hover-shadow: var(--hr-shadow-solid-clay);
+  --palette-toggle-dark-bg: var(--color-happy-gold);
+  --palette-toggle-dark-color: var(--color-cocoa-ink);
+  --palette-toggle-dark-border: var(--color-cocoa-ink);
+  --palette-toggle-dark-shadow: var(--hr-shadow-solid-clay);
+  --palette-toggle-dark-hover-shadow: var(--hr-shadow-solid-clay);
   --language-toggle-bg: var(--color-happy-gold);
   --language-toggle-border: var(--color-cocoa-ink);
   --language-toggle-thumb: var(--color-cocoa-ink);
   --language-toggle-active: var(--color-petal-white);
   --language-toggle-label: var(--color-cocoa-ink);
-  --language-toggle-shadow: color-mix(in srgb, var(--color-petal-white) 18%, transparent);
-  --language-toggle-hover-shadow: color-mix(in srgb, var(--color-petal-white) 18%, transparent);
+  --language-toggle-shadow: var(--hr-shadow-solid-clay);
+  --language-toggle-hover-shadow: var(--hr-shadow-solid-clay);
   --nav-cta-color: var(--color-cocoa-ink);
   --nav-cta-bg: var(--color-happy-gold);
   --nav-cta-border: var(--color-cocoa-ink);
-  --nav-cta-shadow: color-mix(in srgb, var(--color-petal-white) 18%, transparent);
+  --nav-cta-shadow: var(--hr-shadow-solid-clay);
   --nav-shadow-strength: 0.1;
 }
 
@@ -83,18 +103,18 @@
   --nav-focus: var(--color-cocoa-ink);
   --nav-link-hover-bg: var(--color-cocoa-ink);
   --nav-link-hover-color: var(--color-petal-white);
-  --nav-link-hover-shadow: color-mix(in srgb, var(--color-petal-white) 58%, transparent);
+  --nav-link-hover-shadow: var(--hr-shadow-solid-clay);
   --language-toggle-bg: var(--color-cocoa-ink);
   --language-toggle-border: var(--color-cocoa-ink);
   --language-toggle-thumb: var(--color-petal-white);
   --language-toggle-active: var(--color-cocoa-ink);
   --language-toggle-label: var(--color-petal-white);
-  --language-toggle-shadow: color-mix(in srgb, var(--color-petal-white) 42%, transparent);
-  --language-toggle-hover-shadow: color-mix(in srgb, var(--color-petal-white) 58%, transparent);
+  --language-toggle-shadow: var(--hr-shadow-solid-clay);
+  --language-toggle-hover-shadow: var(--hr-shadow-solid-clay);
   --nav-cta-color: var(--color-petal-white);
   --nav-cta-bg: var(--color-cocoa-ink);
   --nav-cta-border: var(--color-cocoa-ink);
-  --nav-cta-shadow: color-mix(in srgb, var(--color-petal-white) 58%, transparent);
+  --nav-cta-shadow: var(--hr-shadow-solid-clay);
 }
 
 .nav {
@@ -233,175 +253,6 @@
   flex: none;
 }
 
-.heroToggle {
-  display: inline-flex;
-  flex: none;
-  gap: 0.1rem;
-  padding: 0.16rem;
-  border-radius: var(--radius-pill);
-  background: color-mix(in srgb, currentColor 8%, transparent);
-}
-
-.heroToggle button {
-  display: grid;
-  width: 1.75rem;
-  height: 1.75rem;
-  place-items: center;
-  border: 0;
-  border-radius: 50%;
-  opacity: 0.5;
-  color: inherit;
-  background: transparent;
-  font: 780 0.59rem/1 var(--font-manrope), sans-serif;
-  letter-spacing: 0.02em;
-  cursor: pointer;
-  transition:
-    opacity 180ms ease,
-    color 180ms ease,
-    background-color 180ms ease;
-}
-
-.heroToggle button[aria-pressed="true"] {
-  opacity: 1;
-  color: var(--color-cocoa-ink);
-  background: var(--nav-accent);
-}
-
-.heroToggle button:focus-visible {
-  outline: 2px solid var(--nav-focus);
-  outline-offset: 2px;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .heroToggle button:not([aria-pressed="true"]):hover {
-    opacity: 0.85;
-  }
-}
-
-.heroDropdown {
-  position: relative;
-  display: inline-flex;
-  flex: none;
-}
-
-.heroDropdownTrigger {
-  display: inline-flex;
-  min-height: 2.4rem;
-  align-items: center;
-  gap: 0.45rem;
-  padding: 0.45rem 0.55rem 0.45rem 0.75rem;
-  border: 1px solid color-mix(in srgb, currentColor 20%, transparent);
-  border-radius: var(--radius-pill);
-  color: inherit;
-  background: color-mix(in srgb, var(--nav-bg) 86%, transparent);
-  font: 760 0.65rem/1 var(--font-manrope), sans-serif;
-  letter-spacing: 0.055em;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: color 180ms ease, background-color 180ms ease;
-}
-
-.heroDropdownTrigger strong {
-  display: grid;
-  min-width: 1.65rem;
-  height: 1.65rem;
-  place-items: center;
-  border-radius: 50%;
-  color: var(--color-cocoa-ink);
-  background: var(--nav-accent);
-  font-size: 0.61rem;
-}
-
-.heroDropdownTrigger svg {
-  width: 0.9rem;
-  height: 0.9rem;
-  transition: transform 180ms ease;
-}
-
-.heroDropdown[data-open] .heroDropdownTrigger svg {
-  transform: rotate(180deg);
-}
-
-.heroDropdownMenu {
-  position: absolute;
-  top: calc(100% + 0.55rem);
-  right: 0;
-  z-index: 30;
-  display: grid;
-  visibility: hidden;
-  width: 8.7rem;
-  overflow: hidden;
-  padding: 0.35rem;
-  border: 1px solid color-mix(in srgb, var(--color-cocoa-ink) 28%, transparent);
-  border-radius: var(--radius-medium);
-  opacity: 0;
-  color: var(--color-cocoa-ink);
-  background: var(--color-petal-white);
-  box-shadow: 0 1rem 2.5rem color-mix(in srgb, var(--color-cocoa-ink) 18%, transparent);
-  transform: translateY(-0.35rem) scale(0.98);
-  transform-origin: top right;
-  transition:
-    opacity 160ms ease,
-    transform 160ms ease,
-    visibility 160ms;
-}
-
-.heroDropdown[data-open] .heroDropdownMenu {
-  visibility: visible;
-  opacity: 1;
-  transform: translateY(0) scale(1);
-}
-
-.heroDropdownMenu button {
-  display: flex;
-  min-height: 2.35rem;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-  padding: 0.55rem 0.65rem;
-  border: 0;
-  border-radius: calc(var(--radius-medium) - 0.3rem);
-  color: inherit;
-  background: transparent;
-  font: 680 0.7rem/1 var(--font-manrope), sans-serif;
-  letter-spacing: 0.035em;
-  cursor: pointer;
-}
-
-.heroDropdownMenu button strong {
-  font-size: 0.65rem;
-}
-
-.heroDropdownMenu button[aria-checked="true"] {
-  color: var(--color-cocoa-ink);
-  background: var(--color-happy-gold);
-}
-
-.heroDropdownMenu button:hover,
-.heroDropdownMenu button:focus-visible {
-  outline: 0;
-  background: color-mix(in srgb, var(--color-happy-gold) 38%, var(--color-petal-white));
-}
-
-.heroDropdownMenu button[aria-checked="true"]:hover,
-.heroDropdownMenu button[aria-checked="true"]:focus-visible {
-  background: var(--color-happy-gold);
-}
-
-.heroDropdownTrigger:focus-visible,
-.heroDropdownMenu button:focus-visible {
-  outline: 2px solid var(--nav-focus);
-  outline-offset: 2px;
-}
-
-.mobileHeroDropdown .heroDropdownMenu {
-  top: auto;
-  right: auto;
-  bottom: calc(100% + 0.55rem);
-  left: 0;
-  transform-origin: bottom left;
-}
-
 .compactUtilities {
   position: relative;
   display: none;
@@ -445,7 +296,7 @@
   --language-toggle-thumb: var(--color-cocoa-ink);
   --language-toggle-active: var(--color-petal-white);
   --language-toggle-label: var(--color-cocoa-ink);
-  --language-toggle-shadow: color-mix(in srgb, var(--color-cocoa-ink) 16%, transparent);
+  --language-toggle-shadow: var(--hr-shadow-solid-clay);
 
   position: absolute;
   top: calc(100% + 0.65rem);
@@ -494,38 +345,13 @@
   text-transform: uppercase;
 }
 
-.compactHeroToggle,
 .compactVisualToggles {
   display: flex;
   align-items: center;
   gap: 0.45rem;
 }
 
-.compactHeroToggle {
-  padding: 0.2rem;
-  border-radius: var(--radius-pill);
-  background: color-mix(in srgb, var(--color-cocoa-ink) 8%, transparent);
-}
-
-.compactHeroToggle button {
-  display: grid;
-  width: 2.3rem;
-  height: 2.3rem;
-  place-items: center;
-  border: 0;
-  border-radius: 50%;
-  color: var(--color-cocoa-ink);
-  background: transparent;
-  font: 800 0.67rem/1 var(--font-manrope), sans-serif;
-  cursor: pointer;
-}
-
-.compactHeroToggle button[aria-pressed="true"] {
-  background: var(--color-happy-gold);
-}
-
-.compactUtilitiesTrigger:focus-visible,
-.compactHeroToggle button:focus-visible {
+.compactUtilitiesTrigger:focus-visible {
   outline: 2px solid var(--nav-focus);
   outline-offset: 2px;
 }
@@ -536,7 +362,11 @@
   color: var(--nav-cta-color);
   background: var(--nav-cta-bg);
   border-color: var(--nav-cta-border);
-  box-shadow: 6px 5px 0 var(--nav-cta-shadow);
+  box-shadow: 5px 4px 0 var(--nav-cta-shadow);
+}
+
+.navCta:hover {
+  box-shadow: 3px 2px 0 var(--nav-cta-shadow);
 }
 
 .menuButton {
@@ -575,8 +405,10 @@
   --language-toggle-thumb: var(--color-cocoa-ink);
   --language-toggle-active: var(--color-petal-white);
   --language-toggle-label: var(--color-cocoa-ink);
-  --language-toggle-shadow: color-mix(in srgb, var(--color-petal-white) 18%, transparent);
-  --language-toggle-hover-shadow: color-mix(in srgb, var(--color-petal-white) 18%, transparent);
+  --language-toggle-shadow: var(--hr-shadow-solid-clay);
+  --language-toggle-hover-shadow: var(--hr-shadow-solid-clay);
+  --palette-toggle-shadow: var(--hr-shadow-solid-clay);
+  --palette-toggle-hover-shadow: var(--hr-shadow-solid-clay);
 
   position: absolute;
   top: calc(100% - 0.1rem);
@@ -801,18 +633,28 @@
     --nav-focus: var(--color-happy-gold);
     --nav-link-hover-bg: var(--color-happy-gold);
     --nav-link-hover-color: var(--color-cocoa-ink);
-    --nav-link-hover-shadow: color-mix(in srgb, var(--color-petal-white) 22%, transparent);
+    --nav-link-hover-shadow: var(--hr-shadow-solid-clay);
+    --palette-toggle-bg: var(--color-happy-gold);
+    --palette-toggle-color: var(--color-cocoa-ink);
+    --palette-toggle-border: var(--color-cocoa-ink);
+    --palette-toggle-shadow: var(--hr-shadow-solid-clay);
+    --palette-toggle-hover-shadow: var(--hr-shadow-solid-clay);
+    --palette-toggle-dark-bg: var(--color-happy-gold);
+    --palette-toggle-dark-color: var(--color-cocoa-ink);
+    --palette-toggle-dark-border: var(--color-cocoa-ink);
+    --palette-toggle-dark-shadow: var(--hr-shadow-solid-clay);
+    --palette-toggle-dark-hover-shadow: var(--hr-shadow-solid-clay);
     --language-toggle-bg: var(--color-happy-gold);
     --language-toggle-border: var(--color-cocoa-ink);
     --language-toggle-thumb: var(--color-cocoa-ink);
     --language-toggle-active: var(--color-petal-white);
     --language-toggle-label: var(--color-cocoa-ink);
-    --language-toggle-shadow: color-mix(in srgb, var(--color-petal-white) 18%, transparent);
-    --language-toggle-hover-shadow: color-mix(in srgb, var(--color-petal-white) 18%, transparent);
+    --language-toggle-shadow: var(--hr-shadow-solid-clay);
+    --language-toggle-hover-shadow: var(--hr-shadow-solid-clay);
     --nav-cta-color: var(--color-cocoa-ink);
     --nav-cta-bg: var(--color-happy-gold);
     --nav-cta-border: var(--color-cocoa-ink);
-    --nav-cta-shadow: color-mix(in srgb, var(--color-petal-white) 18%, transparent);
+    --nav-cta-shadow: var(--hr-shadow-solid-clay);
     top: var(--nav-collapse-top, 0);
     width: var(--nav-collapse-width, 90%);
     height: var(--nav-collapse-height, var(--header-height));

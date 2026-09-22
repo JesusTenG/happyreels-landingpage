@@ -9,16 +9,10 @@
   margin: 0;
   padding: clamp(1.25rem, 2.4vw, 1.6rem);
   border-radius: var(--hr-radius-ui);
-  border: 1px solid var(--color-border-faint);
-  background:
-    linear-gradient(
-      165deg,
-      color-mix(in srgb, var(--color-white) 5%, transparent) 0%,
-      transparent 48%,
-      color-mix(in srgb, var(--color-gray-975) 40%, transparent) 100%
-    ),
-    color-mix(in srgb, var(--color-gray-910) 88%, transparent);
-  box-shadow: var(--shadow-glass-card);
+  border: 1px solid var(--subpage-line-on-deep);
+  color: var(--subpage-on-deep);
+  background: var(--subpage-bg-deep);
+  box-shadow: 7px 7px 0 var(--subpage-shadow-alt);
   transition:
     border-color var(--hr-transition-card-hover),
     box-shadow var(--hr-transition-card-hover);
@@ -69,7 +63,7 @@
   font-size: clamp(0.92rem, 1.05vw, 1.02rem);
   line-height: 1.62;
   letter-spacing: 0.01em;
-  color: color-mix(in srgb, var(--color-gray-100) 92%, transparent);
+  color: color-mix(in srgb, currentColor 92%, transparent);
   font-style: normal;
 }
 
@@ -155,13 +149,13 @@
   font-size: 0.82rem;
   font-weight: 700;
   letter-spacing: 0.03em;
-  color: var(--color-text-primary);
+  color: currentColor;
 }
 
 .testimonial-card__identity-sep {
   font-size: 0.78rem;
   font-weight: 500;
-  color: color-mix(in srgb, var(--color-text-muted) 72%, transparent);
+  color: color-mix(in srgb, currentColor 62%, transparent);
 }
 
 .testimonial-card__brand,
@@ -169,7 +163,7 @@
   font-size: 0.78rem;
   font-weight: 500;
   letter-spacing: 0.02em;
-  color: color-mix(in srgb, var(--color-text-muted) 88%, transparent);
+  color: color-mix(in srgb, currentColor 76%, transparent);
 }
 
 .testimonial-card__instagram-link {

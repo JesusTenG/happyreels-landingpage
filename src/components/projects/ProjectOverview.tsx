@@ -2,7 +2,6 @@ import { Reveal } from "@/components/animation/Reveal";
 import { SectionWave } from "@/components/layout/SectionWave";
 import { WorkVideoGallery } from "@/components/sections/work/WorkVideoGallery.client";
 import HappyReelsButton from "@/components/ui/HappyReelsButton";
-import { MixedHeadline } from "@/components/ui/MixedHeadline";
 import { getReelVideos } from "@/data/reel-videos";
 import type { Locale } from "@/i18n/config";
 
@@ -27,28 +26,33 @@ export function ProjectOverview({ locale }: Readonly<{ locale: Locale }>) {
 
   return (
     <main id="main-content" className={styles.main}>
-      <section className={styles.hero} aria-labelledby="projects-title" data-navbar-theme="brown">
+      <section
+        className={styles.hero}
+        aria-labelledby="projects-title"
+        data-navbar-theme="brown"
+        data-navbar-hero="collapsing"
+      >
         <Reveal className={`container-base ${styles.heroInner}`}>
-          <h1 id="projects-title"><MixedHeadline text={copy.title} /></h1>
+          <h1 id="projects-title">{copy.title}</h1>
           <p>{copy.intro}</p>
         </Reveal>
       </section>
-      <SectionWave from="var(--color-dusty-blush)" to="var(--color-soft-clay)" />
+      <SectionWave from="var(--subpage-bg-soft)" to="var(--subpage-bg-strong)" />
       <ClientCollaborationsSection locale={locale} variant="projects" />
-      <SectionWave from="var(--color-soft-clay)" to="var(--color-petal-white)" />
+      <SectionWave from="var(--subpage-bg-strong)" to="var(--subpage-bg-base)" />
       <section className={styles.gridSection} aria-label={locale === "de" ? "Projektgalerie" : "Project gallery"} data-navbar-theme="brown">
         <Reveal className="container-base">
           <WorkVideoGallery items={items} />
         </Reveal>
       </section>
-      <SectionWave from="var(--color-petal-white)" to="var(--color-happy-gold)" flip />
+      <SectionWave from="var(--subpage-bg-base)" to="var(--subpage-bg-cta)" flip />
       <section className={styles.cta} aria-labelledby="project-cta-title" data-navbar-theme="brown">
         <Reveal className={`container-base ${styles.ctaInner}`}>
-          <h2 id="project-cta-title"><MixedHeadline text={copy.ctaTitle} /></h2>
+          <h2 id="project-cta-title">{copy.ctaTitle}</h2>
           <HappyReelsButton href={`/${locale}#contact`} variant="on-yellow">{copy.cta}</HappyReelsButton>
         </Reveal>
       </section>
-      <SectionWave from="var(--color-happy-gold)" to="var(--color-cocoa-ink)" />
+      <SectionWave from="var(--subpage-bg-cta)" to="var(--subpage-bg-footer)" />
     </main>
   );
 }

@@ -17,21 +17,15 @@
 
 .stage :global(.hr-italic-marker) {
   margin-inline: 0;
-  border-radius: 0;
   padding: 0;
-  background-color: transparent;
-  background-image:
-    linear-gradient(var(--hr-marker-cover-color, transparent), var(--hr-marker-cover-color, transparent)),
-    radial-gradient(circle closest-side at center, var(--hr-marker-paint) 98%, transparent 100%),
-    linear-gradient(var(--hr-marker-paint), var(--hr-marker-paint)),
-    radial-gradient(circle closest-side at center, var(--hr-marker-paint) 98%, transparent 100%);
-  background-position: right 58%, left 58%, center 58%, right 58%;
-  background-size:
-    calc(var(--hr-marker-cover-width) + var(--hr-marker-cover-overscan))
-      calc(0.78em + 4px),
-    0.78em 0.78em,
-    calc(100% - 0.68em) 0.78em,
-    0.78em 0.78em;
+  color: var(--color-happy-gold) !important;
+  background: none !important;
+  font-family: var(--font-manrope), Arial, sans-serif !important;
+  font-size: inherit !important;
+  font-style: normal !important;
+  font-weight: inherit !important;
+  letter-spacing: inherit !important;
+  -webkit-text-fill-color: var(--color-happy-gold) !important;
 }
 
 .stage[data-ready] {
@@ -140,30 +134,25 @@
 .copy h2 {
   max-width: 16ch;
   margin: 0;
-  font-size: clamp(2.15rem, 4.2vw, 4.4rem);
-  font-weight: 780;
-  line-height: 0.94;
-  letter-spacing: -0.065em;
+  font-size: var(--hr-section-heading-size);
+  font-weight: var(--hr-section-heading-weight);
+  line-height: var(--hr-section-heading-line-height);
+  letter-spacing: var(--hr-section-heading-letter-spacing);
   opacity: var(--cta-headline-opacity, 0);
   transform: translate3d(0, var(--cta-headline-y, 62px), 0);
   will-change: auto;
 }
 
 .headlineAccent {
-  color: var(--wave-cta-text) !important;
-  -webkit-text-fill-color: var(--wave-cta-text) !important;
-  font-family: var(--font-instrument-serif), Georgia, serif;
-  font-size: 1.04em;
-  font-style: italic;
-  font-weight: var(--hr-italic-heading-weight);
-  letter-spacing: var(--hr-italic-letter-spacing);
-  paint-order: stroke fill;
+  color: var(--color-happy-gold) !important;
+  -webkit-text-fill-color: var(--color-happy-gold) !important;
+  font: inherit;
 }
 
 .cta {
   justify-self: start;
   opacity: var(--cta-button-opacity, 0);
-  box-shadow: 7px 6px 0 color-mix(in srgb, var(--color-cocoa-ink) 24%, transparent);
+  box-shadow: 7px 6px 0 var(--hr-shadow-solid-gold);
   transform: translate3d(0, var(--cta-button-y, 54px), 0);
   will-change: auto;
 }
@@ -175,7 +164,7 @@
 }
 
 .cta:hover {
-  box-shadow: 4px 3px 0 color-mix(in srgb, var(--color-cocoa-ink) 30%, transparent);
+  box-shadow: 4px 3px 0 var(--hr-shadow-solid-gold);
 }
 
 @media (max-width: 900px) {

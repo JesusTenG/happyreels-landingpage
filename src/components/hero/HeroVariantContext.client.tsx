@@ -11,17 +11,11 @@ import {
   type ReactNode,
 } from "react";
 
-import type { HeroVariant } from "./Hero.types";
-
 export type SiteColorMode = "light" | "dark";
 
 type HeroVariantState = Readonly<{
-  variant: HeroVariant;
-  setVariant: (variant: HeroVariant) => void;
   colorMode: SiteColorMode;
   setColorMode: (mode: SiteColorMode) => void;
-  textMarkersVisible: boolean;
-  setTextMarkersVisible: (visible: boolean) => void;
 }>;
 
 const HeroVariantContext = createContext<HeroVariantState | null>(null);
@@ -33,9 +27,7 @@ function isSiteColorMode(value: string | null): value is SiteColorMode {
 }
 
 export function HeroVariantProvider({ children }: Readonly<{ children: ReactNode }>) {
-  const [variant, setVariant] = useState<HeroVariant>("current");
   const [colorMode, setColorModeState] = useState<SiteColorMode>("light");
-  const [textMarkersVisible, setTextMarkersVisible] = useState(true);
   const hasManualColorMode = useRef(false);
 
   const applyColorMode = useCallback((mode: SiteColorMode) => {
@@ -96,23 +88,18 @@ export function HeroVariantProvider({ children }: Readonly<{ children: ReactNode
 
   const value = useMemo(
     () => ({
-      variant,
-      setVariant,
       colorMode,
       setColorMode,
-      textMarkersVisible,
-      setTextMarkersVisible,
     }),
-    [colorMode, setColorMode, textMarkersVisible, variant],
+    [colorMode, setColorMode],
   );
 
   return (
     <HeroVariantContext.Provider value={value}>
       <div
         className="site-variant-root"
-        data-site-variant={variant}
+        data-site-variant="current"
         data-site-color-mode={colorMode}
-        data-text-markers={textMarkersVisible ? "visible" : "hidden"}
         suppressHydrationWarning
       >
         {children}
