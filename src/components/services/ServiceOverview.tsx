@@ -1,121 +1,70 @@
 import Link from "next/link";
+import { Camera, Scissors, Play, Sparkles } from "lucide-react";
 
-import { Reveal } from "@/components/animation/Reveal";
+import { KnowledgeCards } from "@/components/knowledge/KnowledgeCards";
 import { SectionWave } from "@/components/layout/SectionWave";
-import HappyReelsButton from "@/components/ui/HappyReelsButton";
+import { SubpageCta } from "@/components/subpages/SubpageCta";
 import { getServiceContent, serviceKeys } from "@/data/service-content";
 import type { Locale } from "@/i18n/config";
 import { getServicePath } from "@/lib/route-config";
 
 import styles from "./ServiceOverview.module.css";
 
+const ICONS = [Camera, Scissors, Play, Sparkles] as const;
 const COPY = {
   de: {
-    title: "Videoproduktion und Video Editing für Social Media und YouTube.",
-    intro:
-      "Von Konzept und Dreh über Reels, Long-Form Editing und Motion Design bis zum finalen Master: Wähle den Einstieg, der zu deinem Material und Ziel passt.",
-    chooserTitle: "Welche Leistung passt zu deinem Projekt?",
-    choices: [
-      "Du brauchst Konzept, Planung und einen professionellen Videodreh.",
-      "Du hast Rohmaterial und möchtest Reels oder Shorts schneiden lassen.",
-      "Du planst ein längeres YouTube-Video, einen Podcast oder Educational Content.",
-      "Der Edit steht und braucht Motion Design, Farbe, Sound oder ein finales Finish.",
-    ],
-    ctaTitle: "Noch nicht sicher, welcher Umfang sinnvoll ist?",
-    ctaBody:
-      "Beschreibe kurz Ziel, Material und Plattform. Wir ordnen gemeinsam ein, welche Leistung und welche Deliverables wirklich gebraucht werden.",
-    ctaLabel: "Projekt einordnen",
+    title: "Videoproduktion & Videoschnitt",
+    intro: "Vom ersten Konzept bis zum fertigen Film. Wir produzieren neue Aufnahmen, schneiden dein Material oder übernehmen das Finish.",
+    choices: ["Konzept, Dreh und Postproduktion für dein nächstes Videoprojekt.", "Reels, TikToks und Shorts aus vorhandenem Material.", "Schnitt für Podcasts, Interviews und längere Videos.", "Motion Design, Color Grading und Sound für bestehende Edits."],
+    guides: "Vor dem Projektstart",
+    guidesIntro: "Kosten, Schnittablauf und Color Grading verständlich erklärt.",
+    ctaTitle: "Welche Leistung brauchst du?",
+    ctaBody: "Erzähl uns von deinem Ziel und dem vorhandenen Material.",
+    cta: "Projekt besprechen",
   },
   en: {
-    title: "Video production and video editing for social media and YouTube.",
-    intro:
-      "From concept and filming to reels, long-form editing, motion design and final mastering: choose the starting point that matches your footage and goal.",
-    chooserTitle: "Which service fits your project?",
-    choices: [
-      "You need a concept, production planning and a professional video shoot.",
-      "You have raw footage and need Reels or Shorts edited.",
-      "You are planning a longer YouTube video, podcast or educational format.",
-      "The edit is in place and needs motion design, color, sound or final finishing.",
-    ],
-    ctaTitle: "Not sure which scope makes sense yet?",
-    ctaBody:
-      "Briefly describe the goal, footage and platform. We can identify which service and deliverables are actually required.",
-    ctaLabel: "Discuss the project",
+    title: "Video production & editing",
+    intro: "From the first concept to the finished film. We shoot new footage, edit your material or take care of finishing.",
+    choices: ["Concept, filming and postproduction for your next video.", "Reels, TikToks and Shorts from existing footage.", "Editing for podcasts, interviews and longer videos.", "Motion design, color grading and sound for existing edits."],
+    guides: "Before your project starts",
+    guidesIntro: "Production costs, editing workflows and color grading explained.",
+    ctaTitle: "What does your project need?",
+    ctaBody: "Tell us your goal and what footage you already have.",
+    cta: "Discuss your project",
   },
 } as const;
 
 export function ServiceOverview({ locale }: Readonly<{ locale: Locale }>) {
   const copy = COPY[locale];
-  const home = `/${locale}`;
-
   return (
     <main id="main-content" className={styles.main}>
-      <section
-        className={styles.hero}
-        aria-labelledby="services-overview-title"
-        data-navbar-theme="brown"
-        data-navbar-hero="collapsing"
-      >
-        <Reveal className={`container-base ${styles.heroInner}`}>
-          <h1 id="services-overview-title">{copy.title}</h1>
+      <header className={styles.hero} data-navbar-theme="brown">
+        <div className={`container-base ${styles.heroInner}`}>
+          <h1 className={styles.title}>{copy.title}</h1>
           <p className={styles.lead}>{copy.intro}</p>
-        </Reveal>
-      </section>
-
+        </div>
+      </header>
       <SectionWave from="var(--subpage-bg-soft)" to="var(--subpage-bg-base)" />
-
       <section className={styles.services} aria-label={locale === "de" ? "Alle Leistungen" : "All services"} data-navbar-theme="brown">
         <div className={`container-base ${styles.serviceGrid}`}>
           {serviceKeys.map((key, index) => {
-            const service = getServiceContent(key, locale);
+            const Icon = ICONS[index];
             return (
-              <Reveal key={key} delay={70 + index * 65}>
-                <Link className={styles.serviceCard} href={getServicePath(locale, key)} data-card={index + 1}>
-                  <div>
-                    <h2>{service.navTitle}</h2>
-                    <span>{service.lead}</span>
-                  </div>
-                  <span className={styles.cardArrow} aria-hidden="true">↗</span>
-                </Link>
-              </Reveal>
+              <Link className={styles.serviceCard} href={getServicePath(locale, key)} data-card={index + 1} key={key}>
+                <div className={styles.cardTop}><h2>{getServiceContent(key, locale).navTitle}</h2><span className={styles.icon}><Icon size={25} aria-hidden="true" /></span></div>
+                <p>{copy.choices[index]}</p>
+              </Link>
             );
           })}
         </div>
       </section>
-
-      <SectionWave from="var(--subpage-bg-base)" to="var(--subpage-bg-deep)" flip />
-
-      <section className={styles.chooser} aria-labelledby="service-chooser-title" data-navbar-theme="rose">
-        <div className={`container-base ${styles.chooserLayout}`}>
-          <Reveal className={styles.chooserHeader}>
-            <h2 id="service-chooser-title">{copy.chooserTitle}</h2>
-          </Reveal>
-          <div className={styles.choiceList}>
-            {serviceKeys.map((key, index) => (
-              <Reveal key={key} delay={70 + index * 55}>
-                <Link href={getServicePath(locale, key)}>
-                  <p>{copy.choices[index]}</p>
-                  <strong>{getServiceContent(key, locale).navTitle}<span aria-hidden="true"> ↗</span></strong>
-                </Link>
-              </Reveal>
-            ))}
-          </div>
+      <section className={styles.guides} aria-labelledby="service-guides-title" data-navbar-theme="brown">
+        <div className="container-base">
+          <h2 id="service-guides-title" className={styles.heading}>{copy.guides}</h2>
+          <KnowledgeCards locale={locale} />
         </div>
       </section>
-
-      <SectionWave from="var(--subpage-bg-deep)" to="var(--subpage-bg-cta)" />
-
-      <section className={styles.cta} aria-labelledby="services-cta-title" data-navbar-theme="brown">
-        <Reveal className={`container-base ${styles.ctaInner}`}>
-          <div>
-            <h2 id="services-cta-title">{copy.ctaTitle}</h2>
-            <p>{copy.ctaBody}</p>
-          </div>
-          <HappyReelsButton href={`${home}#contact`} variant="on-yellow">{copy.ctaLabel}</HappyReelsButton>
-        </Reveal>
-      </section>
-
-      <SectionWave from="var(--subpage-bg-cta)" to="var(--subpage-bg-footer)" />
+      <SubpageCta locale={locale} />
     </main>
   );
 }

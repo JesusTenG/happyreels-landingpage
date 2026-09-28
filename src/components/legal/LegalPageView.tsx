@@ -23,7 +23,6 @@ export function LegalPageView({ locale, dict, page }: Props) {
         className={styles.hero}
         aria-labelledby="legal-title"
         data-navbar-theme="brown"
-        data-navbar-hero="collapsing"
       >
         <div className={`container-base ${styles.heroInner}`}>
           <Link className={styles.back} href={home}>← {backLabel}</Link>

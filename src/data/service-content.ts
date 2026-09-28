@@ -53,9 +53,9 @@ export const serviceDefinitions: Record<ServiceKey, ServiceDefinition> = {
         metaDescription:
           "Social Media Videoproduktion mit Konzept, Dreh und Postproduktion für Reels, Ads, Creator Content und digitale Markenkampagnen.",
         eyebrow: "Konzept · Dreh · Postproduktion",
-        h1: "Social Media Videoproduktion für Marken und Creator.",
+        h1: "Videoproduktion für Social Media",
         lead:
-          "HappyReels entwickelt und produziert Videos, die filmisch gedacht und von Beginn an für ihren digitalen Einsatz geplant sind.",
+          "Konzept, Dreh und Schnitt für Marken und Creator. Wir planen Reels, Werbevideos und Kampagnen passend zu deiner Plattform.",
         overviewTitle: "Jede starke Produktion beginnt mit Richtung.",
         overviewBody:
           "Von der ersten Idee bis zum fertigen Master bleiben Konzept, Bildsprache, Plattform und Format miteinander verbunden. So entstehen Werbevideos, Creator Content und Markenfilme, die nicht nachträglich auf Social Media zugeschnitten werden müssen, sondern bereits beim Dreh dafür gedacht sind.",
@@ -66,7 +66,7 @@ export const serviceDefinitions: Record<ServiceKey, ServiceDefinition> = {
           "Produkteinführungen und digitale Kampagnen",
           "Markencontent für wiederkehrende Veröffentlichungen",
         ],
-        formatsTitle: "Formate für jeden Touchpoint",
+        formatsTitle: "Mögliche Formate",
         formats: ["Instagram Reels", "TikTok", "YouTube Shorts", "Commercials", "Brand Films"],
         approachTitle: "Filmisch denken. Plattformgerecht produzieren.",
         approachBody:
@@ -80,7 +80,7 @@ export const serviceDefinitions: Record<ServiceKey, ServiceDefinition> = {
           { title: "Finish vollenden", text: "Schnitt, Farbe, Sound und Exporte werden für die vorgesehenen Formate fertiggestellt." },
         ],
         relatedTitle: "Mehr Möglichkeiten für deinen Content.",
-        ctaTitle: "Lass uns den nächsten Film richtig beginnen.",
+        ctaTitle: "Planen wir deinen nächsten Dreh",
         ctaBody: "Beschreibe kurz das geplante Video und die Plattformen, auf denen es erscheinen soll.",
         ctaLabel: "Projekt anfragen",
         homeLabel: "Zur Startseite",
@@ -91,9 +91,9 @@ export const serviceDefinitions: Record<ServiceKey, ServiceDefinition> = {
         metaDescription:
           "Social-first video production by HappyReels: concept, planning, filming and postproduction for creators, brand content and commercials.",
         eyebrow: "Concept · shoot · postproduction",
-        h1: "Social media video production for brands and creators.",
+        h1: "Video production for social media",
         lead:
-          "HappyReels develops and produces films that are cinematic in their thinking and planned for digital use from the start.",
+          "Concept, filming and editing for brands and creators. Reels, commercials and campaigns planned for your platform.",
         overviewTitle: "Every strong production starts with direction.",
         overviewBody:
           "From the first idea to the final master, the concept, visual language, platform and format stay connected. The result is commercial, creator and brand content designed for social delivery rather than adapted as an afterthought.",
@@ -104,7 +104,7 @@ export const serviceDefinitions: Record<ServiceKey, ServiceDefinition> = {
           "Product launches and digital campaigns",
           "Brand content for recurring releases",
         ],
-        formatsTitle: "Formats for every touchpoint",
+        formatsTitle: "Available formats",
         formats: ["Instagram Reels", "TikTok", "YouTube Shorts", "Commercials", "Brand films"],
         approachTitle: "Think cinematic. Produce platform-first.",
         approachBody:
@@ -118,7 +118,7 @@ export const serviceDefinitions: Record<ServiceKey, ServiceDefinition> = {
           { title: "Complete the finish", text: "Editing, color, sound and exports are completed for the intended formats." },
         ],
         relatedTitle: "More ways to shape your content.",
-        ctaTitle: "Let’s start your next film the right way.",
+        ctaTitle: "Let's plan your next shoot",
         ctaBody: "Tell us briefly what you want to film and where the content needs to live.",
         ctaLabel: "Start a project",
         homeLabel: "Back to home",
@@ -134,9 +134,9 @@ export const serviceDefinitions: Record<ServiceKey, ServiceDefinition> = {
         metaDescription:
           "Reels schneiden lassen: Short-Form Editing für Instagram, TikTok und YouTube Shorts mit Untertiteln, Sound, Motion Graphics und Color Grading.",
         eyebrow: "Reels · TikTok · YouTube Shorts",
-        h1: "Reels schneiden lassen – mit Short-Form Editing, das wirkt.",
+        h1: "Reels schneiden lassen",
         lead:
-          "Aus vorhandenem oder neu produziertem Material entstehen kompakte Social Videos, die schnell verständlich sind und visuell zusammengehören.",
+          "Schnitt für Instagram Reels, TikTok und YouTube Shorts. Mit klarem Einstieg, lesbaren Untertiteln und einem Look, der zu dir passt.",
         overviewTitle: "Jeder Cut braucht einen Grund.",
         overviewBody:
           "Short-Form lebt nicht allein von Geschwindigkeit. Ein guter Edit setzt einen klaren Einstieg, führt Informationen verständlich und nutzt Bild, Sprache und Sound bewusst. HappyReels verbindet Story-Struktur mit plattformgerechtem Pacing und einem Finish, das wiedererkennbar bleibt.",
@@ -147,7 +147,7 @@ export const serviceDefinitions: Record<ServiceKey, ServiceDefinition> = {
           "Educational Content und Talking-Head-Formate",
           "Clips aus Podcasts und Long-Form-Inhalten",
         ],
-        formatsTitle: "Alles für einen vollständigen Edit",
+        formatsTitle: "Bausteine nach Bedarf",
         formats: ["Story Edit", "Untertitel", "Sound Design", "Motion Graphics", "Color Grading"],
         approachTitle: "Schnell im Feed. Präzise im Schnitt.",
         approachBody:
@@ -161,7 +161,7 @@ export const serviceDefinitions: Record<ServiceKey, ServiceDefinition> = {
           { title: "Formatgerecht ausspielen", text: "Die fertigen Dateien werden passend für die vereinbarten Plattformen exportiert." },
         ],
         relatedTitle: "Mehr Möglichkeiten für deinen Content.",
-        ctaTitle: "Lass uns aus deinem Material Momentum bauen.",
+        ctaTitle: "Was soll aus deinem Material werden?",
         ctaBody: "Sende eine kurze Einordnung zu Material, Zielgruppe und gewünschten Plattformen.",
         ctaLabel: "Editing anfragen",
         homeLabel: "Zur Startseite",
@@ -172,9 +172,9 @@ export const serviceDefinitions: Record<ServiceKey, ServiceDefinition> = {
         metaDescription:
           "Short-form editing for Instagram Reels, TikTok and YouTube Shorts with clear pacing, sound design, captions, motion graphics and color grading.",
         eyebrow: "Reels · TikTok · YouTube Shorts",
-        h1: "Reels and short-form video editing built for impact.",
+        h1: "Reels & short-form video editing",
         lead:
-          "Existing or newly produced footage becomes concise social video that communicates quickly and feels visually connected.",
+          "Editing for Instagram Reels, TikTok and YouTube Shorts. Clear openings, readable captions and a look that fits your content.",
         overviewTitle: "Every cut needs a reason.",
         overviewBody:
           "Short-form is not only about speed. A considered edit establishes a clear opening, guides information and uses image, language and sound with purpose. HappyReels combines story structure with platform-native pacing and a finish that remains recognisable.",
@@ -185,7 +185,7 @@ export const serviceDefinitions: Record<ServiceKey, ServiceDefinition> = {
           "Educational and talking-head content",
           "Clips derived from podcasts and long-form content",
         ],
-        formatsTitle: "Everything a complete edit needs",
+        formatsTitle: "Options for your edit",
         formats: ["Story edit", "Captions", "Sound design", "Motion graphics", "Color grading"],
         approachTitle: "Fast in the feed. Precise in the edit.",
         approachBody:
@@ -199,7 +199,7 @@ export const serviceDefinitions: Record<ServiceKey, ServiceDefinition> = {
           { title: "Deliver every format", text: "Final files are exported for the agreed platforms and formats." },
         ],
         relatedTitle: "More ways to shape your content.",
-        ctaTitle: "Let’s turn your footage into momentum.",
+        ctaTitle: "What do you want to make?",
         ctaBody: "Share a short note about the footage, audience and platforms you have in mind.",
         ctaLabel: "Request an edit",
         homeLabel: "Back to home",
@@ -215,9 +215,9 @@ export const serviceDefinitions: Record<ServiceKey, ServiceDefinition> = {
         metaDescription:
           "YouTube Videos schneiden lassen: strukturiertes Editing für Long-Form, Podcasts und Education – auf Wunsch mit Trailern und Short-Form-Cutdowns.",
         eyebrow: "Long-Form · Podcasts · Education",
-        h1: "YouTube Videos schneiden lassen – mit Struktur und Spannung.",
+        h1: "YouTube-Videos schneiden lassen",
         lead:
-          "HappyReels formt Gespräche, Wissen und Entertainment zu Long-Form-Videos mit verständlichem Aufbau, Tempo und visueller Kontinuität.",
+          "Videoschnitt für Podcasts, Interviews und längere Creator-Formate. Wir ordnen das Material, kürzen Wiederholungen und gestalten die fertige Episode.",
         overviewTitle: "Struktur gibt starken Inhalten Raum.",
         overviewBody:
           "Längere Videos brauchen Orientierung, ohne ihren natürlichen Charakter zu verlieren. Der Schnitt ordnet Aussagen, verdichtet Wiederholungen und setzt visuelle sowie akustische Akzente dort, wo sie den Inhalt tragen. So entsteht ein flüssiges Ganzes statt einer bloßen Aneinanderreihung von Clips.",
@@ -228,7 +228,7 @@ export const serviceDefinitions: Record<ServiceKey, ServiceDefinition> = {
           "Entertainment- und Creator-Formate",
           "Long-Form-Videos mit ergänzenden Social Clips",
         ],
-        formatsTitle: "Deliverables mit echter Reichweite",
+        formatsTitle: "Mögliche Fassungen",
         formats: ["Long-Form Edit", "Video-Podcast", "YouTube Episode", "Trailer", "Short-Form Cutdowns"],
         approachTitle: "Inhalt zuerst. Tempo mit Gefühl.",
         approachBody:
@@ -242,7 +242,7 @@ export const serviceDefinitions: Record<ServiceKey, ServiceDefinition> = {
           { title: "Momente weiterdenken", text: "Bei Bedarf werden starke Momente als eigenständige Short-Form-Clips aufbereitet." },
         ],
         relatedTitle: "Mehr Möglichkeiten für deinen Content.",
-        ctaTitle: "Lass uns aus langem Material eine Geschichte formen.",
+        ctaTitle: "Deine nächste Episode",
         ctaBody: "Erzähl kurz, welches Format du planst und welches Ausgangsmaterial bereits vorhanden ist.",
         ctaLabel: "YouTube-Projekt anfragen",
         homeLabel: "Zur Startseite",
@@ -253,9 +253,9 @@ export const serviceDefinitions: Record<ServiceKey, ServiceDefinition> = {
         metaDescription:
           "Structured YouTube editing for long-form video, podcasts, educational content and entertainment, including derived short-form clips.",
         eyebrow: "Long-form · podcasts · education",
-        h1: "YouTube video editing with structure and momentum.",
+        h1: "YouTube video editing",
         lead:
-          "HappyReels shapes conversations, knowledge and entertainment into long-form video with a clear flow, considered pacing and visual continuity.",
+          "Editing for podcasts, interviews and longer creator formats. We organise the footage, remove repetition and finish the episode.",
         overviewTitle: "Structure gives strong content room to work.",
         overviewBody:
           "Longer videos need orientation without losing their natural character. The edit organises ideas, removes repetition and places visual and sonic accents where they support the content. The result feels like one coherent piece rather than a sequence of disconnected clips.",
@@ -266,7 +266,7 @@ export const serviceDefinitions: Record<ServiceKey, ServiceDefinition> = {
           "Entertainment and creator formats",
           "Long-form video with supporting social clips",
         ],
-        formatsTitle: "Deliverables built for real reach",
+        formatsTitle: "Available versions",
         formats: ["Long-form edit", "Video podcast", "YouTube episode", "Trailer", "Short-form cutdowns"],
         approachTitle: "Content first. Pace with feeling.",
         approachBody:
@@ -280,7 +280,7 @@ export const serviceDefinitions: Record<ServiceKey, ServiceDefinition> = {
           { title: "Extend key moments", text: "When needed, strong moments are developed into standalone short-form clips." },
         ],
         relatedTitle: "More ways to shape your content.",
-        ctaTitle: "Let’s shape long material into a story.",
+        ctaTitle: "Your next episode",
         ctaBody: "Tell us what format you are planning and what source material is already available.",
         ctaLabel: "Start a YouTube project",
         homeLabel: "Back to home",
@@ -296,9 +296,9 @@ export const serviceDefinitions: Record<ServiceKey, ServiceDefinition> = {
         metaDescription:
           "Motion Design, Typografieanimation, Compositing, Sound Design und Color Grading für ein konsistentes, hochwertiges Finish bestehender Videoproduktionen.",
         eyebrow: "Motion · Color · Sound",
-        h1: "Motion Design und Video Finishing aus einer Hand.",
+        h1: "Motion Design & Color Grading",
         lead:
-          "HappyReels verfeinert bestehende Produktionen mit Motion Design, Typografie, Compositing, Sound und Farbe zu einem stimmigen Gesamtbild.",
+          "Das Finish für deinen Schnitt: animierte Titel, abgestimmte Farben und sauberer Sound. Einzeln oder als vereinbartes Gesamtpaket.",
         overviewTitle: "Wenn jedes Detail dieselbe Sprache spricht.",
         overviewBody:
           "Finishing verbindet einzelne gestalterische Ebenen zu einem konsistenten Film. Bewegte Typografie, grafische Elemente, Übergänge, Farblook und Sound werden nicht als Effekte addiert, sondern auf Inhalt, Marke und Format abgestimmt.",
@@ -309,7 +309,7 @@ export const serviceDefinitions: Record<ServiceKey, ServiceDefinition> = {
           "Titel, Bauchbinden und Typografieanimation",
           "Compositing und visuelle Bereinigung",
         ],
-        formatsTitle: "Bausteine für ein starkes Finish",
+        formatsTitle: "Finishing-Bausteine",
         formats: ["Motion Design", "Typografieanimation", "Compositing", "Sound Design", "Color Grading"],
         approachTitle: "Weniger Effekt. Mehr Wirkung.",
         approachBody:
@@ -323,7 +323,7 @@ export const serviceDefinitions: Record<ServiceKey, ServiceDefinition> = {
           { title: "Master vollenden", text: "Die finalen Dateien werden kontrolliert und für die benötigten Ausspielwege exportiert." },
         ],
         relatedTitle: "Mehr Möglichkeiten für deinen Content.",
-        ctaTitle: "Gib deinem Edit das Finish, das noch fehlt.",
+        ctaTitle: "Das Finish für deinen Film",
         ctaBody: "Beschreibe den aktuellen Stand des Materials und welche gestalterischen Ebenen noch fehlen.",
         ctaLabel: "Finishing anfragen",
         homeLabel: "Zur Startseite",
@@ -334,9 +334,9 @@ export const serviceDefinitions: Record<ServiceKey, ServiceDefinition> = {
         metaDescription:
           "Motion design, typography animation, compositing, sound design and color grading for a consistent premium finish across existing video productions.",
         eyebrow: "Motion · color · sound",
-        h1: "Motion design and video finishing from one creative partner.",
+        h1: "Motion design & color grading",
         lead:
-          "HappyReels refines existing productions with motion design, typography, compositing, sound and color to create one coherent visual result.",
+          "Finishing for your edit: animated titles, consistent color and clean sound. Book individual services or an agreed package.",
         overviewTitle: "When every detail speaks one language.",
         overviewBody:
           "Finishing connects individual creative layers into a consistent film. Animated typography, graphic elements, transitions, color and sound are not added as isolated effects; they are aligned with the content, brand and intended format.",
@@ -347,7 +347,7 @@ export const serviceDefinitions: Record<ServiceKey, ServiceDefinition> = {
           "Titles, lower thirds and typography animation",
           "Compositing and visual clean-up",
         ],
-        formatsTitle: "Building blocks for a stronger finish",
+        formatsTitle: "Finishing services",
         formats: ["Motion design", "Typography animation", "Compositing", "Sound design", "Color grading"],
         approachTitle: "Less effect. More impact.",
         approachBody:
@@ -361,7 +361,7 @@ export const serviceDefinitions: Record<ServiceKey, ServiceDefinition> = {
           { title: "Complete the master", text: "Final files are checked and exported for the required channels." },
         ],
         relatedTitle: "More ways to shape your content.",
-        ctaTitle: "Give your edit the finish it is missing.",
+        ctaTitle: "The finish for your film",
         ctaBody: "Tell us where the material currently stands and which creative layers are still needed.",
         ctaLabel: "Request finishing",
         homeLabel: "Back to home",

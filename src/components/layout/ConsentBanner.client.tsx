@@ -19,22 +19,20 @@ type Props = Readonly<{ locale: Locale }>;
 
 const COPY = {
   de: {
-    eyebrow: "Deine Privatsphäre",
-    title: "Du entscheidest, was mitläuft.",
+    title: "Datenschutz",
     body:
-      "Wir verwenden notwendige Technologien für den sicheren Betrieb der Website. Mit deiner Zustimmung aktivieren wir zusätzlich Vercel Web Analytics für anonyme Nutzungsstatistiken. Vercel Analytics verwendet keine Cookies.",
+      "Wir verwenden notwendige Technologien für den Betrieb dieser Website. Mit deiner Zustimmung nutzen wir zusätzlich Vercel Web Analytics für anonyme Nutzungsstatistiken, ohne Analyse-Cookies. Deine Auswahl kannst du jederzeit über die Cookie-Einstellungen ändern.",
     necessary: "Nur notwendige",
-    accept: "Analytics erlauben",
-    privacy: "Datenschutz ansehen",
+    accept: "Alle akzeptieren",
+    privacy: "Datenschutzerklärung",
   },
   en: {
-    eyebrow: "Your privacy",
-    title: "You decide what runs.",
+    title: "Privacy",
     body:
-      "We use necessary technologies to operate this website securely. With your consent, we also activate Vercel Web Analytics for anonymous usage statistics. Vercel Analytics does not use cookies.",
+      "We use necessary technologies to operate this website. With your consent, we also use Vercel Web Analytics for anonymous usage statistics, without analytics cookies. You can change your choice at any time in the cookie settings.",
     necessary: "Necessary only",
-    accept: "Allow analytics",
-    privacy: "View privacy policy",
+    accept: "Accept all",
+    privacy: "Privacy policy",
   },
 } as const;
 
@@ -122,7 +120,6 @@ export function ConsentBanner({ locale }: Props) {
           aria-labelledby="consent-title"
         >
           <div className={styles.copy}>
-            <span className={styles.eyebrow}>{copy.eyebrow}</span>
             <h2 id="consent-title">{copy.title}</h2>
             <p>{copy.body}</p>
             <a href={`/${activeLocale}/datenschutz`}>{copy.privacy}</a>

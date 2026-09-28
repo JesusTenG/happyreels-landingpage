@@ -1,6 +1,9 @@
 import { isLocale, type Locale } from "@/i18n/config";
 import {
+  findKnowledgeKey,
   findServiceKey,
+  knowledgeSegments,
+  knowledgeSlugs,
   projectSegments,
   serviceSegments,
   serviceSlugs,
@@ -29,6 +32,12 @@ export function switchLocalePath(pathname: string, targetLocale: Locale): string
         ? findServiceKey(sourceLocale, segments[2])
         : undefined;
       if (serviceKey) segments[2] = serviceSlugs[serviceKey][targetLocale];
+    } else if (section === knowledgeSegments[sourceLocale]) {
+      segments[1] = knowledgeSegments[targetLocale];
+      const knowledgeKey = segments[2]
+        ? findKnowledgeKey(sourceLocale, segments[2])
+        : undefined;
+      if (knowledgeKey) segments[2] = knowledgeSlugs[knowledgeKey][targetLocale];
     }
 
     segments[0] = targetLocale;

@@ -6,6 +6,7 @@ import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { SectionWave } from "@/components/layout/SectionWave";
 import HappyReelsButton from "@/components/ui/HappyReelsButton";
+import { getProjectsPath, getServicesPath } from "@/lib/route-config";
 
 import { CaseContentDropCard } from "./CaseContentDropCard";
 import styles from "./WorkCaseDetailViewV2.module.css";
@@ -36,16 +37,15 @@ function MetaList({
 }
 
 export function WorkCaseDetailView({ locale, dict, workCase, content }: Props) {
-  const homeWorkHash = `/${locale}/projekte`;
+  const homeWorkHash = getProjectsPath(locale);
   const contactHref = `/${locale}${dict.caseDetail.ctaHref}`;
-  const servicesHref = `/${locale}${dict.caseDetail.servicesHref}`;
+  const servicesHref = getServicesPath(locale);
 
   return (
     <main id="main-content" className={styles["work-case-detail"]}>
       <section
         className={styles["work-case-detail__hero"]}
         data-navbar-theme="brown"
-        data-navbar-hero="collapsing"
       >
         <div className={`container-base ${styles["work-case-detail__hero-inner"]}`}>
           <p className={styles["work-case-detail__back-wrap"]}>

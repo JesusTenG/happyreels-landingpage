@@ -29,14 +29,6 @@
   gap: 0.55rem;
 }
 
-.eyebrow {
-  color: color-mix(in srgb, var(--color-cocoa-ink) 68%, transparent);
-  font-size: 0.68rem;
-  font-weight: 820;
-  letter-spacing: 0.11em;
-  text-transform: uppercase;
-}
-
 .copy h2 {
   max-width: 18ch;
   margin: 0;

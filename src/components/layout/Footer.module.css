@@ -10,7 +10,7 @@
 }
 
 :global(.site-variant-root[data-site-color-mode="dark"]) .footer {
-  --footer-background: var(--hero-two-dark-bg);
+  --footer-background: var(--color-cocoa-ink);
   --footer-line: var(--hero-two-dark-line);
   --footer-muted: color-mix(in srgb, var(--color-petal-white) 68%, transparent);
   --footer-hover-background: color-mix(in srgb, var(--color-happy-gold) 12%, transparent);
@@ -53,9 +53,9 @@
 
 .grid {
   display: grid;
-  grid-template-columns: 0.85fr 1.15fr 1fr 1.25fr;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   align-items: start;
-  gap: clamp(2rem, 4.5vw, 5rem);
+  gap: clamp(1.5rem, 2.8vw, 3rem);
 }
 
 .linkCard {
@@ -171,7 +171,13 @@
   outline-offset: 4px;
 }
 
-@media (max-width: 1050px) {
+@media (max-width: 1200px) {
+  .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 800px) {
   .grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 2.5rem clamp(2rem, 8vw, 5rem);
