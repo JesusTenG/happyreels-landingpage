@@ -1,0 +1,9 @@
+.section { color: var(--color-cocoa-ink); }
+.section [data-faq-item] p { color: var(--color-cocoa-ink); }
+.layout { gap: 3.5rem; padding-right: calc(var(--page-gutter) + 8px); }
+.heading { top: calc(var(--header-height) + 2rem); }
+.heading h2 { max-width: 18ch; font-size: 2.25rem; line-height: 1.2; letter-spacing: 0; }
+:global(.site-variant-root[data-site-color-mode="dark"]) .section { color: var(--color-petal-white); }
+:global(.site-variant-root[data-site-color-mode="dark"]) .section [data-faq-item] p { color: var(--color-petal-white); }
+@media (max-width: 900px) { .layout { gap: 2rem; } }
+@media (max-width: 480px) { .heading h2 { font-size: 1.75rem; } }

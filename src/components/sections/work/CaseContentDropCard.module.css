@@ -1,12 +1,14 @@
 /*//////////////CASE CONTENT DROP CARD//////////////////*/
 .case-drop-card {
+  --subpage-text: var(--color-cocoa-ink);
+  --subpage-text-muted: color-mix(in srgb, var(--color-cocoa-ink) 72%, transparent);
   display: flex;
   flex-direction: column;
   gap: var(--hr-space-3);
   border-radius: var(--hr-radius-card);
   border: 1px solid var(--subpage-line);
   color: var(--subpage-text);
-  background: var(--subpage-card);
+  background: var(--color-dusty-blush);
   box-shadow: 6px 6px 0 var(--subpage-shadow);
   padding: var(--hr-space-3);
   transition:

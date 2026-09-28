@@ -1,0 +1,19 @@
+.main { composes: page from "../subpages/Subpage.module.css"; }
+.hero { composes: hero from "../subpages/Subpage.module.css"; }
+.heroInner { composes: heroInner from "../subpages/Subpage.module.css"; }
+.title { composes: title from "../subpages/Subpage.module.css"; }
+.lead { composes: lead from "../subpages/Subpage.module.css"; }
+.backLink { composes: backLink from "../subpages/Subpage.module.css"; }
+.guides, .articleBody, .relatedGuides { padding: var(--section-space) 0; }
+.guides, .articleBody { padding-top: 1.5rem; }
+.sections { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2.5rem; padding: 0.75rem 12px 1rem 4px; }
+.sections:not(:first-child) { margin-top: 3rem; }
+.contentSection { composes: card from "../subpages/SubpageCard.module.css"; padding: 2rem; }
+.contentSection h2 { margin: 0 0 1.25rem; font-size: 1.5rem; font-weight: 780; line-height: 1.25; }
+.contentSection p { margin: 0; line-height: 1.7; }
+.contentSection p + p { margin-top: 1rem; }
+.sources { margin-top: 2rem; font-size: 0.8rem; }
+.sources a { color: inherit; text-underline-offset: 0.25rem; }
+.relatedGuides h2 { margin: 0 0 2rem; font-size: 2.25rem; font-weight: 760; line-height: 1.2; }
+@media (max-width: 700px) { .sections { grid-template-columns: 1fr; } .contentSection { padding: 1.5rem; } }
+@media (max-width: 480px) { .relatedGuides h2 { font-size: 1.75rem; } }

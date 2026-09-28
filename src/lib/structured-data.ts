@@ -4,6 +4,12 @@ import type { WorkVideoItem } from "@/i18n/dictionaries";
 import type { ReelVideo } from "@/data/reel-videos";
 import type { WorkCaseLocaleContent } from "@/data/work-cases";
 import type { FaqItem } from "@/data/faq-content";
+import {
+  getKnowledgeContent,
+  knowledgeImages,
+  knowledgeKeys,
+  type KnowledgePageContent,
+} from "@/data/knowledge-content";
 import type {
   ClientStory,
   ClientStoryLocaleContent,
@@ -19,11 +25,107 @@ import { buildCanonical, siteUrl } from "@/lib/seo";
 import { INSTAGRAM_URL, SITE_NAME } from "@/lib/site";
 import {
   getClientProjectPath,
+  getKnowledgeHubPath,
+  getKnowledgePath,
   getProjectsPath,
   getServicePath,
   getServicesPath,
+  type KnowledgeKey,
   type ServiceKey,
 } from "@/lib/route-config";
+
+export function buildKnowledgeHubJsonLd(
+  locale: Locale,
+  meta: Readonly<{ title: string; description: string }>,
+  copy: Readonly<{ sectionTitle: string }>,
+) {
+  const url = new URL(getKnowledgeHubPath(locale), siteUrl).toString();
+  const homeUrl = buildCanonical(locale);
+  const inLanguage = locale === "de" ? "de-DE" : "en-US";
+
+  return [
+    {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      name: meta.title,
+      description: meta.description,
+      url,
+      inLanguage,
+      isPartOf: { "@id": `${homeUrl}#website` },
+      about: { "@id": `${homeUrl}#organization` },
+      mainEntity: {
+        "@type": "ItemList",
+        name: copy.sectionTitle,
+        itemListElement: knowledgeKeys.map((key, index) => {
+          const content = getKnowledgeContent(key, locale);
+          return {
+            "@type": "ListItem",
+            position: index + 1,
+            name: content.cardTitle,
+            description: content.cardSummary,
+            url: new URL(getKnowledgePath(locale, key), siteUrl).toString(),
+          };
+        }),
+      },
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: locale === "de" ? "Start" : "Home", item: homeUrl },
+        { "@type": "ListItem", position: 2, name: locale === "de" ? "Ratgeber" : "Guides", item: url },
+      ],
+    },
+  ];
+}
+
+export function buildKnowledgeArticleJsonLd(
+  locale: Locale,
+  knowledgeKey: KnowledgeKey,
+  content: KnowledgePageContent,
+) {
+  const url = new URL(getKnowledgePath(locale, knowledgeKey), siteUrl).toString();
+  const hubUrl = new URL(getKnowledgeHubPath(locale), siteUrl).toString();
+  const homeUrl = buildCanonical(locale);
+  const inLanguage = locale === "de" ? "de-DE" : "en-US";
+
+  return [
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "@id": `${url}#article`,
+      image: new URL(knowledgeImages[knowledgeKey], siteUrl).toString(),
+      headline: content.title,
+      name: content.metaTitle,
+      description: content.metaDescription,
+      url,
+      inLanguage,
+      mainEntityOfPage: url,
+      author: { "@type": "Person", name: "Simon Saad", url: `${homeUrl}/about` },
+      publisher: { "@id": `${homeUrl}#organization` },
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: locale === "de" ? "Start" : "Home", item: homeUrl },
+        { "@type": "ListItem", position: 2, name: locale === "de" ? "Ratgeber" : "Guides", item: hubUrl },
+        { "@type": "ListItem", position: 3, name: content.cardTitle, item: url },
+      ],
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      url: `${url}#faq`,
+      inLanguage,
+      mainEntity: content.faqs.map((item) => ({
+        "@type": "Question",
+        name: item.question,
+        acceptedAnswer: { "@type": "Answer", text: item.answer },
+      })),
+    },
+  ];
+}
 
 export function buildHomeJsonLd(locale: Locale, dict: Dictionary) {
   const url = buildCanonical(locale);

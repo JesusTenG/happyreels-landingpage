@@ -4,11 +4,14 @@ import Link from "next/link";
 import { BrandMark } from "@/components/brand/BrandMark";
 import { ConsentSettingsButton } from "@/components/layout/ConsentSettingsButton.client";
 import { getAllClientStories } from "@/data/client-stories";
+import { getKnowledgeContent, knowledgeKeys } from "@/data/knowledge-content";
 import { getServiceContent, serviceKeys } from "@/data/service-content";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import {
   getClientProjectPath,
+  getKnowledgeHubPath,
+  getKnowledgePath,
   getProjectsPath,
   getServicePath,
   getServicesPath,
@@ -39,6 +42,8 @@ const FOOTER_COPY = {
     allProjects: "Alle Projekte",
     about: "Über uns",
     contact: "Kontakt",
+    knowledge: "Ratgeber",
+    allKnowledge: "Alle Ratgeber",
   },
   en: {
     navigation: "Navigation",
@@ -50,6 +55,8 @@ const FOOTER_COPY = {
     allProjects: "All projects",
     about: "About",
     contact: "Contact",
+    knowledge: "Guides",
+    allKnowledge: "All guides",
   },
 } as const;
 
@@ -64,6 +71,10 @@ export function Footer({ locale, dict }: Props) {
   const projectLinks = getAllClientStories().map((project) => ({
     href: getClientProjectPath(locale, project.slug),
     label: project.name,
+  }));
+  const knowledgeLinks = knowledgeKeys.map((key) => ({
+    href: getKnowledgePath(locale, key),
+    label: getKnowledgeContent(key, locale).cardTitle,
   }));
 
   return (
@@ -83,7 +94,6 @@ export function Footer({ locale, dict }: Props) {
             <h2 id="footer-navigation">{copy.navigation}</h2>
             <nav className={styles.linkList} aria-label={copy.navigation}>
               <Link href={home}>{copy.home}</Link>
-              <Link href={getProjectsPath(locale)}>{copy.allProjects}</Link>
               <Link href={`${home}/about`}>{copy.about}</Link>
               <Link href={`${home}#contact`}>{copy.contact}</Link>
             </nav>
@@ -104,7 +114,20 @@ export function Footer({ locale, dict }: Props) {
           <section className={styles.linkCard} aria-labelledby="footer-projects">
             <h2 id="footer-projects">{copy.projects}</h2>
             <nav className={styles.linkList} aria-label={copy.projects}>
+              <Link href={getProjectsPath(locale)}>{copy.allProjects}</Link>
               {projectLinks.map((link) => (
+                <Link key={link.href} href={link.href}>
+                  {link.label}
+                </Link>
+              ))}
+            </nav>
+          </section>
+
+          <section className={styles.linkCard} aria-labelledby="footer-knowledge">
+            <h2 id="footer-knowledge">{copy.knowledge}</h2>
+            <nav className={styles.linkList} aria-label={copy.knowledge}>
+              <Link href={getKnowledgeHubPath(locale)}>{copy.allKnowledge}</Link>
+              {knowledgeLinks.map((link) => (
                 <Link key={link.href} href={link.href}>
                   {link.label}
                 </Link>

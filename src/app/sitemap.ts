@@ -2,9 +2,12 @@ import type { MetadataRoute } from "next";
 
 import { getAllClientStories } from "@/data/client-stories";
 import { serviceKeys } from "@/data/service-content";
+import { knowledgeKeys } from "@/data/knowledge-content";
 import { defaultLocale, locales, type Locale } from "@/i18n/config";
 import {
   getClientProjectPathnames,
+  getKnowledgeHubPathnames,
+  getKnowledgePathnames,
   getProjectsPath,
   getServicePathnames,
   getServicesPath,
@@ -60,6 +63,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     entries,
     { de: getServicesPath("de"), en: getServicesPath("en") },
   );
+  addLocalizedEntries(entries, getKnowledgeHubPathnames());
 
   for (const pathname of ["/about", "/impressum", "/datenschutz"] as const) {
     addLocalizedEntries(entries, matchingPathnames(pathname));
@@ -71,6 +75,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   for (const serviceKey of serviceKeys) {
     addLocalizedEntries(entries, getServicePathnames(serviceKey));
+  }
+
+  for (const knowledgeKey of knowledgeKeys) {
+    addLocalizedEntries(entries, getKnowledgePathnames(knowledgeKey));
   }
 
   return entries;

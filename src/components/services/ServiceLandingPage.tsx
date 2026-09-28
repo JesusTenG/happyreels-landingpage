@@ -1,203 +1,99 @@
 import Link from "next/link";
+import { ArrowLeft, ArrowUpRight, Check } from "lucide-react";
 
-import { Reveal } from "@/components/animation/Reveal";
+import { KnowledgeCards } from "@/components/knowledge/KnowledgeCards";
 import { SectionWave } from "@/components/layout/SectionWave";
 import { WorkVideoGallery } from "@/components/sections/work/WorkVideoGallery.client";
+import { SubpageCta } from "@/components/subpages/SubpageCta";
+import { SubpageFaq } from "@/components/subpages/SubpageFaq";
 import HappyReelsButton from "@/components/ui/HappyReelsButton";
 import { getReelVideosById } from "@/data/reel-videos";
-import {
-  getServiceContent,
-  serviceKeys,
-  type ServiceLandingContent,
-} from "@/data/service-content";
+import type { ServiceLandingContent } from "@/data/service-content";
 import { getServiceSeoContent } from "@/data/service-seo-content";
 import type { Locale } from "@/i18n/config";
-import { stripTrailingHeadingPeriod } from "@/lib/heading-text";
-import {
-  getServicePath,
-  getServicesPath,
-  type ServiceKey,
-} from "@/lib/route-config";
+import { getProjectsPath, getServicesPath, type KnowledgeKey, type ServiceKey } from "@/lib/route-config";
 
 import styles from "./ServiceLandingPageV2.module.css";
 
-type Props = Readonly<{
-  locale: Locale;
-  serviceKey: ServiceKey;
-  content: ServiceLandingContent;
-}>;
+type Props = Readonly<{ locale: Locale; serviceKey: ServiceKey; content: ServiceLandingContent }>;
+
+const SERVICE_GUIDES: Record<ServiceKey, readonly KnowledgeKey[]> = {
+  videoProduction: ["videoProductionCosts", "videoEditingWorkflow"],
+  shortFormEditing: ["videoEditingWorkflow", "colorGrading"],
+  youtubeEditing: ["videoEditingWorkflow", "videoProductionCosts"],
+  motionFinishing: ["colorGrading", "videoEditingWorkflow"],
+};
 
 export function ServiceLandingPage({ locale, serviceKey, content }: Props) {
-  const home = `/${locale}`;
-  const serviceCollectionLabel = locale === "de" ? "Leistungen" : "Services";
-  const serviceCollectionHref = getServicesPath(locale);
-  const seoContent = getServiceSeoContent(serviceKey, locale);
-  const proofVideos = getReelVideosById(locale, seoContent.proofVideoIds);
-  const relatedServices = serviceKeys.filter((key) => key !== serviceKey);
+  const seo = getServiceSeoContent(serviceKey, locale);
+  const proofVideos = getReelVideosById(locale, seo.proofVideoIds);
+  const de = locale === "de";
 
   return (
     <main id="main-content" className={styles.main}>
-      <section
-        className={styles.hero}
-        aria-labelledby="service-title"
-        data-navbar-theme="brown"
-        data-navbar-hero="collapsing"
-      >
-        <Reveal className={`container-base ${styles.heroInner}`}>
-          <Link className={styles.backLink} href={serviceCollectionHref}>
-            <span aria-hidden="true">←</span> {serviceCollectionLabel}
-          </Link>
-          <div className={styles.heroCopy}>
-            <h1 id="service-title">{content.h1}</h1>
-            <p className={styles.lead}>{content.lead}</p>
-          </div>
-        </Reveal>
-      </section>
-
+      <header className={styles.hero} data-navbar-theme="brown">
+        <div className={`container-base ${styles.heroInner}`}>
+          <Link className={styles.backLink} href={getServicesPath(locale)}><ArrowLeft size={16} aria-hidden="true" />{de ? "Alle Leistungen" : "All services"}</Link>
+          <h1 className={styles.title}>{content.h1}</h1>
+          <p className={styles.lead}>{content.lead}</p>
+          <div><HappyReelsButton href={`/${locale}#contact`} variant="on-rose">{de ? "Kontakt aufnehmen" : "Get in touch"}</HappyReelsButton></div>
+        </div>
+      </header>
       <SectionWave from="var(--subpage-bg-soft)" to="var(--subpage-bg-base)" />
-
-      <section className={styles.overview} data-navbar-theme="brown">
-        <div className={`container-base ${styles.overviewGrid}`}>
-          <Reveal>
-            <h2>{content.overviewTitle}</h2>
-            <p>{content.overviewBody}</p>
-          </Reveal>
-          <Reveal className={styles.approachCard} delay={120} direction="right">
-            <h2>{content.approachTitle}</h2>
-            <p>{content.approachBody}</p>
-          </Reveal>
+      <section className={styles.proof} aria-labelledby="service-proof-title" data-navbar-theme="brown">
+        <div className={`container-base ${styles.proofLayout}`}>
+          <div className={styles.proofHeader}>
+            <h2 id="service-proof-title">{seo.proofTitle}</h2>
+            {serviceKey === "youtubeEditing" ? <p>{seo.proofIntro}</p> : null}
+            <Link href={getProjectsPath(locale)}>{de ? "Alle Projekte" : "All projects"}<ArrowUpRight size={18} aria-hidden="true" /></Link>
+          </div>
+          <WorkVideoGallery items={proofVideos} gridClassName={styles.proofGrid} />
         </div>
-
-        <div className={`container-base ${styles.listsGrid}`}>
-          <Reveal className={styles.listCard}>
-            <h2>{content.useCasesTitle}</h2>
-            <ul>{content.useCases.map((item) => <li key={item}>{item}</li>)}</ul>
-          </Reveal>
-          <Reveal className={`${styles.listCard} ${styles.formatsCard}`} delay={100}>
-            <h2>{content.formatsTitle}</h2>
-            <ul>{content.formats.map((item) => <li key={item}>{item}</li>)}</ul>
-          </Reveal>
-        </div>
-
-        <div className={`container-base ${styles.detailsBlock}`}>
-          <Reveal className={styles.detailsHeader}>
-            <h2>{seoContent.detailsTitle}</h2>
-            <p>{seoContent.detailsIntro}</p>
-          </Reveal>
+      </section>
+      <section className={styles.overview} aria-labelledby="service-scope-title" data-navbar-theme="brown">
+        <div className="container-base">
+          <h2 id="service-scope-title" className={styles.heading}>{seo.detailsTitle}</h2>
           <div className={styles.detailsGrid}>
-            {seoContent.details.map((detail, index) => (
-              <Reveal key={detail.title} delay={80 + index * 70}>
-                <article>
-                  <h3>{detail.title}</h3>
-                  <p>{detail.text}</p>
-                </article>
-              </Reveal>
+            {seo.details.map((detail, index) => (
+              <article key={detail.title} className={styles.detailCard} data-card={index + 1}>
+                <h3>{detail.title}</h3><p>{detail.text}</p>
+              </article>
             ))}
           </div>
+          <div className={styles.listsGrid}>
+            <div className={styles.list}>
+              <h3>{de ? "Passt zu" : "A fit for"}</h3>
+              <ul>{content.useCases.map(item => <li key={item}><Check size={16} aria-hidden="true" />{item}</li>)}</ul>
+            </div>
+            <div className={styles.list}>
+              <h3>{content.formatsTitle}</h3>
+              <ul>{content.formats.map(item => <li key={item}><Check size={16} aria-hidden="true" />{item}</li>)}</ul>
+            </div>
+          </div>
         </div>
       </section>
-
-      <SectionWave from="var(--subpage-bg-base)" to="var(--subpage-bg-deep)" flip />
-
-      <section className={styles.process} aria-labelledby="service-process-title" data-navbar-theme="rose">
-        <div className={`container-base ${styles.processGrid}`}>
-          <Reveal className={styles.processIntro}>
-            <h2 id="service-process-title">{content.processTitle}</h2>
-            <p>{content.processIntro}</p>
-          </Reveal>
+      <SectionWave from="var(--subpage-bg-base)" to="var(--subpage-bg-soft)" flip />
+      <section className={styles.process} aria-labelledby="service-process-title" data-navbar-theme="brown">
+        <div className="container-base">
+          <h2 id="service-process-title" className={styles.heading}>{de ? "So arbeiten wir zusammen" : "How we work together"}</h2>
           <ol className={styles.steps}>
             {content.processSteps.map((step, index) => (
-              <Reveal key={step.title} delay={90 + index * 70}>
-                <li>
-                  <span aria-hidden="true">0{index + 1}</span>
-                  <div><h3>{step.title}</h3><p>{step.text}</p></div>
-                </li>
-              </Reveal>
+              <li key={step.title} className={styles.step} data-card={index + 1}>
+                <div className={styles.stepHeader}><h3>{step.title}</h3><span className={styles.number} aria-hidden="true">0{index + 1}</span></div>
+                <p>{step.text}</p>
+              </li>
             ))}
           </ol>
         </div>
       </section>
-
-      <SectionWave from="var(--subpage-bg-deep)" to="var(--subpage-bg-base)" />
-
-      <section className={styles.proof} aria-labelledby="service-proof-title" data-navbar-theme="brown">
+      <SubpageFaq title={seo.faqTitle} items={seo.faqs} />
+      <section className={styles.knowledge} aria-labelledby="service-guides-title" data-navbar-theme="brown">
         <div className="container-base">
-          <Reveal className={styles.proofHeader}>
-            <h2 id="service-proof-title">{seoContent.proofTitle}</h2>
-            <p>{seoContent.proofIntro}</p>
-          </Reveal>
-          <WorkVideoGallery items={proofVideos} gridClassName={styles.proofGrid} />
-          <Reveal className={styles.expertise}>
-            <div>
-              <h3>{stripTrailingHeadingPeriod(seoContent.expertiseTitle)}</h3>
-              <p>{seoContent.expertiseBody}</p>
-            </div>
-            <Link href={`${home}/about`}>{seoContent.expertiseLinkLabel}<span aria-hidden="true"> ↗</span></Link>
-          </Reveal>
+          <h2 id="service-guides-title" className={styles.heading}>{de ? "Weitere Fragen?" : "More questions?"}</h2>
+          <KnowledgeCards locale={locale} keys={SERVICE_GUIDES[serviceKey]} />
         </div>
       </section>
-
-      <SectionWave from="var(--subpage-bg-base)" to="var(--subpage-bg-soft)" flip />
-
-      <section className={styles.faq} aria-labelledby="service-faq-title" data-navbar-theme="brown">
-        <div className={`container-base ${styles.faqLayout}`}>
-          <Reveal className={styles.faqHeader}>
-            <h2 id="service-faq-title">{seoContent.faqTitle}</h2>
-          </Reveal>
-          <div className={styles.faqList}>
-            {seoContent.faqs.map((item, index) => (
-              <Reveal key={item.question} delay={60 + index * 45}>
-                <details className={styles.faqItem}>
-                  <summary>
-                    <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
-                    <strong>{item.question}</strong>
-                    <span aria-hidden="true">+</span>
-                  </summary>
-                  <p>{item.answer}</p>
-                </details>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <SectionWave from="var(--subpage-bg-soft)" to="var(--subpage-bg-strong)" />
-
-      <section className={styles.related} aria-labelledby="related-services-title" data-navbar-theme="brown">
-        <div className="container-base">
-          <Reveal><h2 id="related-services-title">{content.relatedTitle}</h2></Reveal>
-          <div className={styles.relatedGrid}>
-            {relatedServices.map((key, index) => {
-              const related = getServiceContent(key, locale);
-              return (
-                <Reveal key={key} delay={80 + index * 70}>
-                  <Link href={getServicePath(locale, key)}>
-                    <span>{related.navTitle}</span>
-                    <span aria-hidden="true">↗</span>
-                  </Link>
-                </Reveal>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      <SectionWave from="var(--subpage-bg-strong)" to="var(--subpage-bg-cta)" flip />
-
-      <section className={styles.cta} aria-labelledby="service-cta-title" data-navbar-theme="brown">
-        <Reveal className={`container-base ${styles.ctaInner}`}>
-          <div>
-            <h2 id="service-cta-title">{content.ctaTitle}</h2>
-            <p>{content.ctaBody}</p>
-          </div>
-          <div className={styles.ctaActions}>
-            <HappyReelsButton href={`${home}#contact`} variant="on-yellow">{content.ctaLabel}</HappyReelsButton>
-            <Link href={home}>{content.homeLabel}</Link>
-          </div>
-        </Reveal>
-      </section>
-
-      <SectionWave from="var(--subpage-bg-cta)" to="var(--subpage-bg-footer)" />
+      <SubpageCta locale={locale} />
     </main>
   );
 }

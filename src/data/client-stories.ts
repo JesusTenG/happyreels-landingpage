@@ -79,34 +79,34 @@ export const clientStories: ClientStory[] = [
     ],
     localized: {
       en: {
-        pageTitle: "Content for Leon Hägele, shaped for every feed.",
+        pageTitle: "Leon Hägele: social ads & reels",
         cardLabel: "Social ads, cinematic edits & podcast content",
         intro:
-          "Recurring social ads and performance edits with a consistent premium look across the feed.",
+          "Social ads, creator reels and podcast trailers.",
         collaborationText:
-          "For Leon Hägele, recurring reels, social ads, cinematic edits, educational short-form content and podcast trailers are produced, cut and edited for Instagram and other digital touchpoints — with a consistently premium look, clear pacing and flexible adaptation across different formats.",
+          "The collaboration with Leon Hägele includes social ads, creator reels and podcast trailers. The portfolio features the Prep My Meal ad alongside fitness and podcast edits.",
         formats: ["Social ads", "Cinematic edits", "Short-form content", "Podcast trailers"],
         directionTitle: "One visual language. Many formats.",
         directionText:
           "The collaboration combines social-first pacing with cinematic imagery, considered sound and a consistent editing language. Each video is shaped for its platform while remaining recognisably part of the same body of work.",
         imageAlt: "Leon Hägele holding a camera during a fitness production",
         metaDescription:
-          "Inside the collaboration with Leon Hägele — recurring Instagram reels, social ads, cinematic edits, educational content and podcast trailers by HappyReels.",
+          "Social ads, creator reels and podcast trailers for Leon Hägele. Selected videos and insights into the collaboration with HappyReels.",
       },
       de: {
-        pageTitle: "Content für Leon Hägele, geschärft für jeden Feed.",
+        pageTitle: "Leon Hägele: Social Ads & Reels",
         cardLabel: "Social Ads, Cinematic Edits & Podcast Content",
         intro:
-          "Wiederkehrende Social Ads und Performance-Edits mit konsistentem Premium-Look im Feed.",
+          "Social Ads, Creator-Reels und Podcast-Trailer.",
         collaborationText:
-          "Für Leon Hägele entstehen regelmäßig Reels, Social Ads, Cinematic Edits, lehrreiche Kurzformate und Podcast-Trailer. Die Zusammenarbeit umfasst die Produktion, den Schnitt und die Bearbeitung von Content für Instagram und weitere digitale Touchpoints — mit einem konsistent hochwertigen Look, klarer Dramaturgie und flexibler Anpassung an unterschiedliche Formate.",
+          "Die Zusammenarbeit mit Leon Hägele umfasst Social Ads, Creator-Reels und Podcast-Trailer. Zu den gezeigten Arbeiten gehören der Prep-My-Meal-Werbespot sowie Fitness- und Podcast-Edits.",
         formats: ["Social Ads", "Cinematic Edits", "Short-Form Content", "Podcast-Trailer"],
         directionTitle: "Eine Bildsprache. Viele Formate.",
         directionText:
           "Die Zusammenarbeit verbindet Social-First-Pacing mit filmischen Bildern, bewusstem Sound und einer konsistenten Editing-Sprache. Jedes Video wird für seine Plattform entwickelt und bleibt zugleich klar als Teil derselben visuellen Welt erkennbar.",
         imageAlt: "Leon Hägele mit Kamera bei einer Fitness-Produktion",
         metaDescription:
-          "Einblick in die Kooperation mit Leon Hägele — wiederkehrende Instagram-Reels, Social Ads, Cinematic Edits, lehrreiche Inhalte und Podcast-Trailer von HappyReels.",
+          "Social Ads, Creator-Reels und Podcast-Trailer für Leon Hägele. Ausgewählte Videos und Einblicke in die Zusammenarbeit mit HappyReels.",
       },
     },
   },
@@ -123,34 +123,34 @@ export const clientStories: ClientStory[] = [
     workReelPreviewSrcs: ["/assets/videos/preview/random/mealplans leiser-web.mp4"],
     localized: {
       en: {
-        pageTitle: "Calm edits for Ramon Limacher. Clearly recognisable.",
+        pageTitle: "Ramon Limacher: educational & lifestyle reels",
         cardLabel: "Educational & lifestyle reels",
         intro:
-          "Recurring social edits shaped for recognition, calm pacing and platform-native rhythm.",
+          "Educational and lifestyle content in short video form.",
         collaborationText:
-          "For Ramon Limacher, recurring social content is produced and edited — educational and lifestyle reels with calm pacing and a recognisable rhythm for Instagram and short-form platforms.",
+          "The work for Ramon Limacher focuses on educational and lifestyle reels. Clear statements and an edit that gives the explanation room are central to the approach.",
         formats: ["Educational reels", "Lifestyle reels", "Short-form editing"],
         directionTitle: "Calm pacing. Unmistakable rhythm.",
         directionText:
           "The edits give educational ideas enough space while keeping every sequence concise and native to short-form platforms. A restrained visual treatment connects the recurring releases.",
         imageAlt: "Ramon Limacher speaking to camera",
         metaDescription:
-          "Ongoing social video editing for creator Ramon Limacher — recurring visuals and platform-native edits by HappyReels.",
+          "Educational and lifestyle reels for Ramon Limacher. A video example from the collaboration and an overview of the formats edited by HappyReels.",
       },
       de: {
-        pageTitle: "Ruhige Edits für Ramon Limacher. Klar wiedererkennbar.",
+        pageTitle: "Ramon Limacher: Educational & Lifestyle Reels",
         cardLabel: "Educational & Lifestyle Reels",
         intro:
-          "Regelmäßige Social Edits mit Fokus auf Wiedererkennung, ruhigem Pacing und kanalgerechtem Rhythmus.",
+          "Educational- und Lifestyle-Content im Kurzformat.",
         collaborationText:
-          "Für Ramon Limacher entsteht fortlaufend Social Content — Educational- und Lifestyle-Reels mit ruhigem Pacing und wiedererkennbarem Rhythmus für Instagram und Short-Form.",
+          "Für Ramon Limacher bearbeiten wir Educational- und Lifestyle-Reels. Im Mittelpunkt stehen verständliche Aussagen und ein Schnitt, der der Erklärung Raum lässt.",
         formats: ["Educational Reels", "Lifestyle Reels", "Short-Form Editing"],
         directionTitle: "Ruhiges Pacing. Klarer Rhythmus.",
         directionText:
           "Die Edits geben lehrreichen Inhalten den nötigen Raum und bleiben zugleich kompakt und plattformgerecht. Eine zurückhaltende visuelle Bearbeitung verbindet die wiederkehrenden Veröffentlichungen.",
         imageAlt: "Ramon Limacher spricht direkt in die Kamera",
         metaDescription:
-          "Fortlaufender Social-Video-Schnitt für Creator Ramon Limacher — wiederkehrende Visuals und plattformgerechte Edits von HappyReels.",
+          "Educational- und Lifestyle-Reels für Ramon Limacher. Ein Videobeispiel aus der Zusammenarbeit und die Formate im Überblick bei HappyReels.",
       },
     },
   },
@@ -175,34 +175,34 @@ export const clientStories: ClientStory[] = [
     ],
     localized: {
       en: {
-        pageTitle: "Podcast moments for Mario Scherthan with a premium finish.",
+        pageTitle: "Mario Scherthan: podcast & social edits",
         cardLabel: "Premium podcast & social edits",
         intro:
-          "Ongoing social content with clear visual direction and a consistent editing style.",
+          "Podcast trailers and short-form social edits.",
         collaborationText:
-          "For Mario Scherthan, recurring social edits are produced along a defined visual direction — social-first pacing, brand-aware rhythm and a cohesive premium look across ongoing Instagram content.",
+          "The work for Mario Scherthan includes podcast trailers and short social edits. The selection shows different excerpts from the collaboration, with a focus on statements, pacing and captions.",
         formats: ["Podcast edits", "Social edits", "Premium short-form editing"],
         directionTitle: "A finish that connects every release.",
         directionText:
           "Podcast moments and social-first ideas are translated into concise edits with a shared visual language. Typography, pacing, sound and finishing remain aligned across the continuing release schedule.",
         imageAlt: "Mario Scherthan during a gym production",
         metaDescription:
-          "Long-term social content editing for Mario Scherthan — consistent visual direction and premium short-form edits by HappyReels.",
+          "Podcast trailers and social edits for Mario Scherthan. Selected video examples from the collaboration with HappyReels.",
       },
       de: {
-        pageTitle: "Podcast-Momente für Mario Scherthan mit Premium-Finish.",
+        pageTitle: "Mario Scherthan: Podcast- & Social-Edits",
         cardLabel: "Premium Podcast & Social Edits",
         intro:
-          "Fortlaufender Social Content mit klarer visueller Richtung und konsistentem Schnittstil.",
+          "Podcast-Trailer und kurze Social-Edits.",
         collaborationText:
-          "Für Mario Scherthan entstehen wiederkehrende Social Edits entlang einer definierten Bildsprache — social-first Pacing, markenbewusster Rhythmus und ein stimmiger Premium-Look über laufende Instagram-Inhalte.",
+          "Die Arbeiten für Mario Scherthan umfassen Podcast-Trailer und kurze Social-Edits. Die Auswahl zeigt verschiedene Ausschnitte der Zusammenarbeit mit Fokus auf Aussage, Schnitt und Untertitel.",
         formats: ["Podcast-Edits", "Social-Edits", "Premium Short-Form Editing"],
         directionTitle: "Ein Finish, das jede Veröffentlichung verbindet.",
         directionText:
           "Podcast-Momente und Social-First-Ideen werden in kompakte Edits mit gemeinsamer visueller Sprache übersetzt. Typografie, Pacing, Sound und Finishing bleiben über die laufenden Veröffentlichungen hinweg aufeinander abgestimmt.",
         imageAlt: "Mario Scherthan bei einer Produktion im Gym",
         metaDescription:
-          "Langfristiger Social-Content-Schnitt für Mario Scherthan — konsistente visuelle Richtung und Premium-Short-Form-Edits von HappyReels.",
+          "Podcast-Trailer und Social-Edits für Mario Scherthan. Ausgewählte Videobeispiele aus der Zusammenarbeit mit HappyReels.",
       },
     },
   },

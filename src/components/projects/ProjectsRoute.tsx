@@ -14,11 +14,11 @@ import { ProjectOverview } from "./ProjectOverview";
 
 const META = {
   de: {
-    title: "Projekte",
+    title: "Projekte: Reels, Social Ads & Podcast-Edits",
     description: "Ausgewählte Reels, Commercials und Podcast-Edits von HappyReels.",
   },
   en: {
-    title: "Projects",
+    title: "Projects: reels, social ads & podcast edits",
     description: "Selected reels, commercials and podcast edits by HappyReels.",
   },
 } as const;
