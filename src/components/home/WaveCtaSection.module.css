@@ -149,17 +149,21 @@
   font: inherit;
 }
 
-.cta {
+.ctaReveal {
+  display: inline-flex;
   justify-self: start;
   opacity: var(--cta-button-opacity, 0);
-  box-shadow: 7px 6px 0 var(--hr-shadow-solid-gold);
   transform: translate3d(0, var(--cta-button-y, 54px), 0);
   will-change: auto;
 }
 
+.cta {
+  box-shadow: 7px 6px 0 var(--hr-shadow-solid-gold);
+}
+
 .stage[data-motion-active] .logoMark,
 .stage[data-motion-active] .copy h2,
-.stage[data-motion-active] .cta {
+.stage[data-motion-active] .ctaReveal {
   will-change: opacity, transform;
 }
 
@@ -184,7 +188,7 @@
   .stage[data-ready] .inner { will-change: auto; }
   .logoMark,
   .copy h2,
-  .cta {
+  .ctaReveal {
     opacity: 1;
     transform: none;
     will-change: auto;
@@ -224,7 +228,7 @@
   }
 
   .copy h2,
-  .cta {
+  .ctaReveal {
     opacity: 1;
     transform: none;
     transition: none;

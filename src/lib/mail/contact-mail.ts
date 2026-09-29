@@ -1,8 +1,11 @@
+import { readFile } from "node:fs/promises";
+import path from "node:path";
 import nodemailer from "nodemailer";
 import type { Transporter } from "nodemailer";
 
 import type { Locale } from "@/i18n/config";
 
+import { buildContactAutoReply, CONTACT_EMAIL_LOGO_CID } from "./contact-auto-reply";
 import type { ContactMailConfig } from "./contact-env";
 import { escapeHtml } from "./escape-html";
 import type { ValidatedContactPayload } from "./contact-validation";
@@ -37,12 +40,6 @@ function operatorSubject(locale: Locale): string {
   return locale === "en"
     ? "New contact request via the website"
     : "Neue Kontaktanfrage über die Website";
-}
-
-function autoReplySubject(locale: Locale): string {
-  return locale === "en"
-    ? "Thanks for your message"
-    : "Danke für deine Nachricht";
 }
 
 function buildOperatorText(ctx: SendContext): string {
@@ -97,41 +94,6 @@ function buildOperatorHtml(ctx: SendContext): string {
   return `<!DOCTYPE html><html><body style="margin:0;padding:16px;background:#f5f5f5;"><table role="presentation" cellpadding="0" cellspacing="0" style="max-width:560px;width:100%;background:#fff;border:1px solid #e5e5e5;border-radius:8px;"><tbody>${bodyRows}</tbody></table></body></html>`;
 }
 
-function buildAutoReplyText(ctx: SendContext): string {
-  const { payload, config } = ctx;
-
-  if (payload.locale === "en") {
-    return [
-      `Hi ${payload.name},`,
-      "",
-      "thank you for your message. Your request has been received and will be reviewed as soon as possible.",
-      "",
-      "Your message:",
-      `"${payload.message}"`,
-      "",
-      "Best regards",
-      config.siteName,
-    ].join("\n");
-  }
-
-  return [
-    `Hallo ${payload.name},`,
-    "",
-    "vielen Dank für deine Nachricht. Deine Anfrage ist angekommen und wird so schnell wie möglich geprüft.",
-    "",
-    "Zur Übersicht deine Nachricht:",
-    `"${payload.message}"`,
-    "",
-    "Viele Grüße",
-    config.siteName,
-  ].join("\n");
-}
-
-function buildAutoReplyHtml(ctx: SendContext): string {
-  const text = buildAutoReplyText(ctx);
-  return `<!DOCTYPE html><html><body style="margin:0;padding:16px;font-family:sans-serif;font-size:15px;line-height:1.55;color:#111;white-space:pre-wrap;">${escapeHtml(text)}</body></html>`;
-}
-
 export async function sendOperatorContactMail(ctx: SendContext): Promise<void> {
   const transport = createTransport(ctx.config);
 
@@ -152,8 +114,13 @@ export async function sendContactAutoReply(ctx: SendContext): Promise<void> {
     from: ctx.config.mailFrom,
     to: ctx.payload.email,
     replyTo: ctx.config.mailTo,
-    subject: autoReplySubject(ctx.payload.locale),
-    text: buildAutoReplyText(ctx),
-    html: buildAutoReplyHtml(ctx),
+    ...buildContactAutoReply(ctx.payload, ctx.config.siteName),
+    attachments: [{
+      filename: "happyreels.png",
+      content: await readFile(path.join(process.cwd(), "public/assets/logo/happyreels-email.png")),
+      contentType: "image/png",
+      contentDisposition: "inline",
+      cid: CONTACT_EMAIL_LOGO_CID,
+    }],
   });
 }
