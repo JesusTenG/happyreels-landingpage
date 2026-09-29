@@ -160,14 +160,16 @@ export function WaveCtaSection({ locale }: Props) {
                   <em className={`${styles.headlineAccent} hr-italic-marker`}>{copy.title.feeling}</em>
                   {stripTrailingHeadingPeriod(copy.title.end)}
                 </h2>
-                <HappyReelsButton
-                  href={`/${locale}#contact`}
-                  variant="primary"
-                  enableMovingBorder={false}
-                  className={styles.cta}
-                >
-                  {copy.cta}
-                </HappyReelsButton>
+                <span className={styles.ctaReveal}>
+                  <HappyReelsButton
+                    href={`/${locale}#contact`}
+                    variant="primary"
+                    enableMovingBorder={false}
+                    className={styles.cta}
+                  >
+                    {copy.cta}
+                  </HappyReelsButton>
+                </span>
               </div>
               <span className={styles.logoMark} aria-hidden="true">
                 <BrandMark
